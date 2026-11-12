@@ -1,0 +1,86 @@
+import { Helmet } from 'react-helmet-async';
+import { Shield, CheckCircle2, Download } from 'lucide-react';
+import { motion } from 'framer-motion';
+
+const MaklumatPelayanan = () => {
+  const pernyataan = [
+    'Sanggup menyelenggarakan Pelayanan sesuai dengan Standar Pelayanan yang telah ditetapkan;',
+    'Berkomitmen untuk memberikan pelayanan sesuai dengan kewajiban dan melakukan perbaikan secara terus menerus;',
+    'Apabila dalam penyelenggaraan pelayanan kami tidak sesuai dengan Standar Pelayanan yang telah ditetapkan, kami siap memberikan kompensasi kepada Pemohon dan siap menerima sanksi sesuai peraturan perundang-undangan yang berlaku.',
+  ];
+
+  return (
+    <>
+      <Helmet><title>Maklumat Pelayanan - PPID Dinas Pariwisata Sulteng</title></Helmet>
+
+      <div className="bg-gradient-to-r from-navy-900 to-primary-800 py-16 lg:py-20">
+        <div className="container-custom">
+          <h1 className="text-3xl lg:text-5xl font-extrabold text-white">Maklumat Pelayanan</h1>
+          <p className="text-white/70 mt-2">Informasi Publik Dinas Pariwisata Provinsi Sulawesi Tengah</p>
+        </div>
+      </div>
+
+      <section className="py-12 lg:py-16">
+        <div className="container-custom max-w-5xl">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="card p-8 lg:p-12"
+          >
+            {/* Header */}
+            <div className="text-center mb-8 pb-8 border-b border-gray-100">
+              <div className="w-20 h-20 rounded-full bg-primary-600 flex items-center justify-center text-white mx-auto mb-4">
+                <Shield size={36} />
+              </div>
+              <h2 className="text-2xl lg:text-3xl font-bold text-navy-900 mb-2">
+                MAKLUMAT PELAYANAN
+              </h2>
+              <p className="text-gray-500">Dinas Pariwisata Provinsi Sulawesi Tengah</p>
+            </div>
+
+            {/* Content */}
+            <div className="bg-gradient-to-br from-primary-50 to-white rounded-xl p-6 lg:p-8 border-l-4 border-gold-400 mb-8">
+              <p className="text-lg font-semibold text-navy-900 mb-6 text-center">
+                "Dengan ini, kami berjanji:"
+              </p>
+              <ol className="space-y-5">
+                {pernyataan.map((p, idx) => (
+                  <li key={idx} className="flex gap-4">
+                    <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary-600 text-white flex items-center justify-center font-bold text-sm">
+                      {idx + 1}
+                    </span>
+                    <p className="text-gray-700 leading-relaxed pt-1">{p}</p>
+                  </li>
+                ))}
+              </ol>
+            </div>
+
+            {/* Signature */}
+            <div className="text-right">
+              <p className="text-gray-600 mb-2">Palu, {new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+              <p className="text-gray-600 mb-8">Kepala Dinas Pariwisata Prov. Sulteng</p>
+              <div className="inline-block border-t-2 border-navy-900 pt-2 min-w-[250px]">
+                <p className="font-bold text-navy-900">Dra. DIAH AGUSTININGSIH, M.Pd</p>
+                <p className="text-sm text-gray-500">NIP. 196808251994122006</p>
+              </div>
+            </div>
+
+            {/* Download */}
+            <div className="mt-10 text-center">
+              <a
+                href="/dokumen/maklumat-pelayanan.pdf"
+                download
+                className="btn-primary"
+              >
+                <Download size={18} /> Unduh Maklumat Pelayanan (PDF)
+              </a>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+    </>
+  );
+};
+
+export default MaklumatPelayanan;

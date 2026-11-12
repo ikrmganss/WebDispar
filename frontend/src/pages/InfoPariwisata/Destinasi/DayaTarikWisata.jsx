@@ -1,0 +1,93 @@
+import { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
+import { MapPin, Eye } from 'lucide-react';
+import { motion } from 'framer-motion';
+import api from '../../../services/api';
+
+const kabupatenList = [
+  'Kota Palu', 'Kabupaten Donggala', 'Kabupaten Sigi', 'Kabupaten Parigi Moutong',
+  'Kabupaten Poso', 'Kabupaten Morowali', 'Kabupaten Morowali Utara', 'Kabupaten Tojo Una-Una',
+  'Kabupaten Banggai', 'Kabupaten Banggai Kepulauan', 'Kabupaten Banggai Laut', 'Kabupaten Tolitoli', 'Kabupaten Buol'
+];
+
+const DayaTarikWisata = () => {
+  const [data, setData] = useState([]);
+  const [selected, setSelected] = useState('Kota Palu');
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    api.get(`/info-pariwisata/dtw?kabupaten=${selected}`)
+      .then((res) => setData(res.data))
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, [selected]);
+
+  return (
+    <>
+      <Helmet><title>Daya Tarik Wisata - Info Pariwisata</title></Helmet>
+      <div className="bg-gradient-to-r from-navy-900 to-primary-800 py-16 lg:py-20">
+        <div className="container-custom">
+          <h1 className="text-3xl lg:text-5xl font-extrabold text-white">Daya Tarik Wisata</h1>
+          <p className="text-white/70 mt-2">Destinasi pariwisata unggulan Sulawesi Tengah</p>
+        </div>
+      </div>
+      <section className="py-12 lg:py-16">
+        <div className="container-custom">
+          {/* Filter Kabupaten */}
+          <div className="flex flex-wrap gap-2 mb-10">
+            {kabupatenList.map((kab) => (
+              <button
+                key={kab}
+                onClick={() => setSelected(kab)}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${selected === kab ? 'bg-primary-600 text-white shadow-lg' : 'bg-white text-navy-700 border border-gray-200 hover:border-primary-400'}`}
+              >
+                {kab}
+              </button>
+            ))}
+          </div>
+
+          {loading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[...Array(6)].map((_, i) => <div key={i} className="skeleton h-72 rounded-xl" />)}
+            </div>
+          ) : data.length === 0 ? (
+            <div className="text-center py-20 text-gray-400">
+              <MapPin size={48} className="mx-auto mb-4 opacity-30" />
+              <p>Belum ada data destinasi untuk {selected}</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {data.map((item, idx) => (
+                <motion.div
+                  key={item.id}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.1 }}
+                  className="card group"
+                >
+                  <div className="relative overflow-hidden h-52">
+                    <img src={item.gambar ? `/uploads/${item.gambar}` : '/placeholder.jpg'} alt={item.judul} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                    <div className="absolute top-4 left-4 bg-gold-400 text-navy-900 text-xs font-bold px-3 py-1 rounded-full">
+                      {item.kabupaten}
+                    </div>
+                  </div>
+                  <div className="p-5">
+                    <h3 className="font-bold text-navy-900 text-lg mb-2 line-clamp-2">{item.judul}</h3>
+                    <p className="text-sm text-gray-500 line-clamp-3 mb-4">{item.deskripsi}</p>
+                    <span className="inline-flex items-center gap-1 text-xs text-gray-400">
+                      <Eye size={14} /> {item.dilihat} dilihat
+                    </span>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+    </>
+  );
+};
+
+export default DayaTarikWisata;
