@@ -1,7 +1,6 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
+import MainLayout from './components/MainLayout';
 import Home from './pages/Home';
 import Berita from './pages/Berita';
 import BeritaDetail from './pages/BeritaDetail';
@@ -70,59 +69,54 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen text-slate-900 font-sans flex flex-col antialiased">
-      <Navbar language={language} setLanguage={setLanguage} />
-      <main className="flex-1 w-full">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/berita" element={<div className="pt-20"><Berita /></div>} />
-          <Route path="/berita/:slug" element={<div className="pt-20"><BeritaDetail /></div>} />
+    <MainLayout language={language} setLanguage={setLanguage}>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/berita" element={<Berita />} />
+        <Route path="/berita/:slug" element={<BeritaDetail />} />
 
-          {/* Profil */}
-          <Route path="/profil/sejarah" element={<div className="pt-20"><Sejarah /></div>} />
-          <Route path="/profil/visi-misi" element={<div className="pt-20"><VisiMisi /></div>} />
-          <Route path="/profil/profil-pimpinan" element={<div className="pt-20"><ProfilPimpinan /></div>} />
-          <Route path="/profil/tupoksi" element={<div className="pt-20"><Tupoksi /></div>} />
-          <Route path="/profil/majalah" element={<div className="pt-20"><Majalah /></div>} />
-          <Route path="/profil/logo" element={<div className="pt-20"><Logo /></div>} />
-          <Route path="/profil/hubungi-kami" element={<div className="pt-20"><HubungiKami /></div>} />
+        {/* Profil */}
+        <Route path="/profil/sejarah" element={<Sejarah />} />
+        <Route path="/profil/visi-misi" element={<VisiMisi />} />
+        <Route path="/profil/profil-pimpinan" element={<ProfilPimpinan />} />
+        <Route path="/profil/tupoksi" element={<Tupoksi />} />
+        <Route path="/profil/majalah" element={<Majalah />} />
+        <Route path="/profil/logo" element={<Logo />} />
+        <Route path="/profil/hubungi-kami" element={<HubungiKami />} />
 
-          {/* PPID */}
-          <Route path="/ppid/profil" element={<div className="pt-20"><ProfilPPID /></div>} />
-          <Route path="/ppid/daftar-informasi-publik" element={<div className="pt-20"><DaftarInformasiPublik /></div>} />
-          <Route path="/ppid/profil/struktur-organisasi" element={<div className="pt-20"><StrukturOrganisasiPPID /></div>} />
-          <Route path="/ppid/profil/visi-misi" element={<div className="pt-20"><VisiMisiPPID /></div>} />
-          <Route path="/ppid/profil/maklumat-pelayanan" element={<div className="pt-20"><MaklumatPelayanan /></div>} />
-          <Route path="/ppid/profil/tugas-ppid" element={<div className="pt-20"><TugasPPID /></div>} />
-          <Route path="/ppid/laporan-tahunan" element={<div className="pt-20"><LaporanTahunan /></div>} />
-          <Route path="/ppid/surat-keputusan" element={<div className="pt-20"><SuratKeputusan /></div>} />
-          <Route path="/ppid/standar-pelayanan" element={<div className="pt-20"><StandarPelayanan /></div>} />
-          <Route path="/ppid/layanan-publik/form-permohonan" element={<div className="pt-20"><FormPermohonan /></div>} />
-          <Route path="/ppid/layanan-publik/form-keberatan" element={<div className="pt-20"><FormKeberatan /></div>} />
-          <Route path="/ppid/layanan-publik/prosedur-pengaduan" element={<div className="pt-20"><ProsedurPengaduan /></div>} />
-          <Route path="/ppid/layanan-publik/survey-kepuasan" element={<div className="pt-20"><SurveyKepuasan /></div>} />
-          <Route path="/ppid/layanan-publik/regulasi" element={<div className="pt-20"><Regulasi /></div>} />
+        {/* PPID */}
+        <Route path="/ppid/profil" element={<ProfilPPID />} />
+        <Route path="/ppid/daftar-informasi-publik" element={<DaftarInformasiPublik />} />
+        <Route path="/ppid/profil/struktur-organisasi" element={<StrukturOrganisasiPPID />} />
+        <Route path="/ppid/profil/visi-misi" element={<VisiMisiPPID />} />
+        <Route path="/ppid/profil/maklumat-pelayanan" element={<MaklumatPelayanan />} />
+        <Route path="/ppid/profil/tugas-ppid" element={<TugasPPID />} />
+        <Route path="/ppid/laporan-tahunan" element={<LaporanTahunan />} />
+        <Route path="/ppid/surat-keputusan" element={<SuratKeputusan />} />
+        <Route path="/ppid/standar-pelayanan" element={<StandarPelayanan />} />
+        <Route path="/ppid/layanan-publik/form-permohonan" element={<FormPermohonan />} />
+        <Route path="/ppid/layanan-publik/form-keberatan" element={<FormKeberatan />} />
+        <Route path="/ppid/layanan-publik/prosedur-pengaduan" element={<ProsedurPengaduan />} />
+        <Route path="/ppid/layanan-publik/survey-kepuasan" element={<SurveyKepuasan />} />
+        <Route path="/ppid/layanan-publik/regulasi" element={<Regulasi />} />
 
-          {/* Info Pariwisata */}
-          <Route path="/info-pariwisata/destinasi/daya-tarik-wisata" element={<div className="pt-20"><DayaTarikWisata /></div>} />
-          <Route path="/info-pariwisata/destinasi/daya-tarik-wisata/:kabupaten" element={<div className="pt-20"><DayaTarikWisata /></div>} />
-          <Route path="/info-pariwisata/destinasi/desa-wisata" element={<div className="pt-20"><DesaWisata /></div>} />
-          <Route path="/info-pariwisata/destinasi/desa-wisata/:kabupaten" element={<div className="pt-20"><DesaWisata /></div>} />
-          <Route path="/info-pariwisata/pemasaran/paket-wisata" element={<div className="pt-20"><PaketWisata /></div>} />
-          <Route path="/info-pariwisata/pemasaran/kalender-event" element={<div className="pt-20"><KalenderEvent /></div>} />
-          <Route path="/info-pariwisata/pemasaran/data-hunian" element={<div className="pt-20"><DataHunian /></div>} />
-          <Route path="/info-pariwisata/pemasaran/statistik-kunjungan" element={<div className="pt-20"><StatistikKunjungan /></div>} />
-          <Route path="/info-pariwisata/ekonomi-kreatif" element={<div className="pt-20"><EkonomiKreatif /></div>} />
-          <Route path="/info-pariwisata/sumber-daya" element={<div className="pt-20"><SumberDaya /></div>} />
+        {/* Info Pariwisata */}
+        <Route path="/info-pariwisata/destinasi/daya-tarik-wisata" element={<DayaTarikWisata />} />
+        <Route path="/info-pariwisata/destinasi/daya-tarik-wisata/:kabupaten" element={<DayaTarikWisata />} />
+        <Route path="/info-pariwisata/destinasi/desa-wisata" element={<DesaWisata />} />
+        <Route path="/info-pariwisata/destinasi/desa-wisata/:kabupaten" element={<DesaWisata />} />
+        <Route path="/info-pariwisata/pemasaran/paket-wisata" element={<PaketWisata />} />
+        <Route path="/info-pariwisata/pemasaran/kalender-event" element={<KalenderEvent />} />
+        <Route path="/info-pariwisata/pemasaran/data-hunian" element={<DataHunian />} />
+        <Route path="/info-pariwisata/pemasaran/statistik-kunjungan" element={<StatistikKunjungan />} />
+        <Route path="/info-pariwisata/ekonomi-kreatif" element={<EkonomiKreatif />} />
+        <Route path="/info-pariwisata/sumber-daya" element={<SumberDaya />} />
 
-          {/* Lain */}
-          <Route path="/rencana-terbit" element={<div className="pt-20"><RencanaTerbit /></div>} />
-          <Route path="/lapor" element={<div className="pt-20"><Lapor /></div>} />
-
-        </Routes>
-      </main>
-      <Footer />
-    </div>
+        {/* Lain */}
+        <Route path="/rencana-terbit" element={<RencanaTerbit />} />
+        <Route path="/lapor" element={<Lapor />} />
+      </Routes>
+    </MainLayout>
   );
 }
 

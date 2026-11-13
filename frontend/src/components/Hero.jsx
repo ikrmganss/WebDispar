@@ -31,54 +31,51 @@ const Hero = () => {
   }, [next, prev]);
 
   const slide = SLIDES[current] ?? SLIDES[0];
-  if (!slide) return <div className="w-full aspect-[12/5] max-h-[800px] bg-slate-950" />;
 
   return (
     <section
-      aria-label="Featured content"
-      className="relative w-full aspect-[12/5] max-h-[800px] bg-slate-950 overflow-hidden flex items-center justify-center"
+      aria-label="Hero Banner"
+      className="relative w-full h-[400px] md:h-[480px] bg-[#0F172A] overflow-hidden flex items-center justify-center select-none"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      {/* Slides */}
+      {/* Slides Background Image */}
       <AnimatePresence mode="sync">
         <motion.div
           key={current}
           initial={{ opacity: 0, scale: 1.05 }}
-          animate={{ opacity: 1, scale: 1 }}
+          animate={{ opacity: 0.88, scale: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 1, ease: 'easeOut' }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
           className="absolute inset-0"
         >
           <img
             src={slide.image}
             alt={slide.alt}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover object-center"
             loading="eager"
           />
         </motion.div>
       </AnimatePresence>
 
+      {/* Subtle Dark Gradient Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none" />
 
-
-
-
-      {/* Arrows (glassmorphism) */}
+      {/* Glass Navigation Arrows */}
       <button
         onClick={prev}
         aria-label="Previous slide"
-        className="group z-20 absolute left-3 md:left-6 w-9 h-9 md:w-12 md:h-12 rounded-full flex items-center justify-center text-white bg-gradient-to-br from-white/25 to-white/5 hover:from-white/35 hover:to-white/10 border border-white/30 backdrop-blur-xl backdrop-saturate-150 shadow-[0_8px_32px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.4)] hover:scale-110 active:scale-95 transition-all duration-300"
+        className="group z-20 absolute left-4 md:left-6 w-10 h-10 rounded-full flex items-center justify-center text-white bg-black/40 hover:bg-black/60 border border-white/20 backdrop-blur-md shadow-lg transition-all hover:scale-105 active:scale-95"
       >
-        <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 drop-shadow-md transition-transform duration-300 group-hover:-translate-x-0.5" />
+        <ChevronLeft className="w-5 h-5 transition-transform group-hover:-translate-x-0.5" />
       </button>
       <button
         onClick={next}
         aria-label="Next slide"
-        className="group z-20 absolute right-3 md:right-6 w-9 h-9 md:w-12 md:h-12 rounded-full flex items-center justify-center text-white bg-gradient-to-br from-white/25 to-white/5 hover:from-white/35 hover:to-white/10 border border-white/30 backdrop-blur-xl backdrop-saturate-150 shadow-[0_8px_32px_rgba(0,0,0,0.25),inset_0_1px_0_rgba(255,255,255,0.4)] hover:scale-110 active:scale-95 transition-all duration-300"
+        className="group z-20 absolute right-4 md:right-6 w-10 h-10 rounded-full flex items-center justify-center text-white bg-black/40 hover:bg-black/60 border border-white/20 backdrop-blur-md shadow-lg transition-all hover:scale-105 active:scale-95"
       >
-        <ChevronRight className="w-5 h-5 md:w-6 md:h-6 drop-shadow-md transition-transform duration-300 group-hover:translate-x-0.5" />
+        <ChevronRight className="w-5 h-5 transition-transform group-hover:translate-x-0.5" />
       </button>
-
 
       {/* Progress bar */}
       {!isPaused && (

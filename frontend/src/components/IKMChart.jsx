@@ -1,38 +1,55 @@
 import { useEffect, useState } from 'react';
 import api from '../services/api';
+import { Check } from 'lucide-react';
 
 const IKMGaugeChart = ({ nilai = 89.444 }) => {
-  // Hitung sudut jarum berdasarkan nilai (0-100 → -180° to 0°)
+  // Hitung persentase 0..100
   const pct = Math.min(Math.max(nilai / 100, 0), 1);
   const angle = -180 + pct * 180;
   const rad = (angle * Math.PI) / 180;
-  const cx = 100, cy = 100, r = 72;
-  const nx = cx + r * 0.75 * Math.cos(rad);
-  const ny = cy + r * 0.75 * Math.sin(rad);
+  const cx = 100, cy = 95, r = 68;
+  const nx = cx + r * 0.72 * Math.cos(rad);
+  const ny = cy + r * 0.72 * Math.sin(rad);
 
   return (
-    <div className="relative flex flex-col items-center">
-      <svg viewBox="0 0 200 110" className="w-56 h-auto">
-        {/* Track */}
-        <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="#f1f5f9" strokeWidth="18" strokeLinecap="round" />
-        {/* Zone merah */}
-        <path d="M 20 100 A 80 80 0 0 1 60 38" fill="none" stroke="#fecaca" strokeWidth="18" strokeLinecap="round" />
-        {/* Zone kuning */}
-        <path d="M 60 38 A 80 80 0 0 1 140 38" fill="none" stroke="#fef08a" strokeWidth="18" strokeLinecap="round" />
-        {/* Zone hijau */}
-        <path d="M 140 38 A 80 80 0 0 1 180 100" fill="none" stroke="#bbf7d0" strokeWidth="18" strokeLinecap="round" />
-        {/* Progress emerald */}
-        <path d="M 20 100 A 80 80 0 0 1 165 58" fill="none" stroke="#10b981" strokeWidth="18" strokeLinecap="round" opacity="0.9" />
-        {/* Jarum */}
-        <line x1={cx} y1={cy} x2={nx} y2={ny} stroke="#0f172a" strokeWidth="3.5" strokeLinecap="round" />
-        <circle cx={cx} cy={cy} r="6" fill="#0f172a" />
-        <circle cx={cx} cy={cy} r="3" fill="white" />
+    <div className="relative flex flex-col items-center w-full">
+      <svg viewBox="0 0 200 115" className="w-48 h-auto overflow-visible">
+        {/* Background Arc */}
+        <path
+          d="M 25 95 A 75 75 0 0 1 175 95"
+          fill="none"
+          stroke="#E2E8F0"
+          strokeWidth="14"
+          strokeLinecap="round"
+        />
+        {/* Active Arc (Green Emerald) */}
+        <path
+          d="M 25 95 A 75 75 0 0 1 162 55"
+          fill="none"
+          stroke="#10B981"
+          strokeWidth="14"
+          strokeLinecap="round"
+        />
+        {/* Needle Needle Line */}
+        <line
+          x1={cx}
+          y1={cy}
+          x2={nx}
+          y2={ny}
+          stroke="#0F172A"
+          strokeWidth="3"
+          strokeLinecap="round"
+        />
+        <circle cx={cx} cy={cy} r="6" fill="#0F172A" />
+        <circle cx={cx} cy={cy} r="2.5" fill="#FFFFFF" />
       </svg>
 
-      {/* Nilai di tengah bawah gauge */}
-      <div className="flex flex-col items-center -mt-2">
-        <span className="text-5xl font-black text-slate-900 tracking-tight leading-none">{nilai}</span>
-        <span className="mt-2 px-4 py-1 bg-emerald-500 rounded-full font-black text-[11px] text-white tracking-widest uppercase shadow-sm">
+      {/* Nilai dan Predikat */}
+      <div className="flex flex-col items-center -mt-3 gap-1.5">
+        <span className="text-3xl font-extrabold text-[#0F172A] tracking-tight">
+          {nilai}
+        </span>
+        <span className="px-3 py-0.5 rounded-full bg-[#D1FAE5] text-[#047857] text-[10px] font-extrabold tracking-wider uppercase">
           SANGAT BAIK
         </span>
       </div>
@@ -48,43 +65,34 @@ const IKMChart = () => {
   }, []);
 
   const nilai = data?.nilai ?? 89.444;
-  const jumlah = data?.jumlah ?? 13;
 
   return (
-    <article className="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden h-full flex flex-col">
+    <article className="w-full bg-white rounded-2xl border border-[#E2E8F0] shadow-sm p-5 flex flex-col justify-between items-center text-center h-full">
       {/* Header */}
-      <div className="px-6 pt-6 pb-4 border-b border-slate-100">
-        <span className="inline-flex items-center gap-1.5 text-emerald-600 font-extrabold text-[10px] tracking-widest uppercase mb-1">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+      <div className="w-full flex flex-col items-center gap-1">
+        <span className="text-[10px] font-bold text-[#059669] tracking-wider uppercase">
           EVALUASI PELAYANAN
         </span>
-        <h3 className="font-black text-slate-900 text-base leading-tight">
-          Indeks Kepuasan Masyarakat
-          <span className="text-amber-500"> (IKM)</span>
+        <h3 className="font-extrabold text-[#1E293B] text-base leading-tight">
+          Indeks Kepuasan Masyarakat (IKM)
         </h3>
-        <p className="text-slate-400 text-xs mt-0.5">Akumulasi survei mutu layanan publik</p>
+        <p className="text-slate-400 text-[11px] leading-tight max-w-[240px]">
+          Akumulasi survei mutu layanan publik Dinas Pariwisata
+        </p>
       </div>
 
-      {/* Gauge */}
-      <div className="flex-1 flex items-center justify-center px-6 py-6">
+      {/* Gauge Visualization */}
+      <div className="my-2 w-full flex justify-center">
         <IKMGaugeChart nilai={nilai} />
       </div>
 
-      {/* Footer */}
-      <div className="px-6 pb-6">
-        <div className="flex items-center justify-between p-4 bg-emerald-50 rounded-2xl border border-emerald-100">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-xl bg-emerald-500 flex items-center justify-center">
-              <svg viewBox="0 0 24 24" className="w-4 h-4 fill-white">
-                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="white" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </div>
-            <div>
-              <p className="text-xs font-black text-slate-900">Sangat Baik</p>
-              <p className="text-[10px] text-slate-400">Predikat Layanan</p>
-            </div>
+      {/* CTA Button Badge */}
+      <div className="w-full pt-2">
+        <div className="w-full py-2 px-3 rounded-lg bg-[#F1F5F9] flex items-center justify-center gap-2 text-slate-700 text-xs font-bold">
+          <span>Sangat Baik</span>
+          <div className="w-4 h-4 rounded-full bg-emerald-500 flex items-center justify-center text-white">
+            <Check className="w-2.5 h-2.5 stroke-[3]" />
           </div>
-          <span className="text-2xl font-black text-emerald-600">{jumlah}</span>
         </div>
       </div>
     </article>
