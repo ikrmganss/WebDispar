@@ -16,6 +16,9 @@ import HubungiKami from './pages/Profil/HubungiKami';
 
 // PPID
 import DaftarInformasiPublik from './pages/PPID/DaftarInformasiPublik';
+import InformasiSetiapSaat from './pages/PPID/InformasiSetiapSaat';
+import InformasiSertaMerta from './pages/PPID/InformasiSertaMerta';
+import InformasiDikecualikan from './pages/PPID/InformasiDikecualikan';
 import ProfilPPID from './pages/PPID/ProfilPPID';
 import StrukturOrganisasiPPID from './pages/PPID/StrukturOrganisasiPPID';
 import VisiMisiPPID from './pages/PPID/VisiMisiPPID';
@@ -87,6 +90,9 @@ function App() {
         {/* PPID */}
         <Route path="/ppid/profil" element={<ProfilPPID />} />
         <Route path="/ppid/daftar-informasi-publik" element={<DaftarInformasiPublik />} />
+        <Route path="/ppid/informasi-setiap-saat" element={<InformasiSetiapSaat />} />
+        <Route path="/ppid/informasi-serta-merta" element={<InformasiSertaMerta />} />
+        <Route path="/ppid/informasi-dikecualikan" element={<InformasiDikecualikan />} />
         <Route path="/ppid/profil/struktur-organisasi" element={<StrukturOrganisasiPPID />} />
         <Route path="/ppid/profil/visi-misi" element={<VisiMisiPPID />} />
         <Route path="/ppid/profil/maklumat-pelayanan" element={<MaklumatPelayanan />} />
