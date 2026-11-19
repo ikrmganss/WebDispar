@@ -86,6 +86,40 @@ const DTW_FALLBACK_IMAGES = {
     'Sulawesi Tengah': 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80',
 };
 
+function determineBeritaKeyword(judul, konten = '') {
+    const text = (judul + ' ' + konten).toUpperCase();
+    const j = judul.toUpperCase();
+
+    if (j.includes('HARI PAHLAWAN')) return 'HARI PAHLAWAN';
+    if (j.includes('PPID') || j.includes('TRANSPARANSI') || j.includes('KETERBUKAAN INFORMASI') || j.includes('SP4N-LAPOR')) return 'INFORMASI PUBLIK';
+    if (j.includes('PARIPURNA') || j.includes('KUA-PPAS') || j.includes('DPRD')) return 'RAPAT PARIPURNA';
+    if (j.includes('NOMENKLATUR') || j.includes('EKONOMI KREATIF') || j.includes('EKRAF')) return 'EKONOMI KREATIF';
+    if (j.includes('SP4N') || j.includes('LAPOR') || j.includes('PELAYANAN PUBLIK')) return 'PELAYANAN PUBLIK';
+    if (j.includes('OTONOMI DAERAH') || j.includes('OTDA')) return 'OTONOMI DAERAH';
+    if (j.includes('BMKG') || j.includes('MITIGASI')) return 'MITIGASI & BMKG';
+    if (j.includes('RENUNGAN SUCI') || j.includes('HUT KE-81 RI') || j.includes('HUT RI') || j.includes('KEMERDEKAAN')) return 'HUT RI';
+    if (j.includes('SELEKSI JPT') || j.includes('ASN') || j.includes('PEGAWAI') || j.includes('PELANTIKAN')) return 'KEPEGAWAIAN';
+    if (j.includes('GUANGZHOU') || j.includes('CHARTER FLIGHT') || j.includes('PENERBANGAN') || j.includes('BANDARA')) return 'KONEKTIVITAS';
+    if (j.includes('KPK') || j.includes('KORUPSI') || j.includes('INTEGRITAS')) return 'TATA KELOLA';
+    if (j.includes('INVESTASI') || j.includes('INVESTOR') || j.includes('UEA')) return 'INVESTASI';
+    if (j.includes('DANAU LINDU') || j.includes('FDL')) return 'FESTIVAL DANAU LINDU';
+    if (j.includes('BUYA SUBI') || j.includes('TENUN DONGGALA') || j.includes('FASHION')) return 'TENUN DONGGALA';
+    if (j.includes('FESTIVAL') || j.includes('FEST') || j.includes('KARNAVAL')) return 'FESTIVAL DAERAH';
+    if (j.includes('HUT PROVINSI') || j.includes('HUT SULTENG') || j.includes('HUT KE-62')) return 'HUT SULTENG';
+    if (j.includes('PARALAYANG') || j.includes('SERTIFIKASI') || j.includes('BIMTEK') || j.includes('PELATIHAN')) return 'SDM PARIWISATA';
+    if (j.includes('PUTERI INDONESIA') || j.includes('DUTA PARIWISATA')) return 'EVENT & PROMOSI';
+    if (j.includes('100 HARI') || j.includes('KOMITMEN KINERJA')) return 'KINERJA PEMDA';
+    if (j.includes('DESA WISATA') || j.includes('ADWI')) return 'DESA WISATA';
+    if (j.includes('BAHARI') || j.includes('PANTAI') || j.includes('PULAU') || j.includes('UNDERWATER') || j.includes('DIVING')) return 'DESTINASI BAHARI';
+    if (j.includes('MEGALIT') || j.includes('NEGERI SERIBU MEGALIT') || j.includes('SITUS')) return 'CAGAR BUDAYA';
+    if (j.includes('RAKOR') || j.includes('RAKER') || j.includes('FORUM') || j.includes('KONSULTASI')) return 'KOORDINASI DAERAH';
+    if (j.includes('KULINER') || j.includes('MAKANAN KHAS')) return 'KULINER';
+    if (j.includes('BUDAYA') || j.includes('TRADISI') || j.includes('ADAT')) return 'KEBUDAYAAN';
+    if (j.includes('WISATA') || j.includes('DESTINASI') || j.includes('DTW')) return 'DESTINASI WISATA';
+
+    return 'WARTA PARIWISATA';
+}
+
 async function migrate() {
     console.log('🚀 Menjalankan migrasi komprehensif seluruh modul website pariwisata...');
 
@@ -101,6 +135,7 @@ async function migrate() {
 
     // Pastikan tipe kolom LONGTEXT & struktur tabel lengkap
     await conn.query('ALTER TABLE berita MODIFY konten LONGTEXT');
+    try { await conn.query('ALTER TABLE berita ADD COLUMN kategori VARCHAR(100) DEFAULT NULL AFTER penulis'); } catch (e) {}
     await conn.query('ALTER TABLE profil MODIFY konten LONGTEXT');
     await conn.query('ALTER TABLE dtw MODIFY deskripsi LONGTEXT');
     await conn.query('ALTER TABLE desa_wisata MODIFY deskripsi LONGTEXT');
@@ -269,9 +304,10 @@ async function migrate() {
                     tanggal = '2024-01-01';
                 }
 
+                const kategoriBerita = determineBeritaKeyword(judul, konten);
                 await conn.query(
-                    'INSERT INTO berita (judul, slug, konten, gambar, penulis, tanggal, dilihat) VALUES (?, ?, ?, ?, ?, ?, ?)',
-                    [judul, slug, konten, gambar, 'Admin Dispar', tanggal, Math.floor(Math.random() * 250) + 50]
+                    'INSERT INTO berita (judul, slug, konten, gambar, penulis, kategori, tanggal, dilihat) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+                    [judul, slug, konten, gambar, 'Admin Dispar', kategoriBerita, tanggal, Math.floor(Math.random() * 250) + 50]
                 );
                 countBerita++;
             }

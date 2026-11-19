@@ -5,7 +5,6 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 const SLIDES = [
   {
     image: '/images/slider2/62_sulteng-dispar_2026_edit_copy_2.jpg',
-    remoteImage: 'https://pariwisata.sultengprov.go.id/images/slider2/62_sulteng-dispar_2026_edit_copy_2.jpg',
     fallbackImage: '/slider/Slider.jpg',
     alt: 'Dinas Pariwisata Sulawesi Tengah 2026',
     title: 'Dinas Pariwisata Provinsi Sulawesi Tengah',
@@ -13,36 +12,32 @@ const SLIDES = [
     link: '#',
   },
   {
-    image: '/images/slider/komitmen-ppid.jpg',
-    remoteImage: 'https://pariwisata.sultengprov.go.id/images/komitmen-ppid.jpg',
-    fallbackImage: 'https://pariwisata.sultengprov.go.id/images/komitmen-ppid.jpg',
+    image: '/images/komitmen-ppid.jpg',
+    fallbackImage: '/slider/Slider.jpg',
     alt: 'Komitmen Keterbukaan Informasi Publik PPID',
     title: 'Komitmen Keterbukaan Informasi Publik',
     subtitle: 'Layanan Transparan, Akuntabel, dan Terpercaya',
     link: '/ppid',
   },
   {
-    image: '/images/slider/SLIDER-PPID.jpg',
-    remoteImage: 'https://pariwisata.sultengprov.go.id/images/SLIDER-PPID.jpg',
-    fallbackImage: 'https://pariwisata.sultengprov.go.id/images/SLIDER-PPID.jpg',
+    image: '/images/SLIDER-PPID.jpg',
+    fallbackImage: '/slider/Slider.jpg',
     alt: 'PPID Dinas Pariwisata Sulawesi Tengah',
     title: 'PPID Dinas Pariwisata Sulteng',
     subtitle: 'Akses Dokumen, Regulasi, dan Pelayanan Informasi Publik',
     link: '/ppid',
   },
   {
-    image: '/images/slider/iku_dispar_26.jpg',
-    remoteImage: 'https://pariwisata.sultengprov.go.id/images/slider2/iku_dispar_26.jpg',
-    fallbackImage: 'https://pariwisata.sultengprov.go.id/images/slider2/iku_dispar_26.jpg',
+    image: '/images/slider2/iku_dispar_26.jpg',
+    fallbackImage: '/slider/Slider.jpg',
     alt: 'Indikator Kinerja Utama Dispar 2026',
     title: 'Indikator Kinerja Utama (IKU) 2026',
     subtitle: 'Target dan Capaian Pembangunan Kepariwisataan',
     link: '#',
   },
   {
-    image: '/images/slider/command_center_-_berani_samporoa_2025_edit.jpg',
-    remoteImage: 'https://pariwisata.sultengprov.go.id/images/command_center_-_berani_samporoa_2025_edit.jpg',
-    fallbackImage: 'https://pariwisata.sultengprov.go.id/images/command_center_-_berani_samporoa_2025_edit.jpg',
+    image: '/images/command_center_-_berani_samporoa_2025_edit.jpg',
+    fallbackImage: '/slider/Slider.jpg',
     alt: 'Command Center Berani Samporoa',
     title: 'Command Center BERANI - SAMPOROA',
     subtitle: 'Hotline Layanan Cepat Tanggap Pariwisata Sulteng',
@@ -50,9 +45,8 @@ const SLIDES = [
     isExternal: true,
   },
   {
-    image: '/images/slider/sp4l-2025.png',
-    remoteImage: 'https://pariwisata.sultengprov.go.id/images/2025/sp4l-2025.png',
-    fallbackImage: 'https://pariwisata.sultengprov.go.id/images/2025/sp4l-2025.png',
+    image: '/images/2025/sp4l-2025.png',
+    fallbackImage: '/slider/Slider.jpg',
     alt: 'SP4N-LAPOR Pengaduan Pelayanan Publik',
     title: 'Layanan Aspirasi & Pengaduan SP4N-LAPOR',
     subtitle: 'Sampaikan Aspirasi dan Laporan Anda Secara Online',
@@ -60,9 +54,8 @@ const SLIDES = [
     isExternal: true,
   },
   {
-    image: '/images/slider/no_4_1.png',
-    remoteImage: 'https://pariwisata.sultengprov.go.id/images/no_4_1.png',
-    fallbackImage: 'https://pariwisata.sultengprov.go.id/images/no_4_1.png',
+    image: '/images/no_4_1.png',
+    fallbackImage: '/slider/Slider.jpg',
     alt: 'Kampanye Pariwisata Anti Korupsi',
     title: 'Pariwisata Berintegritas & Anti Korupsi',
     subtitle: 'Menjaga Tata Kelola Pemerintahan yang Bersih dan Berwibawa',
@@ -70,8 +63,7 @@ const SLIDES = [
   },
   {
     image: '/images/slider/cekidot.jpg',
-    remoteImage: 'https://pariwisata.sultengprov.go.id/images/cekidot.jpg',
-    fallbackImage: '/images/slider/cekidot.jpg',
+    fallbackImage: '/slider/Slider.jpg',
     alt: 'Aplikasi Cekidot Persuratan Dispar',
     title: 'Layanan Cekidot Dispar Sulteng',
     subtitle: 'Digitalisasi Persuratan dan Pelayanan Dinas',
@@ -129,14 +121,9 @@ const Hero = () => {
             className="w-full h-full object-cover object-center"
             loading="eager"
             onError={(e) => {
-              const remote = slide.remoteImage;
-              if (remote && e.currentTarget.src !== remote) {
-                e.currentTarget.src = remote;
-              } else {
-                const fallback = slide.fallbackImage || '/slider/Slider.jpg';
-                if (!e.currentTarget.src.endsWith(fallback)) {
-                  e.currentTarget.src = fallback;
-                }
+              const fallback = slide.fallbackImage || '/slider/Slider.jpg';
+              if (!e.currentTarget.src.endsWith(fallback)) {
+                e.currentTarget.src = fallback;
               }
             }}
           />
