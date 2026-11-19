@@ -32,6 +32,7 @@ import FormKeberatan from './pages/PPID/LayananPublik/FormKeberatan';
 import ProsedurPengaduan from './pages/PPID/LayananPublik/ProsedurPengaduan';
 import SurveyKepuasan from './pages/PPID/LayananPublik/SurveyKepuasan';
 import Regulasi from './pages/PPID/LayananPublik/Regulasi';
+import InformasiSecaraBerkala from './pages/PPID/InformasiSecaraBerkala';
 
 // Info Pariwisata
 import DayaTarikWisata from './pages/InfoPariwisata/Destinasi/DayaTarikWisata';
@@ -104,7 +105,10 @@ function App() {
         <Route path="/ppid/layanan-publik/form-keberatan" element={<FormKeberatan />} />
         <Route path="/ppid/layanan-publik/prosedur-pengaduan" element={<ProsedurPengaduan />} />
         <Route path="/ppid/layanan-publik/survey-kepuasan" element={<SurveyKepuasan />} />
+        <Route path="/ppid/informasi-secara-berkala" element={<InformasiSecaraBerkala />} />
+        <Route path="/ppid/informasi-berkala" element={<InformasiSecaraBerkala />} />
         <Route path="/ppid/layanan-publik/regulasi" element={<Regulasi />} />
+        <Route path="/ppid/regulasi" element={<Regulasi />} />
 
         {/* Info Pariwisata */}
         <Route path="/info-pariwisata/destinasi/daya-tarik-wisata" element={<DayaTarikWisata />} />

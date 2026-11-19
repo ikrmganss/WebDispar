@@ -114,3 +114,41 @@ exports.createSurvey = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+// Informasi Secara Berkala
+exports.getBerkala = async (req, res) => {
+  try {
+    const { kategori, subkategori, tahun, q } = req.query;
+    let query = `
+      SELECT i.*, k.nama as kategori_nama, k.slug as kategori_slug
+      FROM ppid_item i
+      JOIN ppid_kategori k ON i.kategori_id = k.id
+      WHERE k.slug IN ('data-kepegawaian', 'dokumen-sakip', 'laporan-keuangan-aset', 'laporan-kegiatan', 'informasi-berkala')
+    `;
+    const params = [];
+
+    if (kategori) {
+      query += ` AND k.slug = ?`;
+      params.push(kategori);
+    }
+    if (subkategori) {
+      query += ` AND (i.subkategori = ? OR LOWER(i.judul) LIKE ?)`;
+      params.push(subkategori, `%${subkategori.replace(/-/g, ' ')}%`);
+    }
+    if (tahun) {
+      query += ` AND i.tahun = ?`;
+      params.push(tahun);
+    }
+    if (q) {
+      query += ` AND (LOWER(i.judul) LIKE ? OR LOWER(k.nama) LIKE ?)`;
+      params.push(`%${q.toLowerCase()}%`, `%${q.toLowerCase()}%`);
+    }
+
+    query += ` ORDER BY i.tahun DESC, i.id DESC`;
+
+    const [rows] = await db.query(query, params);
+    res.json(rows);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};

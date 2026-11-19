@@ -5,12 +5,14 @@ const {
   getRegulasi, createRegulasi,
   getSK, createSK,
   getLaporanTahunan,
-  createPermohonan, createKeberatan, createSurvey
+  createPermohonan, createKeberatan, createSurvey,
+  getBerkala
 } = require('../controllers/ppidController');
 const { verifyToken, isAdmin } = require('../middlewares/authMiddleware');
 const upload = require('../middlewares/uploadMiddleware');
 
 router.get('/kategori', getKategori);
+router.get('/berkala', getBerkala);
 router.get('/items/:kategoriId', getItemsByKategori);
 router.post('/items', verifyToken, isAdmin, upload.single('file'), createItem);
 router.get('/regulasi', getRegulasi);
