@@ -1,9 +1,9 @@
 const path = require('path');
-require(path.resolve(__dirname, '../node_modules/dotenv')).config({ path: path.resolve(__dirname, '../.env') });
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 const db = require('../config/db');
 
 const regulasiData = [
-  // ================= KATEGORI: UMUM / KEPARIWISATAAN =================
+  // ================= KATEGORI: UMUM / KEPARIWISATAAN (11 DOKUMEN RESMI) =================
   {
     judul: 'PERATURAN MENTERI PARIWISATA DAN EKONOMI KREATIF/ KEPALA BADAN PARIWISATA DAN EKONOMI KREATIF REPUBLIK INDONESIA NOMOR 14 TAHUN 2021',
     file: '/images/Regulasi/PERMENPAR_NO_14_2021.pdf',
@@ -25,7 +25,7 @@ const regulasiData = [
     kategori: 'umum',
   },
   {
-    judul: 'PERMENDAGRI NOMOR 90 TAHUN 2019',
+    judul: 'PERMENDAGRI NOMOR 90 TAHUN 2019 TENTANG KLASIFIKASI, KODEFIKASI DAN NOMENKLATUR PERENCANAAN PEMBANGUNAN DAERAH',
     file: '/images/Regulasi/PERMENDAGRI_NO_90_2019.pdf',
     kategori: 'umum',
   },
@@ -60,7 +60,7 @@ const regulasiData = [
     kategori: 'umum',
   },
 
-  // ================= KATEGORI: PEDOMAN PENGELOLAAN =================
+  // ================= KATEGORI: PEDOMAN PENGELOLAAN (4 DOKUMEN) =================
   {
     judul: 'PENGELOLAAN ORGANISASI (PERGUB 36/2020)',
     file: '/images/Regulasi/PERGUB_36_2020.pdf',
@@ -82,14 +82,14 @@ const regulasiData = [
     kategori: 'pedoman',
   },
 
-  // ================= KATEGORI: REGULASI LAYANAN PUBLIK (PPID) =================
+  // ================= KATEGORI: REGULASI LAYANAN PUBLIK PPID (9 DOKUMEN) =================
   {
     judul: 'PERATURAN GUBERNUR TENTANG SISTEM INFORMASI DAN DOKUMENTASI PEMDA (PERGUB 12/2021)',
     file: '/images/Regulasi/PERGUB_12_2021-tentang-Sistem-Informasi-dan-Dokumentasi-1.pdf',
     kategori: 'layanan',
   },
   {
-    judul: 'KEPUTUSAN GUBERNUR TENTANG PPID',
+    judul: 'KEPUTUSAN GUBERNUR TENTANG PPID PROVINSI SULAWESI TENGAH',
     file: '/images/Regulasi/SK-PPID-PROV.pdf',
     kategori: 'layanan',
   },
@@ -99,7 +99,7 @@ const regulasiData = [
     kategori: 'layanan',
   },
   {
-    judul: 'KEPUTUSAN PPID TENTANG DAFTAR INFORMASI PUBLIK',
+    judul: 'KEPUTUSAN PPID TENTANG DAFTAR INFORMASI PUBLIK UTAMA SULTENG',
     file: '/images/Regulasi/SK-DIP-UTAMA-SULTENG.pdf',
     kategori: 'layanan',
   },
@@ -124,61 +124,9 @@ const regulasiData = [
     kategori: 'layanan',
   },
   {
-    judul: 'PERKI 1 TAHUN 2018 TENTANG SLIP DESA',
+    judul: 'PERKI 1 TAHUN 2018 TENTANG STANDAR LAYANAN INFORMASI PUBLIK DESA',
     file: '/images/Regulasi/PERKI_SLIP_DESA_FINAL.pdf',
     kategori: 'layanan',
-  },
-
-  // ================= KATEGORI: KEGIATAN & DOKUMENTASI TERKAIT =================
-  {
-    judul: 'Kepala Dinas Pariwisata Prov. Sulteng mengikuti Rapat Pimpinan Perdana Tahun 2026 yang Dipimpin langsung oleh Gubernur Sulawesi Tengah',
-    file: '/images/2026/WhatsApp_Image_2026-01-05_at_114617.jpeg',
-    kategori: 'kegiatan',
-  },
-  {
-    judul: 'Apel Gabungan Perdana Bersama Gubernur Sulawesi Tengah',
-    file: '/images/2026/WhatsApp_Image_2026-01-05_at_113326.jpeg',
-    kategori: 'kegiatan',
-  },
-  {
-    judul: 'Tingkatkan Nilai Reformasi Birokrasi, Biro Organisasi Implementasikan PermenPANRB No 3 Tahun 2023.',
-    file: '/images/pressrelease/Diskominfo/IMG_20230707_165242.jpg',
-    kategori: 'kegiatan',
-  },
-  {
-    judul: 'Dinas Pariwisata Provinsi Sulawesi Gelar Sosialiasi PERMENPAN RB No. 7 Tahun 2022 Dan Tata Cara Pelaporan Angka Kredit Pejabat Fungsional',
-    file: '/images/pressrelease/WhatsApp_Image_2023-01-30_at_134255.jpeg',
-    kategori: 'kegiatan',
-  },
-  {
-    judul: 'Upacara Bendera Perdana Dinas Pariwisata Provinsi Sulawesi Tengah di Tahun 2023',
-    file: '/images/pressrelease/WhatsApp_Image_2023-01-13_at_090326.jpeg',
-    kategori: 'kegiatan',
-  },
-  {
-    judul: 'Upacara Bendera Perdana Dinas Pariwisata Provinsi Sulawesi Tengah Tahun 2022',
-    file: '/images/pressrelease/WhatsApp_Image_2022-08-29_at_103241.jpeg',
-    kategori: 'kegiatan',
-  },
-  {
-    judul: 'Sosialisasi Permenpan RB No. 6 Tahun 2022 : Gubernur Sulteng Tekankan Kinerja ASN',
-    file: '/images/pressrelease/WhatsApp_Image_2022-08-29_at_103241.jpeg',
-    kategori: 'kegiatan',
-  },
-  {
-    judul: 'Rapat Perdana Tim PPID Dinas Pariwisata Provinsi Sulawesi Tengah Tahun 2022',
-    file: '/images/pressrelease/RAPAT_PERDANA.jpeg',
-    kategori: 'kegiatan',
-  },
-  {
-    judul: 'Hari Perdana Masuk Kerja Pasca Cuti Bersama: Dispar Sulteng Gelar Apel Pagi',
-    file: '/images/pressrelease/sekretariat/WhatsApp_Image_2022-05-09_at_12500_PM.jpeg',
-    kategori: 'kegiatan',
-  },
-  {
-    judul: 'Apel Pagi Perdana Setiap Hari Senin Dinas Pariwisata Provinsi Sulawesi Tengah Di Tahun 2022',
-    file: '/images/pressrelease/sekretariat/WhatsApp_Image_2022-01-10_at_81456_AM.jpeg',
-    kategori: 'kegiatan',
   },
 ];
 

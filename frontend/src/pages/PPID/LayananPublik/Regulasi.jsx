@@ -1,5 +1,6 @@
 import { useEffect, useState, useMemo } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useLocation } from 'react-router-dom';
 import {
   FileText,
   Download,
@@ -220,100 +221,19 @@ const DEFAULT_LAYANAN = [
   },
 ];
 
-const DEFAULT_KEGIATAN = [
-  {
-    id: 25,
-    judul: 'Kepala Dinas Pariwisata Prov. Sulteng mengikuti Rapat Pimpinan Perdana Tahun 2026 yang Dipimpin langsung oleh Gubernur Sulawesi Tengah',
-    file: '/images/2026/WhatsApp_Image_2026-01-05_at_114617.jpeg',
-    kategori: 'kegiatan',
-    tipe: 'Dokumentasi Rapim',
-    tahun: '2026',
-  },
-  {
-    id: 26,
-    judul: 'Apel Gabungan Perdana Bersama Gubernur Sulawesi Tengah',
-    file: '/images/2026/WhatsApp_Image_2026-01-05_at_113326.jpeg',
-    kategori: 'kegiatan',
-    tipe: 'Dokumentasi Apel',
-    tahun: '2026',
-  },
-  {
-    id: 27,
-    judul: 'Tingkatkan Nilai Reformasi Birokrasi, Biro Organisasi Implementasikan PermenPANRB No 3 Tahun 2023',
-    file: '/images/pressrelease/Diskominfo/IMG_20230707_165242.jpg',
-    kategori: 'kegiatan',
-    tipe: 'Sosialisasi Reformasi',
-    tahun: '2023',
-  },
-  {
-    id: 28,
-    judul: 'Dinas Pariwisata Provinsi Sulawesi Gelar Sosialiasi PERMENPAN RB No. 7 Tahun 2022 Dan Tata Cara Pelaporan Angka Kredit Pejabat Fungsional',
-    file: '/images/pressrelease/WhatsApp_Image_2023-01-30_at_134255.jpeg',
-    kategori: 'kegiatan',
-    tipe: 'Sosialisasi Permenpan',
-    tahun: '2023',
-  },
-  {
-    id: 29,
-    judul: 'Upacara Bendera Perdana Dinas Pariwisata Provinsi Sulawesi Tengah di Tahun 2023',
-    file: '/images/pressrelease/WhatsApp_Image_2023-01-13_at_090326.jpeg',
-    kategori: 'kegiatan',
-    tipe: 'Dokumentasi Upacara',
-    tahun: '2023',
-  },
-  {
-    id: 30,
-    judul: 'Upacara Bendera Perdana Dinas Pariwisata Provinsi Sulawesi Tengah Tahun 2022',
-    file: '/images/pressrelease/WhatsApp_Image_2022-08-29_at_103241.jpeg',
-    kategori: 'kegiatan',
-    tipe: 'Dokumentasi Upacara',
-    tahun: '2022',
-  },
-  {
-    id: 31,
-    judul: 'Sosialisasi Permenpan RB No. 6 Tahun 2022 : Gubernur Sulteng Tekankan Kinerja ASN',
-    file: '/images/pressrelease/WhatsApp_Image_2022-08-29_at_103241.jpeg',
-    kategori: 'kegiatan',
-    tipe: 'Sosialisasi Kinerja',
-    tahun: '2022',
-  },
-  {
-    id: 32,
-    judul: 'Rapat Perdana Tim PPID Dinas Pariwisata Provinsi Sulawesi Tengah Tahun 2022',
-    file: '/images/pressrelease/RAPAT_PERDANA.jpeg',
-    kategori: 'kegiatan',
-    tipe: 'Rapat PPID',
-    tahun: '2022',
-  },
-  {
-    id: 33,
-    judul: 'Hari Perdana Masuk Kerja Pasca Cuti Bersama: Dispar Sulteng Gelar Apel Pagi',
-    file: '/images/pressrelease/sekretariat/WhatsApp_Image_2022-05-09_at_12500_PM.jpeg',
-    kategori: 'kegiatan',
-    tipe: 'Dokumentasi Apel',
-    tahun: '2022',
-  },
-  {
-    id: 34,
-    judul: 'Apel Pagi Perdana Setiap Hari Senin Dinas Pariwisata Provinsi Sulawesi Tengah Di Tahun 2022',
-    file: '/images/pressrelease/sekretariat/WhatsApp_Image_2022-01-10_at_81456_AM.jpeg',
-    kategori: 'kegiatan',
-    tipe: 'Dokumentasi Apel',
-    tahun: '2022',
-  },
-];
-
 const ALL_DEFAULTS = [
   ...DEFAULT_REGULASI_UMUM,
   ...DEFAULT_PEDOMAN,
   ...DEFAULT_LAYANAN,
-  ...DEFAULT_KEGIATAN,
 ];
 
 const Regulasi = () => {
+  const location = useLocation();
+  const isDirectRegulasiRoute = location.pathname === '/ppid/regulasi';
+
   const [data, setData] = useState(ALL_DEFAULTS);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState('all'); // 'all' | 'umum' | 'pedoman' | 'layanan' | 'kegiatan'
+  const [activeTab, setActiveTab] = useState(isDirectRegulasiRoute ? 'umum' : 'all');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
 
@@ -344,8 +264,6 @@ const Regulasi = () => {
         return { text: 'Pedoman Pengelolaan', bg: 'bg-amber-50 text-amber-700 border-amber-200' };
       case 'layanan':
         return { text: 'Regulasi PPID', bg: 'bg-purple-50 text-purple-700 border-purple-200' };
-      case 'kegiatan':
-        return { text: 'Dokumentasi Kegiatan', bg: 'bg-emerald-50 text-emerald-700 border-emerald-200' };
       default:
         return { text: 'Dokumen Resmi', bg: 'bg-gray-50 text-gray-700 border-gray-200' };
     }
@@ -368,7 +286,6 @@ const Regulasi = () => {
       umum: data.filter((d) => d.kategori === 'umum').length,
       pedoman: data.filter((d) => d.kategori === 'pedoman').length,
       layanan: data.filter((d) => d.kategori === 'layanan').length,
-      kegiatan: data.filter((d) => d.kategori === 'kegiatan').length,
     };
   }, [data]);
 
@@ -379,23 +296,30 @@ const Regulasi = () => {
   return (
     <>
       <Helmet>
-        <title>Regulasi & Dasar Hukum - PPID Dinas Pariwisata Sulteng</title>
+        <title>Regulasi & Dasar Hukum - Dinas Pariwisata Provinsi Sulawesi Tengah</title>
         <meta
           name="description"
-          content="Kumpulan regulasi, peraturan daerah, keputusan menteri, pedoman pengelolaan, dan dasar hukum pelayanan informasi publik Dinas Pariwisata Sulawesi Tengah."
+          content="Kumpulan regulasi kepariwisataan, RIPPARDA, peraturan daerah, peraturan gubernur, dan dasar hukum keterbukaan informasi publik Dinas Pariwisata Sulawesi Tengah."
         />
       </Helmet>
 
       <PageHeader
-        badge="Dasar Hukum & Tata Kelola Regulasi"
+        badge="Dasar Hukum & Regulasi Resmi"
         badgeIcon={Scale}
-        title="Regulasi & Dasar Hukum"
-        subtitle="Kumpulan peraturan perundang-undangan, keputusan, pedoman pengelolaan tata kerja, dan regulasi layanan keterbukaan informasi publik"
-        breadcrumbs={[
-          { label: 'PPID', path: '/ppid/profil' },
-          { label: 'Layanan Publik' },
-          { label: 'Regulasi' },
-        ]}
+        title={isDirectRegulasiRoute ? 'Regulasi Kepariwisataan & Daerah' : 'Regulasi & Dasar Hukum'}
+        subtitle="Kumpulan peraturan perundang-undangan kepariwisataan, RIPPARDA, pedoman tata kelola, dan regulasi layanan keterbukaan informasi publik"
+        breadcrumbs={
+          isDirectRegulasiRoute
+            ? [
+                { label: 'Informasi Publik' },
+                { label: 'Regulasi' },
+              ]
+            : [
+                { label: 'PPID', path: '/ppid/profil' },
+                { label: 'Layanan Publik' },
+                { label: 'Regulasi' },
+              ]
+        }
       />
 
       <section className="py-10 lg:py-14 bg-slate-50 min-h-screen">
@@ -426,7 +350,7 @@ const Regulasi = () => {
               {/* Status Indicator */}
               <div className="flex items-center gap-2 text-xs text-slate-500 font-medium">
                 <CheckCircle2 size={16} className="text-emerald-500" />
-                <span>Seluruh Dokumen Tersedia Lokal (100% Valid)</span>
+                <span>Seluruh Dokumen Tersedia Lokal (100% PDF Valid)</span>
               </div>
             </div>
 
@@ -440,7 +364,6 @@ const Regulasi = () => {
                 { id: 'umum', label: 'Regulasi Kepariwisataan', count: counts.umum },
                 { id: 'pedoman', label: 'Pedoman Pengelolaan', count: counts.pedoman },
                 { id: 'layanan', label: 'Layanan Publik (PPID)', count: counts.layanan },
-                { id: 'kegiatan', label: 'Dokumentasi Terkait', count: counts.kegiatan },
               ].map((tab) => (
                 <button
                   key={tab.id}
@@ -597,21 +520,11 @@ const Regulasi = () => {
 
               {/* Modal Viewer Body */}
               <div className="flex-1 min-h-[550px] p-2 bg-slate-100 relative">
-                {isPdf(selectedFile.file) ? (
-                  <iframe
-                    src={`${getDocHref(selectedFile.file)}#toolbar=1`}
-                    title={selectedFile.judul}
-                    className="w-full h-full rounded-lg border border-slate-200"
-                  />
-                ) : (
-                  <div className="w-full h-full flex items-center justify-center p-4">
-                    <img
-                      src={getDocHref(selectedFile.file)}
-                      alt={selectedFile.judul}
-                      className="max-h-[500px] max-w-full object-contain rounded-lg shadow-md"
-                    />
-                  </div>
-                )}
+                <iframe
+                  src={`${getDocHref(selectedFile.file)}#toolbar=1`}
+                  title={selectedFile.judul}
+                  className="w-full h-full rounded-lg border border-slate-200"
+                />
               </div>
             </motion.div>
           </div>
