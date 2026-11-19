@@ -195,6 +195,8 @@ const panelStyle = (extra = {}, small = false) => ({
   boxShadow: '0 10px 40px rgba(0,0,0,0.12)',
   zIndex: 9999,
   minWidth: small ? 180 : 220,
+  maxHeight: 'calc(100vh - 120px)',
+  overflowY: 'auto',
   padding: '6px',
   ...extra,
 });

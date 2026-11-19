@@ -33,7 +33,7 @@ exports.createItem = async (req, res) => {
 // Regulasi
 exports.getRegulasi = async (req, res) => {
   try {
-    const [rows] = await db.query('SELECT * FROM ppid_regulasi ORDER BY created_at DESC');
+    const [rows] = await db.query('SELECT * FROM ppid_regulasi ORDER BY id ASC');
     res.json(rows);
   } catch (err) {
     res.status(500).json({ message: err.message });
