@@ -1,17 +1,24 @@
 import { Helmet } from 'react-helmet-async';
+import { Calendar } from 'lucide-react';
 import KalenderEventComponent from '../../../components/KalenderEvent';
+import PageHeader from '../../../components/PageHeader';
 
 const KalenderEvent = () => {
   return (
     <>
       <Helmet><title>Kalender Event Pariwisata - Info Pariwisata Sulawesi Tengah</title></Helmet>
 
-      <div className="bg-gradient-to-r from-navy-900 to-primary-800 py-16 lg:py-20">
-        <div className="container-custom">
-          <h1 className="text-3xl lg:text-5xl font-extrabold text-white">Kalender Event Pariwisata</h1>
-          <p className="text-white/70 mt-2">Jadwal event dan festival pariwisata sepanjang tahun</p>
-        </div>
-      </div>
+      <PageHeader
+        badge="Karisma Event Sulawesi Tengah"
+        badgeIcon={Calendar}
+        title="Kalender Event Pariwisata"
+        subtitle="Jadwal event, festival seni budaya, dan atraksi pariwisata sepanjang tahun di Sulawesi Tengah"
+        breadcrumbs={[
+          { label: 'Info Pariwisata', path: '/info-pariwisata/destinasi/daya-tarik-wisata' },
+          { label: 'Pemasaran' },
+          { label: 'Kalender Event' }
+        ]}
+      />
 
       <section className="py-12 lg:py-16">
         <div className="container-custom">

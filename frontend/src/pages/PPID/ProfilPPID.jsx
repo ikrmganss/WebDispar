@@ -2,6 +2,7 @@ import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { FileText, Users, Target, Shield, ArrowRight, Info } from 'lucide-react';
 import { motion } from 'framer-motion';
+import PageHeader from '../../components/PageHeader';
 
 const ProfilPPID = () => {
   const subMenu = [
@@ -19,14 +20,15 @@ const ProfilPPID = () => {
     <>
       <Helmet><title>Profil PPID - Dinas Pariwisata Sulteng</title></Helmet>
 
-      <div className="bg-gradient-to-r from-navy-900 to-primary-800 py-16 lg:py-20">
-        <div className="container-custom">
-          <h1 className="text-3xl lg:text-5xl font-extrabold text-white">Profil PPID</h1>
-          <p className="text-white/70 mt-2">
-            Pejabat Pengelola Informasi dan Dokumentasi Dinas Pariwisata Provinsi Sulawesi Tengah
-          </p>
-        </div>
-      </div>
+      <PageHeader
+        badge="PPID Pelaksana Dinas Pariwisata Sulteng"
+        title="Profil PPID"
+        subtitle="Pejabat Pengelola Informasi dan Dokumentasi Dinas Pariwisata Provinsi Sulawesi Tengah"
+        breadcrumbs={[
+          { label: 'PPID', path: '/ppid/profil' },
+          { label: 'Profil PPID' }
+        ]}
+      />
 
       <section className="py-12 lg:py-16">
         <div className="container-custom">

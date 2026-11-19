@@ -1,6 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import { Target, Flag } from 'lucide-react';
 import { motion } from 'framer-motion';
+import PageHeader from '../../components/PageHeader';
 
 const VisiMisiPPID = () => {
   const visi = 'Terwujudnya Pelayanan Informasi Publik Yang Transparan dan Akuntabel Untuk Memenuhi Hak Pemohon Informasi Sesuai Dengan Ketentuan Peraturan Perundang-Undangan.';
@@ -15,12 +16,16 @@ const VisiMisiPPID = () => {
     <>
       <Helmet><title>Visi dan Misi PPID - Dinas Pariwisata Sulteng</title></Helmet>
 
-      <div className="bg-gradient-to-r from-navy-900 to-primary-800 py-16 lg:py-20">
-        <div className="container-custom">
-          <h1 className="text-3xl lg:text-5xl font-extrabold text-white">Visi dan Misi PPID</h1>
-          <p className="text-white/70 mt-2">Pejabat Pengelola Informasi dan Dokumentasi</p>
-        </div>
-      </div>
+      <PageHeader
+        badge="PPID Pelaksana Dinas Pariwisata Sulteng"
+        badgeIcon={Target}
+        title="Visi dan Misi PPID"
+        subtitle="Komitmen Transparansi, Akuntabilitas, dan Pelayanan Informasi Publik Berkualitas"
+        breadcrumbs={[
+          { label: 'PPID', path: '/ppid/profil' },
+          { label: 'Visi & Misi PPID' }
+        ]}
+      />
 
       <section className="py-12 lg:py-16">
         <div className="container-custom max-w-4xl">

@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { ChevronDown, ChevronRight, FileText, Download } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import api from '../../services/api';
+import PageHeader from '../../components/PageHeader';
 
 const DaftarInformasiPublik = () => {
   const [kategori, setKategori] = useState([]);
@@ -36,12 +37,15 @@ const DaftarInformasiPublik = () => {
   return (
     <>
       <Helmet><title>Daftar Informasi Publik - PPID</title></Helmet>
-      <div className="bg-gradient-to-r from-navy-900 to-primary-800 py-16 lg:py-20">
-        <div className="container-custom">
-          <h1 className="text-3xl lg:text-5xl font-extrabold text-white">Daftar Informasi Publik</h1>
-          <p className="text-white/70 mt-2">PPID Dinas Pariwisata Provinsi Sulawesi Tengah</p>
-        </div>
-      </div>
+      <PageHeader
+        badge="PPID Pelaksana Dinas Pariwisata Sulteng"
+        title="Daftar Informasi Publik"
+        subtitle="Daftar rincian kategori dan dokumen keterbukaan informasi publik Dinas Pariwisata Provinsi Sulawesi Tengah"
+        breadcrumbs={[
+          { label: 'PPID', path: '/ppid/profil' },
+          { label: 'Daftar Informasi Publik' }
+        ]}
+      />
       <section className="py-12 lg:py-16">
         <div className="container-custom max-w-4xl">
           <div className="space-y-3">

@@ -7,8 +7,9 @@ import {
   FaSquareTwitter,
   FaWhatsapp,
 } from 'react-icons/fa6';
-import { CheckCircle } from 'lucide-react';
+import { CheckCircle, ShieldAlert } from 'lucide-react';
 import { motion } from 'framer-motion';
+import PageHeader from '../../../components/PageHeader';
 
 const ProsedurPengaduan = () => {
   const steps = [
@@ -85,15 +86,17 @@ const ProsedurPengaduan = () => {
         <title>Prosedur Pengaduan - PPID Dinas Pariwisata Sulteng</title>
       </Helmet>
 
-      <div className="bg-gradient-to-r from-navy-900 to-primary-800 py-16 lg:py-20">
-        <div className="container-custom">
-          <h1 className="text-3xl lg:text-5xl font-extrabold text-white">Prosedur Pengaduan</h1>
-          <p className="text-white/70 mt-2">
-            Tata Cara Pengaduan Penyelenggaraan Wewenang atau Pelanggaran yang Dilakukan oleh Pejabat
-            Badan Publik
-          </p>
-        </div>
-      </div>
+      <PageHeader
+        badge="Layanan Aspirasi & Pengaduan"
+        badgeIcon={ShieldAlert}
+        title="Prosedur Pengaduan"
+        subtitle="Tata Cara Pengaduan Penyelenggaraan Wewenang atau Pelanggaran yang Dilakukan oleh Pejabat Badan Publik"
+        breadcrumbs={[
+          { label: 'PPID', path: '/ppid/profil' },
+          { label: 'Layanan Publik' },
+          { label: 'Prosedur Pengaduan' }
+        ]}
+      />
 
       <section className="py-12 lg:py-16">
         <div className="container-custom">

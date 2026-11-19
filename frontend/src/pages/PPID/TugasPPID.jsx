@@ -1,6 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import { FileText, Shield, CheckCircle2 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import PageHeader from '../../components/PageHeader';
 
 const TugasPPID = () => {
   const tugasPPIDProvinsi = [
@@ -43,12 +44,16 @@ const TugasPPID = () => {
     <>
       <Helmet><title>Tugas PPID - Dinas Pariwisata Sulteng</title></Helmet>
 
-      <div className="bg-gradient-to-r from-navy-900 to-primary-800 py-16 lg:py-20">
-        <div className="container-custom">
-          <h1 className="text-3xl lg:text-5xl font-extrabold text-white">Tugas PPID dan PPID Pelaksana</h1>
-          <p className="text-white/70 mt-2">Sesuai dengan ketentuan peraturan perundang-undangan</p>
-        </div>
-      </div>
+      <PageHeader
+        badge="PPID Pelaksana Dinas Pariwisata Sulteng"
+        badgeIcon={FileText}
+        title="Tugas PPID dan PPID Pelaksana"
+        subtitle="Rincian Tugas Pokok, Fungsi, dan Tanggung Jawab Pengelola Informasi dan Dokumentasi sesuai Regulasi KIP"
+        breadcrumbs={[
+          { label: 'PPID', path: '/ppid/profil' },
+          { label: 'Tugas PPID' }
+        ]}
+      />
 
       <section className="py-12 lg:py-16">
         <div className="container-custom max-w-5xl space-y-8">

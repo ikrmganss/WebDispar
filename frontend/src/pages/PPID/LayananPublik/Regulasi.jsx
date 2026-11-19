@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { FileText, Download, Shield } from 'lucide-react';
 import { motion } from 'framer-motion';
 import api from '../../../services/api';
+import PageHeader from '../../../components/PageHeader';
 
 const DEFAULT_REGULASI = [
   { judul: 'PERATURAN MENTERI PARIWISATA DAN EKONOMI KREATIF/ KEPALA BADAN PARIWISATA DAN EKONOMI KREATIF REPUBLIK INDONESIA NOMOR 14 TAHUN 2021', kategori: 'umum' },
@@ -93,12 +94,17 @@ const Regulasi = () => {
     <>
       <Helmet><title>Regulasi - PPID Dinas Pariwisata Sulteng</title></Helmet>
 
-      <div className="bg-gradient-to-r from-navy-900 to-primary-800 py-16 lg:py-20">
-        <div className="container-custom">
-          <h1 className="text-3xl lg:text-5xl font-extrabold text-white">Regulasi Layanan Publik</h1>
-          <p className="text-white/70 mt-2">Kumpulan peraturan dan dokumen terkait pelayanan informasi publik</p>
-        </div>
-      </div>
+      <PageHeader
+        badge="Dasar Hukum & Peraturan"
+        badgeIcon={Shield}
+        title="Regulasi Layanan Publik"
+        subtitle="Kumpulan peraturan perundang-undangan, keputusan, dan pedoman terkait keterbukaan informasi publik"
+        breadcrumbs={[
+          { label: 'PPID', path: '/ppid/profil' },
+          { label: 'Layanan Publik' },
+          { label: 'Regulasi' }
+        ]}
+      />
 
       <section className="py-12 lg:py-16">
         <div className="container-custom max-w-4xl space-y-8">

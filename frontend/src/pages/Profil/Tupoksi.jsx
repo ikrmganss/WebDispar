@@ -1,6 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import { CheckCircle2, Briefcase, Target, Shield } from 'lucide-react';
 import { motion } from 'framer-motion';
+import PageHeader from '../../components/PageHeader';
 
 const Tupoksi = () => {
   const tugasPokok =
@@ -45,14 +46,15 @@ const Tupoksi = () => {
     <>
       <Helmet><title>Tugas Pokok dan Fungsi - Dinas Pariwisata Sulteng</title></Helmet>
 
-      <div className="bg-gradient-to-r from-navy-900 to-primary-800 py-16 lg:py-20">
-        <div className="container-custom">
-          <h1 className="text-3xl lg:text-5xl font-extrabold text-white">Tugas Pokok dan Fungsi</h1>
-          <p className="text-white/70 mt-2">
-            Berdasarkan Peraturan Gubernur Sulawesi Tengah Nomor 57 Tahun 2022 yang dimutakhirkan dengan Peraturan Gubernur Nomor 6 Tahun 2024
-          </p>
-        </div>
-      </div>
+      <PageHeader
+        badge="Kedudukan & Kewenangan"
+        title="Tugas Pokok dan Fungsi"
+        subtitle="Berdasarkan Peraturan Gubernur Sulawesi Tengah Nomor 57 Tahun 2022 yang dimutakhirkan dengan Peraturan Gubernur Nomor 6 Tahun 2024"
+        breadcrumbs={[
+          { label: 'Profil', path: '/profil' },
+          { label: 'Tugas Pokok & Fungsi' }
+        ]}
+      />
 
       <section className="py-12 lg:py-16">
         <div className="container-custom max-w-5xl">

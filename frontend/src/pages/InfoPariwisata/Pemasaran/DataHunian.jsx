@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { Hotel, Download, FileText, BedDouble, Building2, TrendingUp } from 'lucide-react';
 import { motion } from 'framer-motion';
 import api from '../../../services/api';
+import PageHeader from '../../../components/PageHeader';
 
 const HUNIAN_KABUPATEN = [
   { no: 1, kabupaten: 'Kota Palu', bintang: 18, nonBintang: 112, kamar: 3420, restoran: 276, tpk: '54,82%' },
@@ -35,12 +36,17 @@ const DataHunian = () => {
     <>
       <Helmet><title>Data Hunian Hotel - Info Pariwisata Sulawesi Tengah</title></Helmet>
 
-      <div className="bg-gradient-to-r from-navy-900 to-primary-800 py-16 lg:py-20">
-        <div className="container-custom">
-          <h1 className="text-3xl lg:text-5xl font-extrabold text-white">Data Hunian Hotel</h1>
-          <p className="text-white/70 mt-2">Informasi tingkat penghunian kamar (TPK) dan direktori akomodasi wisata di Sulawesi Tengah</p>
-        </div>
-      </div>
+      <PageHeader
+        badge="Statistik Akomodasi & Perhotelan"
+        badgeIcon={Hotel}
+        title="Data Hunian Hotel"
+        subtitle="Informasi tingkat penghunian kamar (TPK) dan direktori fasilitas akomodasi wisata di Sulawesi Tengah"
+        breadcrumbs={[
+          { label: 'Info Pariwisata', path: '/info-pariwisata/destinasi/daya-tarik-wisata' },
+          { label: 'Pemasaran' },
+          { label: 'Data Hunian Hotel' }
+        ]}
+      />
 
       <section className="py-12 lg:py-16">
         <div className="container-custom">

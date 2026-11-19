@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
+import PageHeader from '../../components/PageHeader';
+import { Landmark } from 'lucide-react';
 import api from '../../services/api';
 
 const Sejarah = () => {
@@ -12,12 +14,16 @@ const Sejarah = () => {
   return (
     <>
       <Helmet><title>Sejarah - Dinas Pariwisata Sulteng</title></Helmet>
-      <div className="bg-gradient-to-r from-navy-900 to-primary-800 py-16 lg:py-20">
-        <div className="container-custom">
-          <h1 className="text-3xl lg:text-5xl font-extrabold text-white">Sejarah</h1>
-          <p className="text-white/70 mt-2">Sejarah Singkat Dinas Pariwisata Provinsi Sulawesi Tengah</p>
-        </div>
-      </div>
+      <PageHeader
+        badge="Profil Kelembagaan"
+        badgeIcon={Landmark}
+        title="Sejarah Singkat"
+        subtitle="Lintas sejarah pembentukan dan perjalanan Dinas Pariwisata Provinsi Sulawesi Tengah dalam memajukan kepariwisataan daerah."
+        breadcrumbs={[
+          { label: 'Profil' },
+          { label: 'Sejarah' }
+        ]}
+      />
       <section className="py-12 lg:py-16">
         <div className="container-custom max-w-4xl">
           {data ? (

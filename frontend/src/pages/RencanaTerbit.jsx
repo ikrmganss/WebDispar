@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Calendar, CheckCircle, Clock } from 'lucide-react';
+import PageHeader from '../components/PageHeader';
 import api from '../services/api';
 
 const RencanaTerbit = () => {
@@ -17,12 +18,13 @@ const RencanaTerbit = () => {
   return (
     <>
       <Helmet><title>Rencana Terbit - Dinas Pariwisata Sulteng</title></Helmet>
-      <div className="bg-gradient-to-r from-navy-900 to-primary-800 py-16 lg:py-20">
-        <div className="container-custom">
-          <h1 className="text-3xl lg:text-5xl font-extrabold text-white">Rencana Terbit</h1>
-          <p className="text-white/70 mt-2">Jadwal rilis data dan informasi publik</p>
-        </div>
-      </div>
+      <PageHeader
+        badge="Keterbukaan Informasi Publik"
+        badgeIcon={Clock}
+        title="Rencana Terbit"
+        subtitle="Jadwal rilis resmi data statistik, publikasi berkala, dan informasi publik Dinas Pariwisata Sulawesi Tengah."
+        breadcrumbs={[{ label: 'Rencana Terbit' }]}
+      />
       <section className="py-12 lg:py-16">
         <div className="container-custom max-w-4xl">
           {loading ? (

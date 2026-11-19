@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { ShieldAlert, FileText, Download, ExternalLink, Lock, CheckCircle2, ChevronDown, ChevronRight, Eye } from 'lucide-react';
+import PageHeader from '../../components/PageHeader';
 
 const InformasiDikecualikan = () => {
   const [activeTab, setActiveTab] = useState('ringkasan');
@@ -59,21 +60,17 @@ const InformasiDikecualikan = () => {
         />
       </Helmet>
 
-      {/* Header Banner */}
-      <div className="bg-gradient-to-r from-navy-900 via-primary-900 to-navy-950 py-16 lg:py-20 text-white">
-        <div className="container-custom">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-sm text-xs font-medium text-amber-300 mb-4">
-            <Lock size={14} />
-            <span>PPID Pelaksana Dispar Sulteng</span>
-          </div>
-          <h1 className="text-3xl lg:text-5xl font-extrabold tracking-tight">
-            Informasi Yang Dikecualikan
-          </h1>
-          <p className="text-white/80 mt-3 max-w-2xl text-base lg:text-lg">
-            Informasi publik yang bersifat rahasia dan tidak dapat diakses publik berdasarkan hasil Uji Konsekuensi sebagaimana diatur dalam Pasal 17 UU No. 14 Tahun 2008 tentang Keterbukaan Informasi Publik.
-          </p>
-        </div>
-      </div>
+      <PageHeader
+        badge="PPID Pelaksana Dispar Sulteng"
+        badgeIcon={Lock}
+        title="Informasi Yang Dikecualikan"
+        subtitle="Informasi publik yang bersifat rahasia dan tidak dapat diakses publik berdasarkan hasil Uji Konsekuensi sebagaimana diatur dalam Pasal 17 UU No. 14 Tahun 2008 tentang Keterbukaan Informasi Publik."
+        breadcrumbs={[
+          { label: 'PPID', path: '/ppid/profil' },
+          { label: 'Informasi Publik', path: '/ppid/daftar-informasi-publik' },
+          { label: 'Informasi Yang Dikecualikan' }
+        ]}
+      />
 
       <div className="bg-gray-50/60 py-12 lg:py-16">
         <div className="container-custom max-w-5xl space-y-10">

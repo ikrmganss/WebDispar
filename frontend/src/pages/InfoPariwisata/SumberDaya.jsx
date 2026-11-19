@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { Users, Award, Download, FileText } from 'lucide-react';
 import { motion } from 'framer-motion';
 import api from '../../services/api';
+import PageHeader from '../../components/PageHeader';
 
 const DEFAULT_ITEMS = [
   {
@@ -48,12 +49,16 @@ const SumberDaya = () => {
     <>
       <Helmet><title>Sumber Daya Pariwisata & Ekonomi Kreatif - Dinas Pariwisata Sulteng</title></Helmet>
 
-      <div className="bg-gradient-to-r from-navy-900 to-primary-800 py-16 lg:py-20">
-        <div className="container-custom">
-          <h1 className="text-3xl lg:text-5xl font-extrabold text-white">Sumber Daya Pariwisata & Ekonomi Kreatif</h1>
-          <p className="text-white/70 mt-2">Data dan informasi SDM sektor pariwisata dan ekonomi kreatif</p>
-        </div>
-      </div>
+      <PageHeader
+        badge="Pengembangan Kapasitas & SDM"
+        badgeIcon={Users}
+        title="Sumber Daya Pariwisata & Ekonomi Kreatif"
+        subtitle="Data ketenagakerjaan, sertifikasi kompetensi, dan peningkatan kapasitas SDM pariwisata & ekonomi kreatif"
+        breadcrumbs={[
+          { label: 'Info Pariwisata', path: '/info-pariwisata/destinasi/daya-tarik-wisata' },
+          { label: 'Sumber Daya' }
+        ]}
+      />
 
       <section className="py-12 lg:py-16">
         <div className="container-custom max-w-4xl">

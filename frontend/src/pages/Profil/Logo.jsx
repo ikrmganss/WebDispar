@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Download, Image as ImageIcon, FileText, ExternalLink } from 'lucide-react';
 import { motion } from 'framer-motion';
+import PageHeader from '../../components/PageHeader';
 
 const OFFICIAL_LOGOS = [
   {
@@ -75,12 +76,16 @@ const Logo = () => {
     <>
       <Helmet><title>Logo & Identitas Visual - Dinas Pariwisata Sulteng</title></Helmet>
 
-      <div className="bg-gradient-to-r from-navy-900 to-primary-800 py-16 lg:py-20">
-        <div className="container-custom">
-          <h1 className="text-3xl lg:text-5xl font-extrabold text-white">Logo & Identitas Visual</h1>
-          <p className="text-white/70 mt-2">Unduh aset logo resmi dan pedoman identitas visual pariwisata Sulawesi Tengah</p>
-        </div>
-      </div>
+      <PageHeader
+        badge="Aset & Identitas Visual"
+        badgeIcon={ImageIcon}
+        title="Logo & Identitas Visual"
+        subtitle="Unduh aset logo resmi dan pedoman identitas visual pariwisata Sulawesi Tengah"
+        breadcrumbs={[
+          { label: 'Profil', path: '/profil' },
+          { label: 'Logo & Identitas Visual' }
+        ]}
+      />
 
       <section className="py-12 lg:py-16">
         <div className="container-custom">

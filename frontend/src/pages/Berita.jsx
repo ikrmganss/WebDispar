@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Search, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Search, ChevronLeft, ChevronRight, Newspaper } from 'lucide-react';
 import BeritaCard from '../components/BeritaCard';
+import PageHeader from '../components/PageHeader';
 import api from '../services/api';
 
 const Berita = () => {
@@ -28,12 +29,13 @@ const Berita = () => {
         <title>Berita - Dinas Pariwisata Sulteng</title>
       </Helmet>
 
-      <div className="bg-gradient-to-r from-[#0b192c] to-[#1e3a5f] py-16 lg:py-20">
-        <div className="container-custom">
-          <h1 className="text-3xl lg:text-5xl font-extrabold text-white mb-2">Berita</h1>
-          <p className="text-white/70">Informasi terkini seputar pariwisata Sulawesi Tengah</p>
-        </div>
-      </div>
+      <PageHeader
+        badge="Warta Pariwisata Sulawesi Tengah"
+        badgeIcon={Newspaper}
+        title="Berita Terkini"
+        subtitle="Informasi dan rilis resmi seputar pembangunan pariwisata, destinasi, dan ekonomi kreatif Sulawesi Tengah."
+        breadcrumbs={[{ label: 'Berita' }]}
+      />
 
       <section className="py-12 lg:py-16">
         <div className="container-custom">

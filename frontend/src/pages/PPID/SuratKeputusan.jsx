@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { FileText, Download } from 'lucide-react';
 import api from '../../services/api';
+import PageHeader from '../../components/PageHeader';
 
 const KATEGORI = [
   'SK Daftar Informasi Publik',
@@ -38,12 +39,16 @@ const SuratKeputusan = () => {
     <>
       <Helmet><title>Surat Keputusan - PPID Dinas Pariwisata Sulteng</title></Helmet>
 
-      <div className="bg-gradient-to-r from-navy-900 to-primary-800 py-16 lg:py-20">
-        <div className="container-custom">
-          <h1 className="text-3xl lg:text-5xl font-extrabold text-white">Surat Keputusan</h1>
-          <p className="text-white/70 mt-2">Informasi Publik Dinas Pariwisata Provinsi Sulawesi Tengah</p>
-        </div>
-      </div>
+      <PageHeader
+        badge="Regulasi & Ketetapan Hukum"
+        badgeIcon={FileText}
+        title="Surat Keputusan"
+        subtitle="Surat Keputusan Kepala Dinas dan Ketetapan Resmi Layanan Informasi Publik Dinas Pariwisata Provinsi Sulawesi Tengah"
+        breadcrumbs={[
+          { label: 'PPID', path: '/ppid/profil' },
+          { label: 'Surat Keputusan' }
+        ]}
+      />
 
       <section className="py-12 lg:py-16">
         <div className="container-custom">

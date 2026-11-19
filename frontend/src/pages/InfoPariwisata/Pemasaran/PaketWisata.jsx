@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { Download, Eye, Package } from 'lucide-react';
 import { motion } from 'framer-motion';
 import api from '../../../services/api';
+import PageHeader from '../../../components/PageHeader';
 
 const PaketWisata = () => {
   const [data, setData] = useState([]);
@@ -19,12 +20,17 @@ const PaketWisata = () => {
     <>
       <Helmet><title>Paket Wisata - Info Pariwisata Sulawesi Tengah</title></Helmet>
 
-      <div className="bg-gradient-to-r from-navy-900 to-primary-800 py-16 lg:py-20">
-        <div className="container-custom">
-          <h1 className="text-3xl lg:text-5xl font-extrabold text-white">Paket Wisata</h1>
-          <p className="text-white/70 mt-2">Paket perjalanan wisata menarik di Sulawesi Tengah</p>
-        </div>
-      </div>
+      <PageHeader
+        badge="Paket Wisata & Perjalanan"
+        badgeIcon={Package}
+        title="Paket Wisata"
+        subtitle="Rekomendasi paket tour dan perjalanan wisata menarik ke pelosok Sulawesi Tengah"
+        breadcrumbs={[
+          { label: 'Info Pariwisata', path: '/info-pariwisata/destinasi/daya-tarik-wisata' },
+          { label: 'Pemasaran' },
+          { label: 'Paket Wisata' }
+        ]}
+      />
 
       <section className="py-12 lg:py-16">
         <div className="container-custom">

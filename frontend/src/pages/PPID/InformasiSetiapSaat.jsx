@@ -1,6 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { FileText, Download, ExternalLink, ShieldCheck, Clock, CheckCircle } from 'lucide-react';
+import PageHeader from '../../components/PageHeader';
 
 const InformasiSetiapSaat = () => {
   const skDocument = {
@@ -47,21 +48,17 @@ const InformasiSetiapSaat = () => {
         />
       </Helmet>
 
-      {/* Header Banner */}
-      <div className="bg-gradient-to-r from-navy-900 via-primary-900 to-navy-950 py-16 lg:py-20 text-white">
-        <div className="container-custom">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-sm text-xs font-medium text-amber-300 mb-4">
-            <Clock size={14} />
-            <span>PPID Pelaksana Dispar Sulteng</span>
-          </div>
-          <h1 className="text-3xl lg:text-5xl font-extrabold tracking-tight">
-            Informasi Setiap Saat
-          </h1>
-          <p className="text-white/80 mt-3 max-w-2xl text-base lg:text-lg">
-            Informasi publik yang wajib disediakan oleh Badan Publik dan siap tersedia setiap saat ketika terdapat permohonan dari masyarakat sesuai amanat UU No. 14 Tahun 2008.
-          </p>
-        </div>
-      </div>
+      <PageHeader
+        badge="PPID Pelaksana Dispar Sulteng"
+        badgeIcon={Clock}
+        title="Informasi Setiap Saat"
+        subtitle="Informasi publik yang wajib disediakan oleh Badan Publik dan siap tersedia setiap saat ketika terdapat permohonan dari masyarakat sesuai amanat UU No. 14 Tahun 2008."
+        breadcrumbs={[
+          { label: 'PPID', path: '/ppid/profil' },
+          { label: 'Informasi Publik', path: '/ppid/daftar-informasi-publik' },
+          { label: 'Informasi Setiap Saat' }
+        ]}
+      />
 
       <div className="bg-gray-50/60 py-12 lg:py-16">
         <div className="container-custom max-w-5xl space-y-10">

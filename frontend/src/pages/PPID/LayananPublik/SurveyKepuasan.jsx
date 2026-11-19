@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { Send, CheckCircle2, Star } from 'lucide-react';
 import { motion } from 'framer-motion';
 import api from '../../../services/api';
+import PageHeader from '../../../components/PageHeader';
 
 const PERTANYAAN = [
   'SOP layanan informasi publik jelas dan mudah diperoleh',
@@ -54,9 +55,17 @@ const SurveyKepuasan = () => {
     return (
       <>
         <Helmet><title>Survey Kepuasan - PPID Dinas Pariwisata Sulteng</title></Helmet>
-        <div className="bg-gradient-to-r from-navy-900 to-primary-800 py-16 lg:py-20">
-          <div className="container-custom"><h1 className="text-3xl lg:text-5xl font-extrabold text-white">Survey Penilaian Layanan</h1></div>
-        </div>
+        <PageHeader
+          badge="Evaluasi & Mutu Layanan"
+          badgeIcon={Star}
+          title="Survey Penilaian Layanan"
+          subtitle="PPID Dinas Pariwisata Provinsi Sulawesi Tengah"
+          breadcrumbs={[
+            { label: 'PPID', path: '/ppid/profil' },
+            { label: 'Layanan Publik' },
+            { label: 'Survey Kepuasan' }
+          ]}
+        />
         <section className="py-12 lg:py-16">
           <div className="container-custom max-w-3xl">
             <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="card p-10 text-center">
@@ -76,12 +85,17 @@ const SurveyKepuasan = () => {
     <>
       <Helmet><title>Survey Kepuasan - PPID Dinas Pariwisata Sulteng</title></Helmet>
 
-      <div className="bg-gradient-to-r from-navy-900 to-primary-800 py-16 lg:py-20">
-        <div className="container-custom">
-          <h1 className="text-3xl lg:text-5xl font-extrabold text-white">Survey Penilaian Layanan Informasi Publik</h1>
-          <p className="text-white/70 mt-2">PPID Dinas Pariwisata Provinsi Sulawesi Tengah</p>
-        </div>
-      </div>
+      <PageHeader
+        badge="Evaluasi & Mutu Layanan"
+        badgeIcon={Star}
+        title="Survey Penilaian Layanan Informasi Publik"
+        subtitle="Kuesioner Indeks Kepuasan Masyarakat terhadap Pelayanan Informasi Publik Dinas Pariwisata Provinsi Sulawesi Tengah"
+        breadcrumbs={[
+          { label: 'PPID', path: '/ppid/profil' },
+          { label: 'Layanan Publik' },
+          { label: 'Survey Kepuasan' }
+        ]}
+      />
 
       <section className="py-12 lg:py-16">
         <div className="container-custom max-w-4xl">

@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { BookOpen, Download, Eye } from 'lucide-react';
 import { motion } from 'framer-motion';
 import api from '../../services/api';
+import PageHeader from '../../components/PageHeader';
 
 const OFFICIAL_MAJALAH = [
   {
@@ -48,12 +49,16 @@ const Majalah = () => {
     <>
       <Helmet><title>Majalah & Publikasi - Dinas Pariwisata Sulteng</title></Helmet>
 
-      <div className="bg-gradient-to-r from-navy-900 to-primary-800 py-16 lg:py-20">
-        <div className="container-custom">
-          <h1 className="text-3xl lg:text-5xl font-extrabold text-white">Majalah & Publikasi</h1>
-          <p className="text-white/70 mt-2">Koleksi majalah resmi dan booklet promosi pariwisata Sulawesi Tengah</p>
-        </div>
-      </div>
+      <PageHeader
+        badge="Publikasi & Literasi"
+        badgeIcon={BookOpen}
+        title="Majalah & Publikasi"
+        subtitle="Koleksi majalah resmi dan booklet promosi pariwisata Sulawesi Tengah"
+        breadcrumbs={[
+          { label: 'Profil', path: '/profil' },
+          { label: 'Majalah & Publikasi' }
+        ]}
+      />
 
       <section className="py-12 lg:py-16">
         <div className="container-custom">

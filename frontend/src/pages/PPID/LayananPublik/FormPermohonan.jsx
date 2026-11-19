@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { Send, CheckCircle2, FileText } from 'lucide-react';
 import { motion } from 'framer-motion';
 import api from '../../../services/api';
+import PageHeader from '../../../components/PageHeader';
 
 const FormPermohonan = () => {
   const [form, setForm] = useState({
@@ -31,12 +32,17 @@ const FormPermohonan = () => {
     <>
       <Helmet><title>Form Permohonan Informasi - PPID Dinas Pariwisata Sulteng</title></Helmet>
 
-      <div className="bg-gradient-to-r from-navy-900 to-primary-800 py-16 lg:py-20">
-        <div className="container-custom">
-          <h1 className="text-3xl lg:text-5xl font-extrabold text-white">Form Permohonan Informasi</h1>
-          <p className="text-white/70 mt-2">PPID Dinas Pariwisata Provinsi Sulawesi Tengah</p>
-        </div>
-      </div>
+      <PageHeader
+        badge="Layanan PPID Online"
+        badgeIcon={FileText}
+        title="Form Permohonan Informasi"
+        subtitle="Sampaikan permohonan informasi publik secara online kepada PPID Dinas Pariwisata Provinsi Sulawesi Tengah"
+        breadcrumbs={[
+          { label: 'PPID', path: '/ppid/profil' },
+          { label: 'Layanan Publik' },
+          { label: 'Permohonan Informasi' }
+        ]}
+      />
 
       <section className="py-12 lg:py-16">
         <div className="container-custom max-w-3xl">

@@ -1,5 +1,6 @@
 import { Helmet } from 'react-helmet-async';
-import { Target, Flag, ArrowRight } from 'lucide-react';
+import { Target, Flag, ArrowRight, Compass } from 'lucide-react';
+import PageHeader from '../../components/PageHeader';
 import { motion } from 'framer-motion';
 
 const VisiMisi = () => {
@@ -18,19 +19,16 @@ const VisiMisi = () => {
         <title>Visi dan Misi - Dinas Pariwisata Sulteng</title>
       </Helmet>
 
-      <div className="bg-navy-900 pt-32 pb-20 lg:pt-40 lg:pb-24">
-        <div className="container-custom">
-          <p className="text-gold-400 text-sm font-semibold uppercase tracking-widest mb-3">
-            Profil
-          </p>
-          <h1 className="text-4xl lg:text-6xl font-bold text-white tracking-tight">
-            Visi dan Misi
-          </h1>
-          <p className="text-white/60 mt-3 text-lg max-w-2xl">
-            Arah pembangunan Dinas Pariwisata Provinsi Sulawesi Tengah periode 2025-2029
-          </p>
-        </div>
-      </div>
+      <PageHeader
+        badge="Profil Kelembagaan"
+        badgeIcon={Compass}
+        title="Visi dan Misi"
+        subtitle="Arah haluan dan komitmen pembangunan Dinas Pariwisata Provinsi Sulawesi Tengah periode 2025-2029."
+        breadcrumbs={[
+          { label: 'Profil' },
+          { label: 'Visi dan Misi' }
+        ]}
+      />
 
       <section className="py-16 lg:py-24 bg-white">
         <div className="container-custom max-w-5xl">

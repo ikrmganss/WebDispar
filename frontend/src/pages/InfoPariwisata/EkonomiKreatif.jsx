@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { Palette, Download, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
 import api from '../../services/api';
+import PageHeader from '../../components/PageHeader';
 
 const SUBSEKTOR = [
   'Kuliner', 'Kriya', 'Musik', 'Fesyen', 'Film', 'Animasi & Video',
@@ -28,12 +29,16 @@ const EkonomiKreatif = () => {
     <>
       <Helmet><title>Ekonomi Kreatif - Info Pariwisata Sulawesi Tengah</title></Helmet>
 
-      <div className="bg-gradient-to-r from-navy-900 to-primary-800 py-16 lg:py-20">
-        <div className="container-custom">
-          <h1 className="text-3xl lg:text-5xl font-extrabold text-white">Ekonomi Kreatif</h1>
-          <p className="text-white/70 mt-2">Data pelaku ekonomi kreatif Sulawesi Tengah</p>
-        </div>
-      </div>
+      <PageHeader
+        badge="Inovasi & Karya Kreatif Lokal"
+        badgeIcon={Sparkles}
+        title="Ekonomi Kreatif"
+        subtitle="Mendorong pertumbuhan 17 subsektor dan pemberdayaan pelaku ekonomi kreatif di Sulawesi Tengah"
+        breadcrumbs={[
+          { label: 'Info Pariwisata', path: '/info-pariwisata/destinasi/daya-tarik-wisata' },
+          { label: 'Ekonomi Kreatif' }
+        ]}
+      />
 
       <section className="py-12 lg:py-16">
         <div className="container-custom">

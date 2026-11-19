@@ -1,5 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
+import { Users } from 'lucide-react';
+import PageHeader from '../../components/PageHeader';
 
 const StrukturOrganisasiPPID = () => {
   const boxes = [
@@ -53,14 +55,16 @@ const StrukturOrganisasiPPID = () => {
     <>
       <Helmet><title>Struktur Organisasi PPID - Dinas Pariwisata Sulteng</title></Helmet>
 
-      <div className="bg-gradient-to-r from-navy-900 to-primary-800 py-16 lg:py-20">
-        <div className="container-custom">
-          <h1 className="text-3xl lg:text-5xl font-extrabold text-white">Struktur Organisasi PPID</h1>
-          <p className="text-white/70 mt-2">
-            Pejabat Pengelola Informasi dan Dokumentasi Dinas Pariwisata Provinsi Sulawesi Tengah
-          </p>
-        </div>
-      </div>
+      <PageHeader
+        badge="PPID Pelaksana Dinas Pariwisata Sulteng"
+        badgeIcon={Users}
+        title="Struktur Organisasi PPID"
+        subtitle="Bagan Susunan dan Tim Pengelola Informasi dan Dokumentasi Dinas Pariwisata Provinsi Sulawesi Tengah"
+        breadcrumbs={[
+          { label: 'PPID', path: '/ppid/profil' },
+          { label: 'Struktur Organisasi PPID' }
+        ]}
+      />
 
       <section className="py-12 lg:py-16">
         <div className="container-custom">

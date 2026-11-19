@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { MapPin, Eye } from 'lucide-react';
+import { MapPin, Eye, Compass } from 'lucide-react';
 import { motion } from 'framer-motion';
 import api from '../../../services/api';
+import PageHeader from '../../../components/PageHeader';
 
 const kabupatenList = [
   'Kota Palu', 'Kabupaten Donggala', 'Kabupaten Sigi', 'Kabupaten Parigi Moutong',
@@ -81,12 +82,17 @@ const DayaTarikWisata = () => {
   return (
     <>
       <Helmet><title>Daya Tarik Wisata - Info Pariwisata</title></Helmet>
-      <div className="bg-gradient-to-r from-navy-900 to-primary-800 py-16 lg:py-20">
-        <div className="container-custom">
-          <h1 className="text-3xl lg:text-5xl font-extrabold text-white">Daya Tarik Wisata</h1>
-          <p className="text-white/70 mt-2">Destinasi pariwisata unggulan Sulawesi Tengah</p>
-        </div>
-      </div>
+      <PageHeader
+        badge="Destinasi & Wisata Unggulan"
+        badgeIcon={Compass}
+        title="Daya Tarik Wisata"
+        subtitle="Jelajahi keindahan alam, budaya, dan pesona wisata bahari di 13 kabupaten & kota Sulawesi Tengah"
+        breadcrumbs={[
+          { label: 'Info Pariwisata', path: '/info-pariwisata/destinasi/daya-tarik-wisata' },
+          { label: 'Destinasi' },
+          { label: 'Daya Tarik Wisata' }
+        ]}
+      />
       <section className="py-12 lg:py-16">
         <div className="container-custom">
           {/* Filter Kabupaten */}

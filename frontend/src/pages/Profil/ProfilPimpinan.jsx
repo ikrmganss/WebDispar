@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Users, Download, Network } from 'lucide-react';
+import { Users, Download, Network, Award } from 'lucide-react';
+import PageHeader from '../../components/PageHeader';
 import { motion } from 'framer-motion';
 import api from '../../services/api';
 
@@ -40,12 +41,15 @@ const ProfilPimpinan = () => {
     <>
       <Helmet><title>Profil Pimpinan - Dinas Pariwisata Sulteng</title></Helmet>
 
-      <div className="bg-gradient-to-r from-navy-900 to-primary-800 py-16 lg:py-20">
-        <div className="container-custom">
-          <h1 className="text-3xl lg:text-5xl font-extrabold text-white">Profil Pimpinan</h1>
-          <p className="text-white/70 mt-2">Struktur Organisasi Dinas Pariwisata Provinsi Sulawesi Tengah</p>
-        </div>
-      </div>
+      <PageHeader
+        badge="Profil Pimpinan Dinas"
+        title="Profil Pimpinan"
+        subtitle="Struktur Kepemimpinan dan Pejabat Struktural Dinas Pariwisata Provinsi Sulawesi Tengah"
+        breadcrumbs={[
+          { label: 'Profil', path: '/profil' },
+          { label: 'Profil Pimpinan' }
+        ]}
+      />
 
       <section className="py-12 lg:py-16">
         <div className="container-custom">

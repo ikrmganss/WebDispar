@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
+import PageHeader from '../../components/PageHeader';
 import {
   FaLocationDot,
   FaPhone,
@@ -87,12 +88,15 @@ const HubungiKami = () => {
         <title>Hubungi Kami - Dinas Pariwisata Sulteng</title>
       </Helmet>
 
-      <div className="bg-gradient-to-r from-navy-900 to-primary-800 py-16 lg:py-20">
-        <div className="container-custom">
-          <h1 className="text-3xl lg:text-5xl font-extrabold text-white">Hubungi Kami</h1>
-          <p className="text-white/70 mt-2">Kami siap membantu Anda</p>
-        </div>
-      </div>
+      <PageHeader
+        badge="Layanan Kontak & Lokasi"
+        title="Hubungi Kami"
+        subtitle="Kami siap melayani kebutuhan informasi, kemitraan, dan konsultasi kepariwisataan Anda"
+        breadcrumbs={[
+          { label: 'Profil', path: '/profil' },
+          { label: 'Hubungi Kami' }
+        ]}
+      />
 
       <section className="py-12 lg:py-16">
         <div className="container-custom">

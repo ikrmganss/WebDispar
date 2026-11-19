@@ -27,16 +27,24 @@ const BeritaDetail = () => {
         <title>{berita.judul} - Dinas Pariwisata Sulteng</title>
       </Helmet>
 
-      <div className="bg-gradient-to-r from-[#0b192c] to-[#1e3a5f] py-16 lg:py-20">
-        <div className="container-custom">
-          <Link to="/berita" className="inline-flex items-center gap-2 text-white/70 hover:text-gold-400 mb-4 transition-colors">
-            <ArrowLeft size={18} /> Kembali ke Berita
+      <div className="bg-gradient-to-r from-[#1F5BA6] via-[#383087] to-[#5C2180] py-12 lg:py-16 text-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-white/10 via-transparent to-transparent pointer-events-none" />
+        <div className="container mx-auto max-w-7xl px-4 md:px-8 relative z-10">
+          <Link to="/berita" className="inline-flex items-center gap-2 text-white/80 hover:text-amber-300 mb-4 transition-colors font-medium text-sm">
+            <ArrowLeft size={16} /> Kembali ke Berita
           </Link>
+          {berita.kategori && (
+            <div>
+              <span className="inline-block px-3 py-1 mb-3 text-xs font-bold tracking-wider rounded-full bg-white/15 text-amber-300 border border-white/20 uppercase">
+                {berita.kategori}
+              </span>
+            </div>
+          )}
           <h1 className="text-2xl lg:text-4xl font-extrabold text-white mb-4 max-w-4xl">{berita.judul}</h1>
-          <div className="flex flex-wrap items-center gap-4 text-sm text-white/70">
-            <span className="flex items-center gap-1"><Calendar size={16} /> {formatDate(berita.tanggal)}</span>
-            <span className="flex items-center gap-1"><User size={16} /> {berita.penulis}</span>
-            <span className="flex items-center gap-1"><Eye size={16} /> {berita.dilihat} dilihat</span>
+          <div className="flex flex-wrap items-center gap-4 text-xs md:text-sm text-white/80 font-medium">
+            <span className="flex items-center gap-1.5"><Calendar size={15} className="text-amber-300" /> {formatDate(berita.tanggal)}</span>
+            <span className="flex items-center gap-1.5"><User size={15} className="text-amber-300" /> {berita.penulis}</span>
+            <span className="flex items-center gap-1.5"><Eye size={15} className="text-amber-300" /> {berita.dilihat} dilihat</span>
           </div>
         </div>
       </div>

@@ -2,6 +2,7 @@ import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { FileText, Download, Clock, DollarSign, ArrowRight, Shield, AlertCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
+import PageHeader from '../../components/PageHeader';
 
 const StandarPelayanan = () => {
   const sopList = [
@@ -27,12 +28,16 @@ const StandarPelayanan = () => {
     <>
       <Helmet><title>Standar Pelayanan Publik - PPID Dinas Pariwisata Sulteng</title></Helmet>
 
-      <div className="bg-gradient-to-r from-navy-900 to-primary-800 py-16 lg:py-20">
-        <div className="container-custom">
-          <h1 className="text-3xl lg:text-5xl font-extrabold text-white">Standar Pelayanan Publik</h1>
-          <p className="text-white/70 mt-2">PPID Dinas Pariwisata Provinsi Sulawesi Tengah</p>
-        </div>
-      </div>
+      <PageHeader
+        badge="Standar Mutu Layanan"
+        badgeIcon={Shield}
+        title="Standar Pelayanan Publik"
+        subtitle="Pedoman Standar Operasional Prosedur (SOP) dan Mekanisme Pelayanan Keterbukaan Informasi Publik"
+        breadcrumbs={[
+          { label: 'PPID', path: '/ppid/profil' },
+          { label: 'Standar Pelayanan' }
+        ]}
+      />
 
       <section className="py-12 lg:py-16">
         <div className="container-custom max-w-5xl space-y-8">

@@ -1,6 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import { Shield, CheckCircle2, Download } from 'lucide-react';
 import { motion } from 'framer-motion';
+import PageHeader from '../../components/PageHeader';
 
 const MaklumatPelayanan = () => {
   const pernyataan = [
@@ -13,12 +14,16 @@ const MaklumatPelayanan = () => {
     <>
       <Helmet><title>Maklumat Pelayanan - PPID Dinas Pariwisata Sulteng</title></Helmet>
 
-      <div className="bg-gradient-to-r from-navy-900 to-primary-800 py-16 lg:py-20">
-        <div className="container-custom">
-          <h1 className="text-3xl lg:text-5xl font-extrabold text-white">Maklumat Pelayanan</h1>
-          <p className="text-white/70 mt-2">Informasi Publik Dinas Pariwisata Provinsi Sulawesi Tengah</p>
-        </div>
-      </div>
+      <PageHeader
+        badge="PPID Pelaksana Dinas Pariwisata Sulteng"
+        badgeIcon={Shield}
+        title="Maklumat Pelayanan"
+        subtitle="Maklumat dan Janji Layanan Keterbukaan Informasi Publik Dinas Pariwisata Provinsi Sulawesi Tengah"
+        breadcrumbs={[
+          { label: 'PPID', path: '/ppid/profil' },
+          { label: 'Maklumat Pelayanan' }
+        ]}
+      />
 
       <section className="py-12 lg:py-16">
         <div className="container-custom max-w-5xl">
