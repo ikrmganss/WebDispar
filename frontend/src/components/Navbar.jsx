@@ -215,8 +215,24 @@ const SubPanel = ({ items, onClose, small = false }) => {
   const [openIdx, setOpenIdx] = useState(null);
   const pos = { top: 0, left: '100%', marginLeft: 4 };
 
+  // Jika item di subpanel ini tidak memiliki turunan ke samping (leaf submenu seperti Dokumen SAKIP, Data Kepegawaian),
+  // aktifkan scrolling max-height agar tidak terpotong di layar bawah
+  const hasNestedSub = items.some(
+    (it) => Array.isArray(it.children) && it.children.length > 0 && !it.inlineChildren
+  );
+
+  const scrollStyle = hasNestedSub
+    ? {}
+    : {
+        maxHeight: 'min(480px, calc(100vh - 120px))',
+        overflowY: 'auto',
+      };
+
   return (
-    <div style={panelStyle(pos, small)}>
+    <div
+      className={!hasNestedSub ? 'dropdown-scroll' : ''}
+      style={panelStyle({ ...pos, ...scrollStyle }, small)}
+    >
       {items.map((item, idx) => {
         const hasSub = Array.isArray(item.children) && item.children.length > 0;
         if (hasSub && item.inlineChildren) return (

@@ -117,3 +117,23 @@
 ::-webkit-scrollbar-thumb:hover {
   @apply bg-primary-600;
 }
+
+/* Custom Slim Scrollbar for Dropdown Submenus */
+.dropdown-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f8fafc;
+}
+.dropdown-scroll::-webkit-scrollbar {
+  width: 5px;
+}
+.dropdown-scroll::-webkit-scrollbar-track {
+  background: #f8fafc;
+  border-radius: 6px;
+}
+.dropdown-scroll::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 6px;
+}
+.dropdown-scroll::-webkit-scrollbar-thumb:hover {
+  background: #9333ea;
+}
