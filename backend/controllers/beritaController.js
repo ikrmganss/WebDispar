@@ -25,10 +25,10 @@ exports.getBySlug = async (req, res) => {
 };
 
 exports.create = async (req, res) => {
-  const { judul, slug, konten, tanggal, penulis } = req.body;
+  const { judul, slug, konten, tanggal, penulis, kategori } = req.body;
   const gambar = req.file ? req.file.filename : null;
   try {
-    await db.query('INSERT INTO berita (judul, slug, konten, gambar, tanggal, penulis) VALUES (?, ?, ?, ?, ?, ?)', [judul, slug, konten, gambar, tanggal, penulis || 'Admin']);
+    await db.query('INSERT INTO berita (judul, slug, konten, gambar, tanggal, penulis, kategori) VALUES (?, ?, ?, ?, ?, ?, ?)', [judul, slug, konten, gambar, tanggal, penulis || 'Admin', kategori || 'WARTA PARIWISATA']);
     res.status(201).json({ message: 'Berita berhasil dibuat' });
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -36,10 +36,10 @@ exports.create = async (req, res) => {
 };
 
 exports.update = async (req, res) => {
-  const { judul, slug, konten, tanggal, penulis } = req.body;
+  const { judul, slug, konten, tanggal, penulis, kategori } = req.body;
   const gambar = req.file ? req.file.filename : req.body.gambar_lama;
   try {
-    await db.query('UPDATE berita SET judul=?, slug=?, konten=?, gambar=?, tanggal=?, penulis=? WHERE id=?', [judul, slug, konten, gambar, tanggal, penulis, req.params.id]);
+    await db.query('UPDATE berita SET judul=?, slug=?, konten=?, gambar=?, tanggal=?, penulis=?, kategori=? WHERE id=?', [judul, slug, konten, gambar, tanggal, penulis, kategori, req.params.id]);
     res.json({ message: 'Berita berhasil diupdate' });
   } catch (err) {
     res.status(500).json({ message: err.message });

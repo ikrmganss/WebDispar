@@ -35,6 +35,11 @@ const BeritaCard = ({ berita, index = 0 }) => {
             }}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
           />
+          {berita.kategori && (
+            <span className="absolute top-3 left-3 px-2.5 py-1 text-white font-bold text-[10px] tracking-wider rounded-md bg-[#0F172A]/85 backdrop-blur-xs shadow-xs">
+              {berita.kategori}
+            </span>
+          )}
         </div>
         <div className="pt-5">
           <p className="text-xs text-amber-600 font-semibold uppercase tracking-widest mb-3 flex items-center gap-2">

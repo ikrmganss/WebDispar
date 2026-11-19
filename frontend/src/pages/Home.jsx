@@ -21,28 +21,79 @@ const IMAGES = {
 // ==========================================
 // SECTION 1: WARTA PARIWISATA DAERAH (BERITA TERBARU)
 // ==========================================
+const getNewsTag = (b) => {
+  if (b.kategori && b.kategori !== 'Berita' && b.kategori !== 'WARTA PARIWISATA') {
+    return b.kategori;
+  }
+  const j = (b.judul || '').toUpperCase();
+  if (j.includes('HARI PAHLAWAN')) return 'HARI PAHLAWAN';
+  if (j.includes('PPID') || j.includes('TRANSPARANSI') || j.includes('KETERBUKAAN INFORMASI')) return 'INFORMASI PUBLIK';
+  if (j.includes('PARIPURNA') || j.includes('KUA-PPAS') || j.includes('DPRD')) return 'RAPAT PARIPURNA';
+  if (j.includes('NOMENKLATUR') || j.includes('EKONOMI KREATIF') || j.includes('EKRAF')) return 'EKONOMI KREATIF';
+  if (j.includes('SP4N') || j.includes('LAPOR') || j.includes('PELAYANAN PUBLIK')) return 'PELAYANAN PUBLIK';
+  if (j.includes('OTONOMI DAERAH') || j.includes('OTDA')) return 'OTONOMI DAERAH';
+  if (j.includes('BMKG') || j.includes('MITIGASI')) return 'MITIGASI & BMKG';
+  if (j.includes('RENUNGAN SUCI') || j.includes('HUT KE-81 RI') || j.includes('HUT RI') || j.includes('KEMERDEKAAN')) return 'HUT RI';
+  if (j.includes('SELEKSI JPT') || j.includes('ASN') || j.includes('PEGAWAI')) return 'KEPEGAWAIAN';
+  if (j.includes('GUANGZHOU') || j.includes('CHARTER FLIGHT') || j.includes('PENERBANGAN')) return 'KONEKTIVITAS';
+  if (j.includes('KPK') || j.includes('KORUPSI')) return 'TATA KELOLA';
+  if (j.includes('INVESTASI') || j.includes('UEA')) return 'INVESTASI';
+  if (j.includes('DANAU LINDU') || j.includes('FDL')) return 'FESTIVAL DANAU LINDU';
+  if (j.includes('BUYA SUBI') || j.includes('TENUN')) return 'TENUN DONGGALA';
+  if (j.includes('FESTIVAL') || j.includes('FEST') || j.includes('KARNAVAL')) return 'FESTIVAL DAERAH';
+  if (j.includes('HUT PROVINSI') || j.includes('HUT SULTENG') || j.includes('HUT KE-62')) return 'HUT SULTENG';
+  if (j.includes('PARALAYANG') || j.includes('SERTIFIKASI') || j.includes('SDM')) return 'SDM PARIWISATA';
+  if (j.includes('DESA WISATA')) return 'DESA WISATA';
+  if (j.includes('BAHARI') || j.includes('PANTAI') || j.includes('PULAU')) return 'DESTINASI BAHARI';
+  if (j.includes('MEGALIT')) return 'CAGAR BUDAYA';
+  return b.kategori || 'WARTA DAERAH';
+};
+
+const getTagColor = (tag = '') => {
+  const t = tag.toUpperCase();
+  if (t.includes('PAHLAWAN') || t.includes('HUT RI') || t.includes('KEMERDEKAAN')) {
+    return 'bg-[#DC2626]'; // Merah patriotik
+  }
+  if (t.includes('INFORMASI') || t.includes('PPID') || t.includes('PELAYANAN')) {
+    return 'bg-[#059669]'; // Hijau informasi/pelayanan publik
+  }
+  if (t.includes('PARIPURNA') || t.includes('DPRD') || t.includes('PEMDA') || t.includes('KINERJA')) {
+    return 'bg-[#0F172A]'; // Dark Navy elegan formal
+  }
+  if (t.includes('EKONOMI') || t.includes('EKRAF') || t.includes('INVESTASI') || t.includes('KONEKTIVITAS')) {
+    return 'bg-[#2563EB]'; // Biru dinamis
+  }
+  if (t.includes('FESTIVAL') || t.includes('TENUN') || t.includes('BUDAYA') || t.includes('EVENT')) {
+    return 'bg-[#D97706]'; // Amber festival seni budaya
+  }
+  if (t.includes('BAHARI') || t.includes('WISATA') || t.includes('DESTINASI')) {
+    return 'bg-[#0284C7]'; // Sky blue destinasi alam
+  }
+  return 'bg-[#1E293B]'; // Slate dark navy
+};
+
 const LatestNewsSection = ({ berita, loading }) => {
   const fallbackNews = [
     {
       image: IMAGES.news1,
-      tag: 'PEMERINTAHAN',
-      tagColor: 'bg-[#0F172A]',
-      title: 'Kadis Pariwisata Sulteng Pimpin Rapat Koordinasi…',
-      date: '17 Agustus 2024',
+      tag: 'HARI PAHLAWAN',
+      tagColor: 'bg-[#DC2626]',
+      title: 'Dinas Pariwisata Sulteng Hadiri Upacara Hari Pahlawan 2026: Gelorakan Semangat Perjuangan Lewat Pembangunan',
+      date: '10 November 2026',
     },
     {
       image: IMAGES.news2,
-      tag: 'KEMERDEKAAN',
-      tagColor: 'bg-[#DC2626]',
-      title: 'Semangat Kemerdekaan Menggelora di Sektor Pariwisata',
-      date: '17 Agustus 2024',
+      tag: 'INFORMASI PUBLIK',
+      tagColor: 'bg-[#059669]',
+      title: 'Perkuat Transparansi Informasi Publik, PPID Utama Diskominfo Sulteng Gelar Monitoring dan Evaluasi di Dinas Pariwisata',
+      date: '2 November 2026',
     },
     {
       image: IMAGES.news3,
-      tag: 'DESTINASI BAHARI',
-      tagColor: 'bg-[#2563EB]',
-      title: 'Semangat Kemerdekaan Menggelora di Sektor Pariwisata',
-      date: '17 Agustus 2024',
+      tag: 'RAPAT PARIPURNA',
+      tagColor: 'bg-[#0F172A]',
+      title: 'Kadis Pariwisata Sulteng Hadiri Rapat Paripurna DPRD Bahas Perubahan KUA-PPAS 2026',
+      date: '27 Agustus 2026',
     },
   ];
 
@@ -55,14 +106,17 @@ const LatestNewsSection = ({ berita, loading }) => {
   };
 
   const newsItems = berita.length > 0
-    ? berita.slice(0, 3).map((b, idx) => ({
-        image: getNewsImage(b, idx),
-        tag: b.kategori || fallbackNews[idx % 3].tag,
-        tagColor: idx === 0 ? 'bg-[#0F172A]' : idx === 1 ? 'bg-[#DC2626]' : 'bg-[#2563EB]',
-        title: b.judul,
-        date: new Date(b.tanggal || b.created_at || Date.now()).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }),
-        slug: b.slug,
-      }))
+    ? berita.slice(0, 3).map((b, idx) => {
+        const tag = getNewsTag(b);
+        return {
+          image: getNewsImage(b, idx),
+          tag,
+          tagColor: getTagColor(tag),
+          title: b.judul,
+          date: new Date(b.tanggal || b.created_at || Date.now()).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }),
+          slug: b.slug,
+        };
+      })
     : fallbackNews;
 
   return (
