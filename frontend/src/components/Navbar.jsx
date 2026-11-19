@@ -195,8 +195,6 @@ const panelStyle = (extra = {}, small = false) => ({
   boxShadow: '0 10px 40px rgba(0,0,0,0.12)',
   zIndex: 9999,
   minWidth: small ? 180 : 220,
-  maxHeight: 'calc(100vh - 120px)',
-  overflowY: 'auto',
   padding: '6px',
   ...extra,
 });
@@ -216,11 +214,9 @@ const itemBase = (active, small = false) => ({
 const SubPanel = ({ items, onClose, small = false }) => {
   const [openIdx, setOpenIdx] = useState(null);
   const pos = { top: 0, left: '100%', marginLeft: 4 };
-  const hasNestedSub = items.some((it) => Array.isArray(it.children) && it.children.length > 0);
-  const extra = hasNestedSub ? {} : { maxHeight: 'calc(100vh - 90px)', overflowY: 'auto' };
 
   return (
-    <div style={panelStyle({ ...pos, ...extra }, small)}>
+    <div style={panelStyle(pos, small)}>
       {items.map((item, idx) => {
         const hasSub = Array.isArray(item.children) && item.children.length > 0;
         if (hasSub && item.inlineChildren) return (
