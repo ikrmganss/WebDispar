@@ -38,9 +38,35 @@ exports.trackVisitor = async (req, res) => {
 
 exports.getWisatawan = async (req, res) => {
   try {
+    // Ambil tahun terbaru dari data resmi yang ada di tabel statistik_kunjungan
+    const [yearRows] = await db.query('SELECT MAX(CAST(tahun AS UNSIGNED)) as latestYear FROM statistik_kunjungan');
+    const tahun = req.query.tahun || (yearRows[0]?.latestYear ? String(yearRows[0].latestYear) : '2024');
+
+    const [sumRows] = await db.query(
+      'SELECT SUM(domestik) as total_domestik, SUM(mancanegara) as total_mancanegara FROM statistik_kunjungan WHERE tahun = ?',
+      [tahun]
+    );
+
+    const domestic = Number(sumRows[0]?.total_domestik || 0);
+    const international = Number(sumRows[0]?.total_mancanegara || 0);
+    const total = domestic + international;
+
+    // Perbandingan dengan tahun sebelumnya untuk persentase pertumbuhan resmi
+    const tahunLalu = String(Number(tahun) - 1);
+    const [prevRows] = await db.query(
+      'SELECT SUM(domestik) as total_domestik, SUM(mancanegara) as total_mancanegara FROM statistik_kunjungan WHERE tahun = ?',
+      [tahunLalu]
+    );
+    const prevTotal = Number(prevRows[0]?.total_domestik || 0) + Number(prevRows[0]?.total_mancanegara || 0);
+    const growth = prevTotal > 0 ? Number((((total - prevTotal) / prevTotal) * 100).toFixed(2)) : 0;
+
     res.json({
-      domestic: 56348,
-      international: 1887,
+      tahun,
+      domestic,
+      international,
+      total,
+      growth,
+      prevTahun: prevTotal > 0 ? tahunLalu : null
     });
   } catch (err) {
     res.status(500).json({ message: err.message });
