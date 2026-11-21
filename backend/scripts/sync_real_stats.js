@@ -87,8 +87,32 @@ async function sync() {
   }
   console.log('✅ Tahun 2024: Total 9.216.969 Wisnus & 23.973 Wisman (Angka Riil Dokumen Dispar)');
 
+  // ==========================================
+  // TAHUN 2025 (Dokumen Resmi Dispar Sulteng Disahkan 03 Feb 2026: 11.668.933 Wisnus, 28.165 Wisman)
+  // Total: 11.697.098 Kunjungan (Angka Riil Berita Resmi BPS & Dispar Sulteng)
+  // ==========================================
+  const data2025 = [
+    { bulan: 'Januari', dom: 1004763, man: 989 },
+    { bulan: 'Februari', dom: 875103, man: 1568 },
+    { bulan: 'Maret', dom: 859765, man: 1729 },
+    { bulan: 'April', dom: 1147915, man: 1717 },
+    { bulan: 'Mei', dom: 914263, man: 1879 },
+    { bulan: 'Juni', dom: 1041761, man: 2578 },
+    { bulan: 'Juli', dom: 951615, man: 3302 },
+    { bulan: 'Agustus', dom: 926150, man: 4307 },
+    { bulan: 'September', dom: 895193, man: 3066 },
+    { bulan: 'Oktober', dom: 942049, man: 3371 },
+    { bulan: 'November', dom: 972499, man: 2045 },
+    { bulan: 'Desember', dom: 1137857, man: 1614 }
+  ];
+
+  for (const d of data2025) {
+    await conn.query('INSERT INTO statistik_kunjungan (tahun, bulan, domestik, mancanegara) VALUES (?, ?, ?, ?)', ['2025', d.bulan, d.dom, d.man]);
+  }
+  console.log('✅ Tahun 2025: Total 11.668.933 Wisnus & 28.165 Wisman (Angka Riil Dokumen Dispar)');
+
   await conn.end();
-  console.log('🎉 Selesai! Data statistik di database telah 100% sinkron dengan dokumen resmi Dispar Sulteng (2022-2024).');
+  console.log('🎉 Selesai! Data statistik di database telah 100% sinkron dengan dokumen resmi Dispar Sulteng (2022-2025).');
 }
 
 sync().catch(console.error);

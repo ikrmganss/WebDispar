@@ -13,6 +13,18 @@ const monthOrder = [
 
 // Ringkasan Resmi Analisis Kinerja dari Dokumen Resmi Dispar Sulteng
 const YEAR_INSIGHTS = {
+  '2025': {
+    target: '9.000.000 Wisnus & 25.000 Wisman',
+    capaianPersen: '129,65%',
+    statusCapaian: 'Melampaui Target (129,65%)',
+    puncak: 'Bulan April (1.149.632) & Desember (1.139.471)',
+    terendah: 'Bulan Maret (861.494)',
+    topWisman: 'Kabupaten Tojo Una-Una (8.596 Kunjungan - Togean)',
+    topWisnus: 'Kota Palu (3.526.182 Kunjungan)',
+    pertumbuhanWisnus: '+26,60% Wisnus vs 2024 (Rilis BPS Sulteng)',
+    pertumbuhanWisman: '+17,49% Wisman vs 2024 (Realisasi 112,66% Target Wisman)',
+    sumber: 'Rekapitulasi Kunjungan Wisatawan 2025 (Disahkan Dispar Sulteng, 03 Feb 2026)'
+  },
   '2024': {
     target: '5.509.000 Kunjungan',
     capaianPersen: '167,58%',
@@ -53,8 +65,8 @@ const YEAR_INSIGHTS = {
 
 const StatistikKunjungan = () => {
   const [data, setData] = useState([]);
-  const [availableYears, setAvailableYears] = useState(['2024', '2023', '2022']);
-  const [tahun, setTahun] = useState('2024'); // Tahun terbaru dengan data rilis resmi
+  const [availableYears, setAvailableYears] = useState(['2025', '2024', '2023', '2022']);
+  const [tahun, setTahun] = useState('2025'); // Tahun terbaru dengan data rilis resmi BPS & Dispar
   const [loading, setLoading] = useState(true);
   const [viewMode, setViewMode] = useState('both'); // 'both' | 'domestik' | 'mancanegara'
 
@@ -462,8 +474,9 @@ const StatistikKunjungan = () => {
               <Download className="text-primary-600" size={22} />
               Arsip &amp; Laporan Analisis Kunjungan Wisatawan (Resmi)
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               {[
+                { tahun: '2025', judul: 'Rekapitulasi Kunjungan Wisatawan Tahun 2025', url: '/images/Wisatawan/Rekap_Kunjungan_Wisatawan_Thn_2025_edit.pdf' },
                 { tahun: '2024', judul: 'Analisis Kunjungan Wisatawan Tahun 2024', url: '/images/Wisatawan/ANALISIS_KUNJUNGAN_WISATAWAN_2024.pdf' },
                 { tahun: '2023', judul: 'Analisis Kunjungan Wisatawan Tahun 2023', url: '/images/Wisatawan/ANALISIS_DATA_KUNJUNGAN_WISATAWAN_TAHUN_2023_1.pdf' },
                 { tahun: '2022', judul: 'Analisis Kunjungan Wisatawan Tahun 2022', url: '/images/Wisatawan/ANALISIS_KUNJUNGAN_WISATAWAN_TAHUN_2022.pdf' },

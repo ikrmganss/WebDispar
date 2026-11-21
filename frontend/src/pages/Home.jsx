@@ -268,10 +268,10 @@ const AgendaAndIKMSection = () => {
 // SECTION 3: STATISTIK WISATAWAN & VIDEO TOURISM
 // ==========================================
 const StatisticsAndVideosSection = ({ stats }) => {
-  const domestic = stats?.domestic ?? 9216969;
-  const international = stats?.international ?? 23973;
-  const tahun = stats?.tahun || '2024';
-  const growth = stats?.growth ?? 79.32;
+  const domestic = stats?.domestic ?? 11668933;
+  const international = stats?.international ?? 28165;
+  const tahun = stats?.tahun || '2025';
+  const growth = stats?.growth ?? 26.6;
   const total = domestic + international;
 
   return (
