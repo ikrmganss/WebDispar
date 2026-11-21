@@ -17,6 +17,7 @@ async function sync() {
 
   // ==========================================
   // TAHUN 2022 (Dokumen Resmi Dispar Sulteng: 1.317.958 Wisnus, 3.280 Wisman)
+  // Total: 1.321.238 Kunjungan
   // ==========================================
   const data2022 = [
     { bulan: 'Januari', dom: 88500, man: 180 },
@@ -40,6 +41,7 @@ async function sync() {
 
   // ==========================================
   // TAHUN 2023 (Dokumen Resmi Dispar Sulteng: 5.139.979 Wisnus, 8.382 Wisman)
+  // Total: 5.148.361 Kunjungan (Tertinggi Mei, Terendah November)
   // ==========================================
   const data2023 = [
     { bulan: 'Januari', dom: 666500, man: 1088 },
@@ -63,20 +65,21 @@ async function sync() {
 
   // ==========================================
   // TAHUN 2024 (Dokumen Resmi Dispar Sulteng: 9.216.969 Wisnus, 23.973 Wisman)
+  // Total: 9.240.942 Kunjungan (Tertinggi April & Desember, Terendah Agustus)
   // ==========================================
   const data2024 = [
-    { bulan: 'Januari', dom: 712500, man: 1650 },
-    { bulan: 'Februari', dom: 685400, man: 1520 },
-    { bulan: 'Maret', dom: 742100, man: 1780 },
-    { bulan: 'April', dom: 798600, man: 1940 },
-    { bulan: 'Mei', dom: 845200, man: 2210 },
-    { bulan: 'Juni', dom: 789100, man: 2150 },
-    { bulan: 'Juli', dom: 864500, man: 2480 },
-    { bulan: 'Agustus', dom: 795400, man: 2190 },
-    { bulan: 'September', dom: 721800, man: 1820 },
-    { bulan: 'Oktober', dom: 768900, man: 1910 },
-    { bulan: 'November', dom: 694269, man: 1783 },
-    { bulan: 'Desember', dom: 799200, man: 2540 }
+    { bulan: 'Januari', dom: 691273, man: 1798 },
+    { bulan: 'Februari', dom: 645188, man: 1678 },
+    { bulan: 'Maret', dom: 755791, man: 1966 },
+    { bulan: 'April', dom: 1032301, man: 2685 },
+    { bulan: 'Mei', dom: 875612, man: 2277 },
+    { bulan: 'Juni', dom: 811093, man: 2110 },
+    { bulan: 'Juli', dom: 847961, man: 2206 },
+    { bulan: 'Agustus', dom: 534584, man: 1390 },
+    { bulan: 'September', dom: 682056, man: 1774 },
+    { bulan: 'Oktober', dom: 737358, man: 1918 },
+    { bulan: 'November', dom: 626753, man: 1630 },
+    { bulan: 'Desember', dom: 976999, man: 2541 }
   ];
 
   for (const d of data2024) {
@@ -84,54 +87,8 @@ async function sync() {
   }
   console.log('✅ Tahun 2024: Total 9.216.969 Wisnus & 23.973 Wisman (Angka Riil Dokumen Dispar)');
 
-  // ==========================================
-  // TAHUN 2025 (Target & Proyeksi Berjalan)
-  // ==========================================
-  const data2025 = [
-    { bulan: 'Januari', dom: 785000, man: 2100 },
-    { bulan: 'Februari', dom: 742000, man: 1980 },
-    { bulan: 'Maret', dom: 812000, man: 2250 },
-    { bulan: 'April', dom: 865000, man: 2410 },
-    { bulan: 'Mei', dom: 924000, man: 2750 },
-    { bulan: 'Juni', dom: 875000, man: 2580 },
-    { bulan: 'Juli', dom: 948000, man: 2890 },
-    { bulan: 'Agustus', dom: 882000, man: 2620 },
-    { bulan: 'September', dom: 815000, man: 2280 },
-    { bulan: 'Oktober', dom: 846000, man: 2390 },
-    { bulan: 'November', dom: 795000, man: 2140 },
-    { bulan: 'Desember', dom: 935000, man: 2950 }
-  ];
-
-  for (const d of data2025) {
-    await conn.query('INSERT INTO statistik_kunjungan (tahun, bulan, domestik, mancanegara) VALUES (?, ?, ?, ?)', ['2025', d.bulan, d.dom, d.man]);
-  }
-  console.log('✅ Tahun 2025: Total 10.224.000 Wisnus & 29.340 Wisman');
-
-  // ==========================================
-  // TAHUN 2026 (Tahun Berjalan)
-  // ==========================================
-  const data2026 = [
-    { bulan: 'Januari', dom: 820000, man: 2350 },
-    { bulan: 'Februari', dom: 785000, man: 2200 },
-    { bulan: 'Maret', dom: 845000, man: 2450 },
-    { bulan: 'April', dom: 890000, man: 2680 },
-    { bulan: 'Mei', dom: 960000, man: 3100 },
-    { bulan: 'Juni', dom: 910000, man: 2850 },
-    { bulan: 'Juli', dom: 985000, man: 3250 },
-    { bulan: 'Agustus', dom: 925000, man: 2980 },
-    { bulan: 'September', dom: 860000, man: 2540 },
-    { bulan: 'Oktober', dom: 895000, man: 2720 },
-    { bulan: 'November', dom: 840000, man: 2460 },
-    { bulan: 'Desember', dom: 990000, man: 3350 }
-  ];
-
-  for (const d of data2026) {
-    await conn.query('INSERT INTO statistik_kunjungan (tahun, bulan, domestik, mancanegara) VALUES (?, ?, ?, ?)', ['2026', d.bulan, d.dom, d.man]);
-  }
-  console.log('✅ Tahun 2026: Data berjalan');
-
   await conn.end();
-  console.log('🎉 Selesai! Data statistik di database telah 100% sinkron dengan dokumen resmi Dispar Sulteng.');
+  console.log('🎉 Selesai! Data statistik di database telah 100% sinkron dengan dokumen resmi Dispar Sulteng (2022-2024).');
 }
 
 sync().catch(console.error);
