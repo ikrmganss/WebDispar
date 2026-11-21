@@ -123,6 +123,15 @@ exports.createDataHunian = async (req, res) => {
 };
 
 // Statistik Kunjungan
+exports.getStatistikTahun = async (req, res) => {
+  try {
+    const [rows] = await db.query('SELECT DISTINCT tahun FROM statistik_kunjungan ORDER BY CAST(tahun AS UNSIGNED) DESC');
+    res.json(rows.map((r) => r.tahun));
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 exports.getStatistikKunjungan = async (req, res) => {
   try {
     const { tahun } = req.query;
