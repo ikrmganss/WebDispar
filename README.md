@@ -117,5 +117,18 @@ cd WebDispar
 
 ---
 
+## 📊 Logika & Arsitektur Statistik Kunjungan Wisatawan
+1. **Bagaimana Grafik Wisatawan Bekerja:**
+   - Statistik kunjungan wisatawan **TIDAK dianalisis menggunakan AI saat admin upload PDF** (karena parsing PDF otomatis rentan error dan membebani server).
+   - Data grafik dibaca langsung dari tabel terstruktur database **`statistik_kunjungan`** (kolom: `tahun`, `bulan`, `domestik`, `mancanegara`).
+   - Dokumen PDF resmi (seperti `ANALISIS_KUNJUNGAN_WISATAWAN_2024.pdf`) berfungsi sebagai **arsip publik dan lampiran resmi rilis Dispar & BPS** yang dapat diunduh langsung oleh masyarakat.
+2. **Data Resmi yang Digunakan (Dispar & BPS Sulteng):**
+   - **Tahun 2024:** 9.216.969 Wisnus, 23.973 Wisman (Total 9.240.942 — Capaian 167,58% Target). Puncak kunjungan di bulan April & Desember, terendah bulan Agustus.
+   - **Tahun 2023:** 5.139.979 Wisnus, 8.382 Wisman (Total 5.148.361). Puncak di bulan Mei, terendah bulan November.
+   - **Tahun 2022:** 1.317.958 Wisnus, 3.280 Wisman (Total 1.321.238).
+   - Data proyeksi fiktif (2025/2026) telah dibersihkan agar website 100% menyajikan data riil berdokumen resmi.
+
+---
+
 ## 📄 Lisensi
 Hak Cipta © 2026 Dinas Pariwisata Provinsi Sulawesi Tengah.
