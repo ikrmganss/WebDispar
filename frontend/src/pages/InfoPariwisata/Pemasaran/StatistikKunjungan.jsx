@@ -388,6 +388,74 @@ const StatistikKunjungan = () => {
             </div>
           )}
 
+          {/* Tabel Rekapitulasi Data Bulanan */}
+          {!loading && data.length > 0 && (
+            <div className="card p-6 mt-10 overflow-hidden">
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <h3 className="font-bold text-navy-900 text-lg">
+                    Tabel Rekapitulasi Kunjungan Wisatawan Bulanan ({tahun})
+                  </h3>
+                  <p className="text-xs text-gray-500">
+                    Rincian pergerakan wisatawan per bulan dalam angka riil
+                  </p>
+                </div>
+                <span className="text-xs font-semibold px-3 py-1 bg-slate-100 text-slate-700 rounded-full">
+                  12 Bulan
+                </span>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-xs border-collapse">
+                  <thead>
+                    <tr className="bg-slate-50 border-y border-slate-200 text-slate-700 font-bold">
+                      <th className="py-3 px-4">Bulan</th>
+                      <th className="py-3 px-4 text-right">Nusantara (Domestik)</th>
+                      <th className="py-3 px-4 text-right">Mancanegara (Wisman)</th>
+                      <th className="py-3 px-4 text-right">Total Perjalanan</th>
+                      <th className="py-3 px-4 text-right">Pangsa (%)</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100">
+                    {data.map((row, idx) => {
+                      const rowTotal = (row.domestik || 0) + (row.mancanegara || 0);
+                      const share = total > 0 ? ((rowTotal / total) * 100).toFixed(2) : '0';
+                      return (
+                        <tr key={idx} className="hover:bg-slate-50/70 transition-colors">
+                          <td className="py-2.5 px-4 font-semibold text-navy-900">{row.bulan}</td>
+                          <td className="py-2.5 px-4 text-right text-blue-700 font-medium">
+                            {Number(row.domestik || 0).toLocaleString('id-ID')}
+                          </td>
+                          <td className="py-2.5 px-4 text-right text-amber-700 font-medium">
+                            {Number(row.mancanegara || 0).toLocaleString('id-ID')}
+                          </td>
+                          <td className="py-2.5 px-4 text-right font-bold text-navy-900">
+                            {rowTotal.toLocaleString('id-ID')}
+                          </td>
+                          <td className="py-2.5 px-4 text-right text-slate-500">{share}%</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                  <tfoot>
+                    <tr className="bg-slate-100/80 border-t-2 border-slate-300 font-bold text-navy-900">
+                      <td className="py-3 px-4">Total Realisasi Tahun {tahun}</td>
+                      <td className="py-3 px-4 text-right text-blue-800">
+                        {totalDomestik.toLocaleString('id-ID')}
+                      </td>
+                      <td className="py-3 px-4 text-right text-amber-800">
+                        {totalMancanegara.toLocaleString('id-ID')}
+                      </td>
+                      <td className="py-3 px-4 text-right text-navy-950 font-extrabold">
+                        {total.toLocaleString('id-ID')}
+                      </td>
+                      <td className="py-3 px-4 text-right">100.00%</td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+          )}
+
           {/* Dokumen Laporan Kunjungan Resmi */}
           <div className="mt-12">
             <h3 className="font-bold text-navy-900 text-xl mb-4 flex items-center gap-2">
