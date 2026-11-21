@@ -6,7 +6,7 @@ const {
   getPaketWisata, createPaketWisata,
   getKalenderEvent, createKalenderEvent,
   getDataHunian, createDataHunian,
-  getStatistikKunjungan,
+  getStatistikKunjungan, getStatistikTahun,
   getEkonomiKreatif, createEkonomiKreatif,
   getSumberDaya, createSumberDaya
 } = require('../controllers/infoPariwisataController');
@@ -23,6 +23,7 @@ router.get('/kalender-event', getKalenderEvent);
 router.post('/kalender-event', verifyToken, isAdmin, upload.single('gambar'), createKalenderEvent);
 router.get('/data-hunian', getDataHunian);
 router.post('/data-hunian', verifyToken, isAdmin, upload.single('file'), createDataHunian);
+router.get('/statistik-kunjungan/tahun', getStatistikTahun);
 router.get('/statistik-kunjungan', getStatistikKunjungan);
 router.get('/ekonomi-kreatif', getEkonomiKreatif);
 router.post('/ekonomi-kreatif', verifyToken, isAdmin, upload.single('file'), createEkonomiKreatif);
