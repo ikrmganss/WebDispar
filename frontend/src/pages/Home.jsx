@@ -268,53 +268,64 @@ const AgendaAndIKMSection = () => {
 // SECTION 3: STATISTIK WISATAWAN & VIDEO TOURISM
 // ==========================================
 const StatisticsAndVideosSection = ({ stats }) => {
-  const domestic = stats?.domestic ?? 56348;
-  const international = stats?.international ?? 1887;
+  const domestic = stats?.domestic ?? 9216969;
+  const international = stats?.international ?? 23973;
+  const tahun = stats?.tahun || '2024';
+  const growth = stats?.growth ?? 79.32;
+  const total = domestic + international;
 
   return (
     <section className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch w-full">
       {/* Kolom Kiri: Statistik Wisatawan Card */}
-      <div className="lg:col-span-5 bg-white rounded-2xl border border-[#E2E8F0] shadow-xs p-6 flex flex-col justify-between gap-5">
+      <div className="lg:col-span-5 bg-white rounded-2xl border border-[#E2E8F0] shadow-xs p-6 flex flex-col justify-between gap-5 group hover:border-primary-400 transition-all duration-300">
         <div className="flex flex-col gap-1">
-          <span className="text-[#D97706] font-bold text-[10px] tracking-wider uppercase">
-            DATA BERKALA
-          </span>
+          <div className="flex items-center justify-between">
+            <span className="text-[#D97706] font-bold text-[10px] tracking-wider uppercase">
+              DATA BERKALA RESMI
+            </span>
+            <span className="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-bold">
+              +{growth}% vs {stats?.prevTahun || '2023'}
+            </span>
+          </div>
           <h3 className="text-[#0F172A] text-xl font-extrabold tracking-tight">
             Statistik Wisatawan
           </h3>
           <p className="text-[#94A3B8] text-xs">
-            Estimasi kunjungan wisatawan tahun berjalan
+            Realisasi kunjungan wisatawan resmi Dispar Sulteng
           </p>
         </div>
 
         <div className="flex items-center justify-between pb-2 border-b border-[#E5E7EB] text-xs font-bold text-[#94A3B8]">
-          <span>Wisata Status</span>
-          <span>Periode 2024</span>
+          <span>Kategori Wisatawan</span>
+          <span className="text-primary-700 bg-primary-50 px-2 py-0.5 rounded-md font-semibold">
+            Periode {tahun}
+          </span>
         </div>
 
-        {/* Baris Domestik */}
-        <div className="flex items-center justify-between p-4 rounded-xl bg-slate-50/80 border border-slate-100">
+        {/* Baris Domestik (Wisnus) */}
+        <div className="flex items-center justify-between p-4 rounded-xl bg-slate-50/80 border border-slate-100 hover:bg-sky-50/50 transition-colors">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-slate-200/80 flex items-center justify-center text-slate-700">
-              <Building2 className="w-5 h-5 text-slate-700" />
+            <div className="w-10 h-10 rounded-lg bg-sky-100 flex items-center justify-center text-sky-700">
+              <Building2 className="w-5 h-5 text-sky-700" />
             </div>
             <div className="flex flex-col">
               <span className="text-xl font-extrabold text-[#0F172A] leading-tight">
                 {domestic.toLocaleString('id-ID')}
               </span>
-              <span className="text-[#64748B] text-xs font-medium">Domestic</span>
+              <span className="text-[#64748B] text-xs font-medium">Nusantara (Domestik)</span>
             </div>
           </div>
-          {/* Grafik Bar Mini */}
-          <div className="flex items-end gap-1 h-7">
-            <div className="w-1.5 h-3 rounded-xs bg-[#FBBF24]" />
-            <div className="w-1.5 h-6 rounded-xs bg-[#1E293B]" />
-            <div className="w-1.5 h-4 rounded-xs bg-[#3B82F6]" />
+          {/* Persentase */}
+          <div className="flex flex-col items-end">
+            <span className="text-xs font-bold text-sky-700">
+              {total > 0 ? ((domestic / total) * 100).toFixed(1) : 99.7}%
+            </span>
+            <span className="text-[10px] text-slate-400">Pangsa</span>
           </div>
         </div>
 
-        {/* Baris Internasional */}
-        <div className="flex items-center justify-between p-4 rounded-xl bg-slate-50/80 border border-slate-100">
+        {/* Baris Internasional (Wisman) */}
+        <div className="flex items-center justify-between p-4 rounded-xl bg-slate-50/80 border border-slate-100 hover:bg-amber-50/50 transition-colors">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-lg bg-amber-100 flex items-center justify-center text-amber-600">
               <Globe className="w-5 h-5 text-[#D97706]" />
@@ -323,21 +334,31 @@ const StatisticsAndVideosSection = ({ stats }) => {
               <span className="text-xl font-extrabold text-[#0F172A] leading-tight">
                 {international.toLocaleString('id-ID')}
               </span>
-              <span className="text-[#64748B] text-xs font-medium">International</span>
+              <span className="text-[#64748B] text-xs font-medium">Mancanegara (Internasional)</span>
             </div>
           </div>
-          {/* Grafik Bar Mini */}
-          <div className="flex items-end gap-1 h-7">
-            <div className="w-1.5 h-3 rounded-xs bg-[#2DD4BF]" />
-            <div className="w-1.5 h-7 rounded-xs bg-[#0F172A]" />
-            <div className="w-1.5 h-5 rounded-xs bg-[#FBBF24]" />
+          {/* Persentase */}
+          <div className="flex flex-col items-end">
+            <span className="text-xs font-bold text-amber-700">
+              {total > 0 ? ((international / total) * 100).toFixed(1) : 0.3}%
+            </span>
+            <span className="text-[10px] text-slate-400">Pangsa</span>
           </div>
         </div>
 
+        {/* Tombol Tautan ke Halaman Statistik Lengkap */}
+        <Link
+          to="/info-pariwisata/pemasaran/statistik-kunjungan"
+          className="flex items-center justify-between px-4 py-2.5 rounded-xl bg-gradient-to-r from-primary-50 to-sky-50 border border-primary-200 text-primary-700 hover:from-primary-600 hover:to-navy-800 hover:text-white transition-all duration-300 font-semibold text-xs group/btn shadow-xs"
+        >
+          <span>Buka Analisis &amp; Grafik Lengkap ({tahun})</span>
+          <ChevronRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+        </Link>
+
         {/* Sumber Info */}
-        <div className="flex items-center gap-2 pt-2 text-[#94A3B8] text-[11px]">
+        <div className="flex items-center gap-2 pt-1 text-[#94A3B8] text-[11px] border-t border-slate-100">
           <TrendingUp className="w-3.5 h-3.5 text-[#F59E0B] shrink-0" />
-          <span>Sumber: Sistem Informasi Kepariwisataan Sulawesi Tengah</span>
+          <span>Sumber: Dokumen Resmi Analisis Dispar &amp; BPS Sulteng</span>
         </div>
       </div>
 
