@@ -4,7 +4,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const SLIDES = [
   {
-    image: '/images/slider2/62_sulteng-dispar_2026_edit_copy_2.jpg',
+    image: '/images/slider/slider-1-kantor-dispar.jpg',
     fallbackImage: '/slider/Slider.jpg',
     alt: 'Dinas Pariwisata Sulawesi Tengah 2026',
     title: 'Dinas Pariwisata Provinsi Sulawesi Tengah',
@@ -12,7 +12,7 @@ const SLIDES = [
     link: '#',
   },
   {
-    image: '/images/komitmen-ppid.jpg',
+    image: '/images/slider/slider2.jpg',
     fallbackImage: '/slider/Slider.jpg',
     alt: 'Komitmen Keterbukaan Informasi Publik PPID',
     title: 'Komitmen Keterbukaan Informasi Publik',
@@ -20,7 +20,7 @@ const SLIDES = [
     link: '/ppid',
   },
   {
-    image: '/images/SLIDER-PPID.jpg',
+    image: '/images/slider/slider3.jpg',
     fallbackImage: '/slider/Slider.jpg',
     alt: 'PPID Dinas Pariwisata Sulawesi Tengah',
     title: 'PPID Dinas Pariwisata Sulteng',
@@ -28,7 +28,7 @@ const SLIDES = [
     link: '/ppid',
   },
   {
-    image: '/images/slider2/iku_dispar_26.jpg',
+    image: '/images/slider/slider4.jpg',
     fallbackImage: '/slider/Slider.jpg',
     alt: 'Indikator Kinerja Utama Dispar 2026',
     title: 'Indikator Kinerja Utama (IKU) 2026',
@@ -36,7 +36,7 @@ const SLIDES = [
     link: '#',
   },
   {
-    image: '/images/command_center_-_berani_samporoa_2025_edit.jpg',
+    image: '/images/slider/slider5.jpg',
     fallbackImage: '/slider/Slider.jpg',
     alt: 'Command Center Berani Samporoa',
     title: 'Command Center BERANI - SAMPOROA',
@@ -45,7 +45,7 @@ const SLIDES = [
     isExternal: true,
   },
   {
-    image: '/images/2025/sp4l-2025.png',
+    image: '/images/slider/slider6.png',
     fallbackImage: '/slider/Slider.jpg',
     alt: 'SP4N-LAPOR Pengaduan Pelayanan Publik',
     title: 'Layanan Aspirasi & Pengaduan SP4N-LAPOR',
@@ -54,15 +54,15 @@ const SLIDES = [
     isExternal: true,
   },
   {
-    image: '/images/no_4_1.png',
-    fallbackImage: '/slider/Slider.jpg',
+    image: '/images/slider/slider7.jpg',
+    fallbackImage: '/images/slider/slider7.png',
     alt: 'Kampanye Pariwisata Anti Korupsi',
     title: 'Pariwisata Berintegritas & Anti Korupsi',
     subtitle: 'Menjaga Tata Kelola Pemerintahan yang Bersih dan Berwibawa',
     link: '#',
   },
   {
-    image: '/images/slider/cekidot.jpg',
+    image: '/images/slider/slider8.jpg',
     fallbackImage: '/slider/Slider.jpg',
     alt: 'Aplikasi Cekidot Persuratan Dispar',
     title: 'Layanan Cekidot Dispar Sulteng',
@@ -115,18 +115,40 @@ const Hero = () => {
           transition={{ duration: 1, ease: 'easeOut' }}
           className="absolute inset-0"
         >
-          <img
-            src={slide.image}
-            alt={slide.alt}
-            className="w-full h-full object-cover object-center"
-            loading="eager"
-            onError={(e) => {
-              const fallback = slide.fallbackImage || '/slider/Slider.jpg';
-              if (!e.currentTarget.src.endsWith(fallback)) {
-                e.currentTarget.src = fallback;
-              }
-            }}
-          />
+          {slide.link && slide.link !== '#' ? (
+            <a
+              href={slide.link}
+              target={slide.isExternal ? '_blank' : '_self'}
+              rel={slide.isExternal ? 'noopener noreferrer' : undefined}
+              className="block w-full h-full cursor-pointer"
+            >
+              <img
+                src={slide.image}
+                alt={slide.alt}
+                className="w-full h-full object-cover object-center"
+                loading="eager"
+                onError={(e) => {
+                  const fallback = slide.fallbackImage || '/slider/Slider.jpg';
+                  if (!e.currentTarget.src.endsWith(fallback)) {
+                    e.currentTarget.src = fallback;
+                  }
+                }}
+              />
+            </a>
+          ) : (
+            <img
+              src={slide.image}
+              alt={slide.alt}
+              className="w-full h-full object-cover object-center"
+              loading="eager"
+              onError={(e) => {
+                const fallback = slide.fallbackImage || '/slider/Slider.jpg';
+                if (!e.currentTarget.src.endsWith(fallback)) {
+                  e.currentTarget.src = fallback;
+                }
+              }}
+            />
+          )}
         </motion.div>
       </AnimatePresence>
 
