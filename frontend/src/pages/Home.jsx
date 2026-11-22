@@ -13,7 +13,7 @@ const IMAGES = {
   news1: 'https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=800&q=80',
   news2: 'https://images.unsplash.com/photo-1532375810709-75b1da00537c?auto=format&fit=crop&w=800&q=80',
   news3: 'https://images.unsplash.com/photo-1506929562872-bb421503ef21?auto=format&fit=crop&w=800&q=80',
-  calendarBanner: 'https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=1200&q=80',
+  calendarBanner: '/images/calendar-event-banner.webp',
   videoPariwisata: 'https://i.ytimg.com/vi/voGg26hCInU/hqdefault.jpg',
   videoDesaWisata: 'https://i.ytimg.com/vi/42oGdqocrlw/hqdefault.jpg',
 };
@@ -216,30 +216,34 @@ const AgendaAndIKMSection = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
         {/* Banner Kalender Event Daerah (Kiri) */}
-        <div className="lg:col-span-8 relative rounded-2xl overflow-hidden border border-slate-200 shadow-sm min-h-[320px] bg-gradient-to-r from-amber-50 to-orange-100 flex flex-col justify-between p-8 group">
+        <div className="lg:col-span-8 relative rounded-3xl overflow-hidden border border-white/60 shadow-[0_10px_30px_rgba(0,0,0,0.06),inset_0_1px_2px_rgba(255,255,255,0.7)] min-h-[340px] flex flex-col justify-between p-8 group">
           <img
             src={IMAGES.calendarBanner}
             alt="Kalender Event Sulawesi Tengah"
-            className="absolute inset-0 w-full h-full object-cover mix-blend-multiply opacity-25 group-hover:scale-105 transition-transform duration-700"
+            className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 select-none"
           />
+          {/* Glassmorphic frosted layer - 100% uniform across the entire image (sama rata) */}
+          <div className="absolute inset-0 bg-white/35 backdrop-blur-[4px] pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-b from-white/20 via-transparent to-black/10 pointer-events-none" />
+
           <div className="relative z-10 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <img src="/dinas pariwisata-COLOR WHITE.png" alt="Logo" className="h-8 w-auto invert drop-shadow" />
+            <div className="flex items-center gap-2.5 bg-white/75 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-white/80 shadow-xs">
+              <img src="/dinas pariwisata-COLOR WHITE.png" alt="Logo" className="h-7 w-auto invert drop-shadow" />
               <span className="text-xs font-bold text-slate-800 tracking-wide uppercase">DINAS PARIWISATA SULTENG</span>
             </div>
-            <span className="px-3 py-1 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-800 font-bold text-xs">
+            <span className="px-3.5 py-1.5 rounded-full bg-white/75 backdrop-blur-md border border-white/80 text-amber-800 font-bold text-xs shadow-xs">
               Tahun 2026
             </span>
           </div>
 
-          <div className="relative z-10 flex flex-col gap-2 my-auto">
-            <h3 className="text-3xl md:text-4xl font-black text-slate-900 leading-tight">
+          <div className="relative z-10 flex flex-col gap-2.5 my-auto max-w-lg">
+            <h3 className="text-3xl md:text-4xl font-black text-slate-900 leading-tight drop-shadow-[0_1px_3px_rgba(255,255,255,0.9)]">
               Kalender <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 to-orange-600">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 via-orange-600 to-rose-600">
                 Event Daerah
               </span>
             </h3>
-            <p className="text-xs md:text-sm text-slate-600 max-w-md font-medium">
+            <p className="text-xs md:text-sm text-slate-800 font-semibold leading-relaxed drop-shadow-[0_1px_3px_rgba(255,255,255,0.9)]">
               Provinsi Sulawesi Tengah — Beragam festival budaya, karnaval bahari, dan atraksi tradisi tahun berjalan.
             </p>
           </div>
@@ -247,7 +251,7 @@ const AgendaAndIKMSection = () => {
           <div className="relative z-10 pt-2">
             <Link
               to="/info-pariwisata/pemasaran/kalender-event"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#0F172A] hover:bg-slate-800 text-white font-bold text-xs shadow-md transition-all hover:gap-3"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-slate-900/90 hover:bg-slate-900 backdrop-blur-md text-white font-bold text-xs md:text-sm shadow-md hover:shadow-xl transition-all hover:gap-3 group-hover:scale-[1.02] border border-white/20"
             >
               <span>Jelajahi Semua Agenda</span>
               <ChevronRight className="w-4 h-4 text-amber-400" />
