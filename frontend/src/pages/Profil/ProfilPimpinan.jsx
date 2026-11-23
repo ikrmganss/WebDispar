@@ -35,7 +35,7 @@ const DEFAULT_PEJABAT = [
   { nama: 'Husen, S.Kom', nip: '197908112010011007', jabatan: 'Adyatama Kepariwisataan Ekonomi Kreatif Ahli Muda', foto: 'husein.jpg', urutan: 16 },
 ];
 
-const ProfilPimpinan = () => {
+const ProfilPimpinan = ({ language = 'ID' }) => {
   const [pejabat, setPejabat] = useState(DEFAULT_PEJABAT);
   const [loading, setLoading] = useState(true);
   const [isLiveFromDb, setIsLiveFromDb] = useState(false);
@@ -123,7 +123,7 @@ const ProfilPimpinan = () => {
                 </span>
               ) : isLiveFromDb ? (
                 <span className="inline-flex items-center gap-1.5 text-emerald-700 font-medium">
-                  <CheckCircle2 size={14} className="text-emerald-600" /> Terhubung Langsung ke Database ({pejabat.length} Pejabat)
+                  <CheckCircle2 size={14} className="text-emerald-600" /> {language === 'EN' ? 'Directly Connected to Database' : 'Terhubung Langsung ke Database'} ({pejabat.length} {language === 'EN' ? 'Officials' : 'Pejabat'})
                 </span>
               ) : (
                 <span className="inline-flex items-center gap-1.5 text-gray-600">
@@ -203,8 +203,8 @@ const ProfilPimpinan = () => {
             <p className="flex items-start gap-2">
               <Users size={18} className="text-primary-600 flex-shrink-0 mt-0.5" />
               <span>
-                Data pejabat di atas terintegrasi secara langsung dari database sistem Dinas Pariwisata Provinsi Sulawesi Tengah.
-                Untuk informasi lebih lanjut, silakan hubungi <a href="mailto:dispar@sultengprov.go.id" className="text-primary-600 underline">dispar@sultengprov.go.id</a>.
+                {language === 'EN' ? 'The officials above are directly integrated from the database system of the Department of Tourism of Central Sulawesi Province.' : 'Data pejabat di atas terintegrasi secara langsung dari database sistem Dinas Pariwisata Provinsi Sulawesi Tengah.'}
+                {language === 'EN' ? 'For more information, please contact' : 'Untuk informasi lebih lanjut, silakan hubungi'} <a href="mailto:dispar@sultengprov.go.id" className="text-primary-600 underline">dispar@sultengprov.go.id</a>.
               </span>
             </p>
           </div>
