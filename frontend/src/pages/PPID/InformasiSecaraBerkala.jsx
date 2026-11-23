@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import PageHeader from '../../components/PageHeader';
+import api from '../../services/api';
 import {
   FileText, Download, ExternalLink, Search, Filter, Calendar,
   Users, Award, Wallet, Compass, ChevronRight, CheckCircle2,
@@ -85,10 +86,8 @@ const InformasiSecaraBerkala = () => {
     const fetchItems = async () => {
       try {
         setLoading(true);
-        const res = await fetch('http://localhost:5000/api/ppid/berkala');
-        if (!res.ok) throw new Error('Gagal memuat data informasi publik.');
-        const data = await res.json();
-        setItems(data);
+        const res = await api.get('/ppid/berkala');
+        setItems(res.data || []);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -308,7 +307,8 @@ const InformasiSecaraBerkala = () => {
           {!loading && !error && filteredItems.length > 0 && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
               {filteredItems.map((item) => {
-                const docLink = item.file || item.link || '#';
+                const rawLink = item.file || item.link || '#';
+                const docLink = rawLink.startsWith('http') || rawLink.startsWith('/') ? rawLink : `/uploads/${rawLink}`;
                 const isExternal = docLink.startsWith('http');
                 const isDrive = docLink.includes('drive.google.com') || docLink.includes('tinyurl.com');
 
