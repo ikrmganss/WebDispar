@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Lock, User, ShieldCheck, ArrowLeft, AlertCircle } from 'lucide-react';
 import api from '../../services/api';
@@ -10,6 +10,13 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      navigate('/portal-internal-dispar/dashboard', { replace: true });
+    }
+  }, [navigate]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -18,7 +25,7 @@ const Login = () => {
       const res = await api.post('/auth/login', { username, password });
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('user', JSON.stringify(res.data.user));
-      navigate('/admin/dashboard');
+      navigate('/portal-internal-dispar/dashboard');
     } catch (err) {
       setError(err.response?.data?.message || 'Login gagal. Periksa username dan password.');
     } finally {
