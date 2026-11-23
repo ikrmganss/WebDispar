@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown, ChevronRight, Search, ExternalLink } from 'lucide-react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Menu, X, ChevronDown, ChevronRight, Search, ExternalLink, ShieldAlert, ArrowRight } from 'lucide-react';
+import { useTheme } from '../context/ThemeContext';
+import { SeasonalIcon } from './SeasonalIcon';
 
 const KABUPATEN_LIST = [
   'Kota Palu', 'Kabupaten Donggala', 'Kabupaten Sigi', 'Kabupaten Parigi Moutong',
@@ -366,11 +368,13 @@ const DropdownPanel = ({ items, onClose }) => {
 };
 
 export const Navbar = ({ onToggleMobile, language = 'ID', setLanguage }) => {
+  const { theme } = useTheme();
   const [activeMenu, setActiveMenu] = useState(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   const navRef = useRef(null);
 
   useEffect(() => {
@@ -394,6 +398,28 @@ export const Navbar = ({ onToggleMobile, language = 'ID', setLanguage }) => {
 
   const closeAll = () => setActiveMenu(null);
 
+  const handleSearchSubmit = (e) => {
+    e?.preventDefault();
+    const query = searchQuery.trim().toLowerCase();
+    if (!query) return;
+
+    // Secret trigger/code untuk mengakses DB Admin
+    const adminCodes = ['dispar26', 'dispar 26'];
+    if (adminCodes.includes(query)) {
+      setIsSearchOpen(false);
+      setSearchQuery('');
+      navigate('/admin/login');
+      return;
+    }
+
+    setIsSearchOpen(false);
+    navigate(`/berita?q=${encodeURIComponent(query)}`);
+  };
+
+  const isAdminTrigger = ['dispar26', 'dispar 26'].includes(
+    searchQuery.trim().toLowerCase()
+  );
+
   const isActive = (menu) => {
     if (menu.path) return location.pathname === menu.path;
     return false;
@@ -403,21 +429,31 @@ export const Navbar = ({ onToggleMobile, language = 'ID', setLanguage }) => {
     <>
       <header
         ref={navRef}
-        className={`sticky top-0 z-40 w-full flex justify-center transition-all duration-300 ${
-          scrolled
-            ? 'bg-[#5C2180]/90 backdrop-blur-md border-b border-white/20 shadow-lg'
-            : 'bg-gradient-to-r from-[#1F5BA6]/90 via-[#383087]/90 to-[#5C2180]/90 backdrop-blur-md border-b border-white/10 shadow-sm'
-        }`}
+        className="sticky top-0 z-40 w-full flex justify-center transition-all duration-300 backdrop-blur-md border-b border-white/20 shadow-md"
+        style={{
+          background: 'var(--theme-gradient, linear-gradient(to right, #1F5BA6, #383087, #5C2180))',
+          opacity: 0.96
+        }}
       >
         <div className="flex max-w-7xl h-20 items-center justify-between px-4 md:px-8 w-full">
           {/* Logo */}
-          <Link to="/" onClick={closeAll} className="inline-flex items-center gap-3">
-            <LogoSymbol />
+          <Link to="/" onClick={closeAll} className="inline-flex items-center gap-3 shrink-0">
+            <div className="relative">
+              <LogoSymbol />
+              {theme.badge_icon && theme.badge_icon !== 'none' && (
+                <div
+                  className="absolute -top-1 -right-2 w-5 h-5 rounded-full bg-white/90 backdrop-blur border border-white/60 p-0.5 shadow-md flex items-center justify-center animate-bounce pointer-events-none"
+                  title={theme.seasonal_badge}
+                >
+                  <SeasonalIcon type={theme.badge_icon} className="w-3.5 h-3.5" />
+                </div>
+              )}
+            </div>
             <div className="flex flex-col">
-              <span className="font-black text-lg md:text-xl tracking-tight leading-tight text-white">
+              <span className="font-black text-lg md:text-xl tracking-tight leading-tight text-white whitespace-nowrap">
                 Dinas Pariwisata
               </span>
-              <span className="font-bold text-amber-400 text-[10px] md:text-xs tracking-wider uppercase">
+              <span className="font-bold text-amber-400 text-[10px] md:text-xs tracking-wider uppercase whitespace-nowrap">
                 PROVINSI SULAWESI TENGAH
               </span>
             </div>
@@ -513,7 +549,7 @@ export const Navbar = ({ onToggleMobile, language = 'ID', setLanguage }) => {
       {/* Search Modal */}
       {isSearchOpen && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white w-full max-w-md rounded-2xl p-5 shadow-2xl border border-slate-200 flex flex-col gap-4">
+          <div className="bg-white w-full max-w-md rounded-2xl p-5 shadow-2xl border border-slate-200 flex flex-col gap-4 animate-in fade-in zoom-in-95 duration-200">
             <div className="flex items-center justify-between pb-2 border-b border-slate-100">
               <h3 className="font-bold text-slate-900 text-base">Cari Portal Wisata</h3>
               <button
@@ -523,25 +559,55 @@ export const Navbar = ({ onToggleMobile, language = 'ID', setLanguage }) => {
                 ✕
               </button>
             </div>
-            <div className="relative">
-              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-3.5" />
-              <input
-                type="text"
-                placeholder="Cari berita, agenda, atau destinasi..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-9 pr-4 py-2.5 bg-slate-100 rounded-xl text-xs outline-none focus:ring-2 focus:ring-purple-600"
-                autoFocus
-              />
-            </div>
-            <div className="flex justify-end gap-2 pt-2">
-              <button
-                onClick={() => setIsSearchOpen(false)}
-                className="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-800 text-xs font-bold rounded-xl transition-colors"
-              >
-                Tutup
-              </button>
-            </div>
+
+            <form onSubmit={handleSearchSubmit} className="flex flex-col gap-3">
+              <div className="relative">
+                <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
+                <input
+                  type="text"
+                  placeholder="Ketik berita, destinasi, atau kode akses..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-10 pr-4 py-2.5 bg-slate-100 rounded-xl text-xs outline-none focus:ring-2 focus:ring-purple-600 font-medium"
+                  autoFocus
+                />
+              </div>
+
+              {/* Secret Admin Shortcut Detection Hint */}
+              {isAdminTrigger && (
+                <div
+                  onClick={handleSearchSubmit}
+                  className="flex items-center justify-between p-3 rounded-xl bg-gradient-to-r from-amber-50 to-amber-100 border border-amber-300 text-amber-900 cursor-pointer hover:bg-amber-100/90 transition-all shadow-sm group"
+                >
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-7 h-7 rounded-lg bg-amber-400 flex items-center justify-center text-slate-950 font-black text-xs shadow-sm">
+                      <ShieldAlert className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold leading-tight">Akses Panel Admin Terdeteksi</p>
+                      <p className="text-[10px] text-amber-800/80">Tekan Enter atau klik untuk membuka Login CMS Admin</p>
+                    </div>
+                  </div>
+                  <ArrowRight className="w-4 h-4 text-amber-700 group-hover:translate-x-1 transition-transform" />
+                </div>
+              )}
+
+              <div className="flex justify-end gap-2 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setIsSearchOpen(false)}
+                  className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition-colors cursor-pointer"
+                >
+                  Tutup
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-gradient-to-r from-[#1F5BA6] to-[#5C2180] hover:opacity-90 text-white text-xs font-bold rounded-xl transition-all shadow-sm cursor-pointer"
+                >
+                  {isAdminTrigger ? 'Buka Admin' : 'Cari'}
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}

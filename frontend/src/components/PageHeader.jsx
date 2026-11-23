@@ -11,7 +11,10 @@ const PageHeader = ({
   children,
 }) => {
   return (
-    <div className="bg-gradient-to-r from-[#1F5BA6] via-[#383087] to-[#5C2180] py-12 lg:py-16 text-white relative overflow-hidden">
+    <div
+      className="py-12 lg:py-16 text-white relative overflow-hidden transition-colors duration-300"
+      style={{ background: 'var(--theme-gradient, linear-gradient(to right, #1F5BA6, #383087, #5C2180))' }}
+    >
       {/* Background Radial Glow */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-white/10 via-transparent to-transparent pointer-events-none" />
 

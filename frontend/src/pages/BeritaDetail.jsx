@@ -27,7 +27,10 @@ const BeritaDetail = () => {
         <title>{berita.judul} - Dinas Pariwisata Sulteng</title>
       </Helmet>
 
-      <div className="bg-gradient-to-r from-[#1F5BA6] via-[#383087] to-[#5C2180] py-12 lg:py-16 text-white relative overflow-hidden">
+      <div
+        className="py-12 lg:py-16 text-white relative overflow-hidden transition-colors duration-300"
+        style={{ background: 'var(--theme-gradient, linear-gradient(to right, #1F5BA6, #383087, #5C2180))' }}
+      >
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-white/10 via-transparent to-transparent pointer-events-none" />
         <div className="container mx-auto max-w-7xl px-4 md:px-8 relative z-10">
           <Link to="/berita" className="inline-flex items-center gap-2 text-white/80 hover:text-amber-300 mb-4 transition-colors font-medium text-sm">

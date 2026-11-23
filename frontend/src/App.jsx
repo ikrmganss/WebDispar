@@ -51,6 +51,12 @@ import Lapor from './pages/Lapor';
 // Admin
 import AdminLogin from './pages/Admin/Login';
 import AdminDashboard from './pages/Admin/Dashboard';
+import AdminSlider from './pages/Admin/Slider';
+import AdminBerita from './pages/Admin/Berita';
+import AdminDTW from './pages/Admin/DTW';
+import AdminDesaWisata from './pages/Admin/DesaWisata';
+import AdminPPID from './pages/Admin/PPID';
+import AdminTema from './pages/Admin/Tema';
 
 import api from './services/api';
 
@@ -68,6 +74,12 @@ function App() {
       <Routes>
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        <Route path="/admin/slider" element={<AdminSlider />} />
+        <Route path="/admin/berita" element={<AdminBerita />} />
+        <Route path="/admin/dtw" element={<AdminDTW />} />
+        <Route path="/admin/desa-wisata" element={<AdminDesaWisata />} />
+        <Route path="/admin/ppid" element={<AdminPPID />} />
+        <Route path="/admin/tema" element={<AdminTema />} />
       </Routes>
     );
   }
