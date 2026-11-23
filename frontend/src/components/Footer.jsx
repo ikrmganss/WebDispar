@@ -5,7 +5,10 @@ import { FaFacebookF, FaTwitter, FaInstagram, FaYoutube } from 'react-icons/fa6'
 
 const Footer = () => {
   return (
-    <footer className="w-full bg-gradient-to-b from-[#5C2180] to-[#143D8F] text-slate-200 border-t border-[#163259] pt-12 pb-8 px-4 lg:px-8">
+    <footer
+      className="w-full text-slate-200 border-t border-white/10 pt-12 pb-8 px-4 lg:px-8 transition-colors duration-300"
+      style={{ background: 'var(--theme-gradient-vertical, linear-gradient(to bottom, #5C2180, #143D8F))' }}
+    >
       <div className="max-w-7xl mx-auto flex flex-col gap-10">
         {/* 4 Kolom Utama */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-10 border-b border-white/10">

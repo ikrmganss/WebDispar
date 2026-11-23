@@ -1,0 +1,56 @@
+const db = require('../config/db');
+
+exports.getAll = async (req, res) => {
+  try {
+    const [rows] = await db.query('SELECT * FROM slider ORDER BY urutan ASC, created_at DESC');
+    res.json(rows);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.getActive = async (req, res) => {
+  try {
+    const [rows] = await db.query('SELECT * FROM slider WHERE aktif = 1 ORDER BY urutan ASC');
+    res.json(rows);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.create = async (req, res) => {
+  const { judul, urutan } = req.body;
+  const gambar = req.file ? req.file.filename : null;
+  if (!gambar) {
+    return res.status(400).json({ message: 'Gambar slider wajib diunggah' });
+  }
+  try {
+    await db.query('INSERT INTO slider (judul, gambar, urutan, aktif) VALUES (?, ?, ?, 1)', [
+      judul || '',
+      gambar,
+      parseInt(urutan) || 1
+    ]);
+    res.status(201).json({ message: 'Slider berhasil ditambahkan' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.toggle = async (req, res) => {
+  const { aktif } = req.body;
+  try {
+    await db.query('UPDATE slider SET aktif = ? WHERE id = ?', [aktif ? 1 : 0, req.params.id]);
+    res.json({ message: 'Status slider berhasil diubah' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.delete = async (req, res) => {
+  try {
+    await db.query('DELETE FROM slider WHERE id = ?', [req.params.id]);
+    res.json({ message: 'Slider berhasil dihapus' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};

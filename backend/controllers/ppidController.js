@@ -30,6 +30,15 @@ exports.createItem = async (req, res) => {
   }
 };
 
+exports.deleteItem = async (req, res) => {
+  try {
+    await db.query('DELETE FROM ppid_item WHERE id = ?', [req.params.id]);
+    res.json({ message: 'Item berhasil dihapus' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 // Regulasi
 exports.getRegulasi = async (req, res) => {
   try {
@@ -51,6 +60,15 @@ exports.createRegulasi = async (req, res) => {
   }
 };
 
+exports.deleteRegulasi = async (req, res) => {
+  try {
+    await db.query('DELETE FROM ppid_regulasi WHERE id = ?', [req.params.id]);
+    res.json({ message: 'Regulasi berhasil dihapus' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 // SK
 exports.getSK = async (req, res) => {
   try {
@@ -67,6 +85,15 @@ exports.createSK = async (req, res) => {
   try {
     await db.query('INSERT INTO ppid_sk (judul, tahun, file) VALUES (?, ?, ?)', [judul, tahun, file]);
     res.status(201).json({ message: 'SK berhasil dibuat' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.deleteSK = async (req, res) => {
+  try {
+    await db.query('DELETE FROM ppid_sk WHERE id = ?', [req.params.id]);
+    res.json({ message: 'SK berhasil dihapus' });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
