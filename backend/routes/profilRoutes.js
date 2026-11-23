@@ -4,8 +4,12 @@ const { getByKategori, getPejabat, createProfil, updateProfil, createPejabat, de
 const { verifyToken, isAdmin } = require('../middlewares/authMiddleware');
 const upload = require('../middlewares/uploadMiddleware');
 
-router.get('/:kategori', getByKategori);
+// Specific routes first
+router.get('/pejabat', getPejabat);
 router.get('/pejabat/all', getPejabat);
+
+// Parameterized route after specific routes
+router.get('/:kategori', getByKategori);
 router.post('/', verifyToken, isAdmin, upload.single('gambar'), createProfil);
 router.put('/:id', verifyToken, isAdmin, upload.single('gambar'), updateProfil);
 router.post('/pejabat', verifyToken, isAdmin, upload.single('foto'), createPejabat);
