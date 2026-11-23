@@ -81,15 +81,15 @@ const ProfilPimpinan = ({ language = 'ID' }) => {
 
   return (
     <>
-      <Helmet><title>Profil Pimpinan - Dinas Pariwisata Sulteng</title></Helmet>
+      <Helmet><title>{language === 'EN' ? 'Leadership Profile - Department of Tourism of Central Sulawesi' : 'Profil Pimpinan - Dinas Pariwisata Sulteng'}</title></Helmet>
 
       <PageHeader
-        badge="Profil Pimpinan Dinas"
-        title="Profil Pimpinan"
-        subtitle="Struktur Kepemimpinan dan Pejabat Struktural Dinas Pariwisata Provinsi Sulawesi Tengah"
+        badge={language === 'EN' ? "Department Leadership Profile" : "Profil Pimpinan Dinas"}
+        title={language === 'EN' ? "Leadership Profile" : "Profil Pimpinan"}
+        subtitle={language === 'EN' ? "Leadership Structure and Structural Officials of the Department of Tourism of Central Sulawesi Province" : "Struktur Kepemimpinan dan Pejabat Struktural Dinas Pariwisata Provinsi Sulawesi Tengah"}
         breadcrumbs={[
-          { label: 'Profil', path: '/profil' },
-          { label: 'Profil Pimpinan' }
+          { label: language === 'EN' ? 'Profile' : 'Profil', path: '/profil' },
+          { label: language === 'EN' ? 'Leadership Profile' : 'Profil Pimpinan' }
         ]}
       />
 
@@ -104,7 +104,7 @@ const ProfilPimpinan = ({ language = 'ID' }) => {
                 rel="noopener noreferrer"
                 className="btn-outline inline-flex items-center gap-2"
               >
-                <Network size={18} /> Lihat Struktur Organisasi
+                <Network size={18} /> {language === 'EN' ? 'View Organizational Structure' : 'Lihat Struktur Organisasi'}
               </a>
               <a
                 href="/images/Kepegawaian/DUK_UPDATE_JANUARI_2025.pdf"
@@ -112,14 +112,14 @@ const ProfilPimpinan = ({ language = 'ID' }) => {
                 rel="noopener noreferrer"
                 className="btn-primary inline-flex items-center gap-2"
               >
-                <Download size={18} /> Unduh DUK (Update 2025)
+                <Download size={18} /> {language === 'EN' ? 'Download DUK (Update 2025)' : 'Unduh DUK (Update 2025)'}
               </a>
             </div>
 
             <div className="flex items-center gap-2 text-xs text-gray-500 bg-gray-50 border border-gray-200 px-3 py-1.5 rounded-full">
               {loading ? (
                 <span className="inline-flex items-center gap-1.5 text-blue-600">
-                  <RefreshCw size={14} className="animate-spin" /> Memuat data database...
+                  <RefreshCw size={14} className="animate-spin" /> {language === 'EN' ? 'Loading database...' : 'Memuat data database...'}
                 </span>
               ) : isLiveFromDb ? (
                 <span className="inline-flex items-center gap-1.5 text-emerald-700 font-medium">
@@ -127,7 +127,7 @@ const ProfilPimpinan = ({ language = 'ID' }) => {
                 </span>
               ) : (
                 <span className="inline-flex items-center gap-1.5 text-gray-600">
-                  Mode Standar ({pejabat.length} Pejabat)
+                  {language === 'EN' ? 'Standard Mode' : 'Mode Standar'} ({pejabat.length} {language === 'EN' ? 'Officials' : 'Pejabat'})
                 </span>
               )}
             </div>
