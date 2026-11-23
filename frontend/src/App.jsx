@@ -51,6 +51,12 @@ import Lapor from './pages/Lapor';
 // Admin
 import AdminLogin from './pages/Admin/Login';
 import AdminDashboard from './pages/Admin/Dashboard';
+import AdminSlider from './pages/Admin/Slider';
+import AdminBerita from './pages/Admin/Berita';
+import AdminDTW from './pages/Admin/DTW';
+import AdminDesaWisata from './pages/Admin/DesaWisata';
+import AdminPPID from './pages/Admin/PPID';
+import AdminTema from './pages/Admin/Tema';
 
 import api from './services/api';
 
@@ -68,6 +74,12 @@ function App() {
       <Routes>
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        <Route path="/admin/slider" element={<AdminSlider />} />
+        <Route path="/admin/berita" element={<AdminBerita />} />
+        <Route path="/admin/dtw" element={<AdminDTW />} />
+        <Route path="/admin/desa-wisata" element={<AdminDesaWisata />} />
+        <Route path="/admin/ppid" element={<AdminPPID />} />
+        <Route path="/admin/tema" element={<AdminTema />} />
       </Routes>
     );
   }
@@ -75,56 +87,56 @@ function App() {
   return (
     <MainLayout language={language} setLanguage={setLanguage}>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/berita" element={<Berita />} />
-        <Route path="/berita/:slug" element={<BeritaDetail />} />
+        <Route path="/" element={<Home language={language} />} />
+        <Route path="/berita" element={<Berita language={language} />} />
+        <Route path="/berita/:slug" element={<BeritaDetail language={language} />} />
 
         {/* Profil */}
-        <Route path="/profil/sejarah" element={<Sejarah />} />
-        <Route path="/profil/visi-misi" element={<VisiMisi />} />
-        <Route path="/profil/profil-pimpinan" element={<ProfilPimpinan />} />
-        <Route path="/profil/tupoksi" element={<Tupoksi />} />
-        <Route path="/profil/majalah" element={<Majalah />} />
-        <Route path="/profil/logo" element={<Logo />} />
-        <Route path="/profil/hubungi-kami" element={<HubungiKami />} />
+        <Route path="/profil/sejarah" element={<Sejarah language={language} />} />
+        <Route path="/profil/visi-misi" element={<VisiMisi language={language} />} />
+        <Route path="/profil/profil-pimpinan" element={<ProfilPimpinan language={language} />} />
+        <Route path="/profil/tupoksi" element={<Tupoksi language={language} />} />
+        <Route path="/profil/majalah" element={<Majalah language={language} />} />
+        <Route path="/profil/logo" element={<Logo language={language} />} />
+        <Route path="/profil/hubungi-kami" element={<HubungiKami language={language} />} />
 
         {/* PPID */}
-        <Route path="/ppid/profil" element={<ProfilPPID />} />
-        <Route path="/ppid/daftar-informasi-publik" element={<DaftarInformasiPublik />} />
-        <Route path="/ppid/informasi-setiap-saat" element={<InformasiSetiapSaat />} />
-        <Route path="/ppid/informasi-serta-merta" element={<InformasiSertaMerta />} />
-        <Route path="/ppid/informasi-dikecualikan" element={<InformasiDikecualikan />} />
-        <Route path="/ppid/profil/struktur-organisasi" element={<StrukturOrganisasiPPID />} />
-        <Route path="/ppid/profil/visi-misi" element={<VisiMisiPPID />} />
-        <Route path="/ppid/profil/maklumat-pelayanan" element={<MaklumatPelayanan />} />
-        <Route path="/ppid/profil/tugas-ppid" element={<TugasPPID />} />
-        <Route path="/ppid/laporan-tahunan" element={<LaporanTahunan />} />
-        <Route path="/ppid/surat-keputusan" element={<SuratKeputusan />} />
-        <Route path="/ppid/standar-pelayanan" element={<StandarPelayanan />} />
-        <Route path="/ppid/layanan-publik/form-permohonan" element={<FormPermohonan />} />
-        <Route path="/ppid/layanan-publik/form-keberatan" element={<FormKeberatan />} />
-        <Route path="/ppid/layanan-publik/prosedur-pengaduan" element={<ProsedurPengaduan />} />
-        <Route path="/ppid/layanan-publik/survey-kepuasan" element={<SurveyKepuasan />} />
-        <Route path="/ppid/informasi-secara-berkala" element={<InformasiSecaraBerkala />} />
-        <Route path="/ppid/informasi-berkala" element={<InformasiSecaraBerkala />} />
-        <Route path="/ppid/layanan-publik/regulasi" element={<Regulasi />} />
-        <Route path="/ppid/regulasi" element={<Regulasi />} />
+        <Route path="/ppid/profil" element={<ProfilPPID language={language} />} />
+        <Route path="/ppid/daftar-informasi-publik" element={<DaftarInformasiPublik language={language} />} />
+        <Route path="/ppid/informasi-setiap-saat" element={<InformasiSetiapSaat language={language} />} />
+        <Route path="/ppid/informasi-serta-merta" element={<InformasiSertaMerta language={language} />} />
+        <Route path="/ppid/informasi-dikecualikan" element={<InformasiDikecualikan language={language} />} />
+        <Route path="/ppid/profil/struktur-organisasi" element={<StrukturOrganisasiPPID language={language} />} />
+        <Route path="/ppid/profil/visi-misi" element={<VisiMisiPPID language={language} />} />
+        <Route path="/ppid/profil/maklumat-pelayanan" element={<MaklumatPelayanan language={language} />} />
+        <Route path="/ppid/profil/tugas-ppid" element={<TugasPPID language={language} />} />
+        <Route path="/ppid/laporan-tahunan" element={<LaporanTahunan language={language} />} />
+        <Route path="/ppid/surat-keputusan" element={<SuratKeputusan language={language} />} />
+        <Route path="/ppid/standar-pelayanan" element={<StandarPelayanan language={language} />} />
+        <Route path="/ppid/layanan-publik/form-permohonan" element={<FormPermohonan language={language} />} />
+        <Route path="/ppid/layanan-publik/form-keberatan" element={<FormKeberatan language={language} />} />
+        <Route path="/ppid/layanan-publik/prosedur-pengaduan" element={<ProsedurPengaduan language={language} />} />
+        <Route path="/ppid/layanan-publik/survey-kepuasan" element={<SurveyKepuasan language={language} />} />
+        <Route path="/ppid/informasi-secara-berkala" element={<InformasiSecaraBerkala language={language} />} />
+        <Route path="/ppid/informasi-berkala" element={<InformasiSecaraBerkala language={language} />} />
+        <Route path="/ppid/layanan-publik/regulasi" element={<Regulasi language={language} />} />
+        <Route path="/ppid/regulasi" element={<Regulasi language={language} />} />
 
         {/* Info Pariwisata */}
-        <Route path="/info-pariwisata/destinasi/daya-tarik-wisata" element={<DayaTarikWisata />} />
-        <Route path="/info-pariwisata/destinasi/daya-tarik-wisata/:kabupaten" element={<DayaTarikWisata />} />
-        <Route path="/info-pariwisata/destinasi/desa-wisata" element={<DesaWisata />} />
-        <Route path="/info-pariwisata/destinasi/desa-wisata/:kabupaten" element={<DesaWisata />} />
-        <Route path="/info-pariwisata/pemasaran/paket-wisata" element={<PaketWisata />} />
-        <Route path="/info-pariwisata/pemasaran/kalender-event" element={<KalenderEvent />} />
-        <Route path="/info-pariwisata/pemasaran/data-hunian" element={<DataHunian />} />
-        <Route path="/info-pariwisata/pemasaran/statistik-kunjungan" element={<StatistikKunjungan />} />
-        <Route path="/info-pariwisata/ekonomi-kreatif" element={<EkonomiKreatif />} />
-        <Route path="/info-pariwisata/sumber-daya" element={<SumberDaya />} />
+        <Route path="/info-pariwisata/destinasi/daya-tarik-wisata" element={<DayaTarikWisata language={language} />} />
+        <Route path="/info-pariwisata/destinasi/daya-tarik-wisata/:kabupaten" element={<DayaTarikWisata language={language} />} />
+        <Route path="/info-pariwisata/destinasi/desa-wisata" element={<DesaWisata language={language} />} />
+        <Route path="/info-pariwisata/destinasi/desa-wisata/:kabupaten" element={<DesaWisata language={language} />} />
+        <Route path="/info-pariwisata/pemasaran/paket-wisata" element={<PaketWisata language={language} />} />
+        <Route path="/info-pariwisata/pemasaran/kalender-event" element={<KalenderEvent language={language} />} />
+        <Route path="/info-pariwisata/pemasaran/data-hunian" element={<DataHunian language={language} />} />
+        <Route path="/info-pariwisata/pemasaran/statistik-kunjungan" element={<StatistikKunjungan language={language} />} />
+        <Route path="/info-pariwisata/ekonomi-kreatif" element={<EkonomiKreatif language={language} />} />
+        <Route path="/info-pariwisata/sumber-daya" element={<SumberDaya language={language} />} />
 
         {/* Lain */}
-        <Route path="/rencana-terbit" element={<RencanaTerbit />} />
-        <Route path="/lapor" element={<Lapor />} />
+        <Route path="/rencana-terbit" element={<RencanaTerbit language={language} />} />
+        <Route path="/lapor" element={<Lapor language={language} />} />
       </Routes>
     </MainLayout>
   );

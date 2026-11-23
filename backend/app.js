@@ -19,6 +19,8 @@ app.use('/api/ppid', require('./routes/ppidRoutes'));
 app.use('/api/info-pariwisata', require('./routes/infoPariwisataRoutes'));
 app.use('/api/rencana-terbit', require('./routes/rencanaTerbitRoutes'));
 app.use('/api/statistik', require('./routes/statistikRoutes'));
+app.use('/api/slider', require('./routes/sliderRoutes'));
+app.use('/api/tema', require('./routes/temaRoutes'));
 
 // Error handler
 app.use((err, req, res, next) => {

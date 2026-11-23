@@ -29,6 +29,26 @@ exports.createDTW = async (req, res) => {
   }
 };
 
+exports.updateDTW = async (req, res) => {
+  const { kabupaten, judul, deskripsi } = req.body;
+  const gambar = req.file ? req.file.filename : req.body.gambar_lama;
+  try {
+    await db.query('UPDATE dtw SET kabupaten=?, judul=?, deskripsi=?, gambar=? WHERE id=?', [kabupaten, judul, deskripsi, gambar, req.params.id]);
+    res.json({ message: 'DTW berhasil diupdate' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.deleteDTW = async (req, res) => {
+  try {
+    await db.query('DELETE FROM dtw WHERE id = ?', [req.params.id]);
+    res.json({ message: 'DTW berhasil dihapus' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 // Desa Wisata
 exports.getDesaWisata = async (req, res) => {
   try {
@@ -53,6 +73,26 @@ exports.createDesaWisata = async (req, res) => {
   try {
     await db.query('INSERT INTO desa_wisata (kabupaten, nama, deskripsi, gambar) VALUES (?, ?, ?, ?)', [kabupaten, nama, deskripsi, gambar]);
     res.status(201).json({ message: 'Desa Wisata berhasil dibuat' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.updateDesaWisata = async (req, res) => {
+  const { kabupaten, nama, deskripsi } = req.body;
+  const gambar = req.file ? req.file.filename : req.body.gambar_lama;
+  try {
+    await db.query('UPDATE desa_wisata SET kabupaten=?, nama=?, deskripsi=?, gambar=? WHERE id=?', [kabupaten, nama, deskripsi, gambar, req.params.id]);
+    res.json({ message: 'Desa Wisata berhasil diupdate' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.deleteDesaWisata = async (req, res) => {
+  try {
+    await db.query('DELETE FROM desa_wisata WHERE id = ?', [req.params.id]);
+    res.json({ message: 'Desa Wisata berhasil dihapus' });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

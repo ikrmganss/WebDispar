@@ -304,12 +304,12 @@ export const Sidebar = ({ isMobileOpen, setIsMobileOpen, language, setLanguage }
         fixed top-0 left-0 z-50
         w-80 max-w-[85vw] h-screen
         flex flex-col justify-between
-        bg-gradient-to-b from-[#5C2180] via-[#383087] to-[#143D8F]
         text-white border-r border-white/10
         shadow-2xl transition-transform duration-300 ease-in-out
         lg:hidden
         ${isMobileOpen ? 'translate-x-0' : '-translate-x-full pointer-events-none'}
       `}
+      style={{ background: 'var(--theme-gradient-vertical, linear-gradient(to bottom, #5C2180, #143D8F))' }}
     >
       {/* Top Section Scrollable */}
       <div className="flex-1 overflow-y-auto overflow-x-hidden p-5 flex flex-col gap-4">
@@ -375,6 +375,12 @@ export const Sidebar = ({ isMobileOpen, setIsMobileOpen, language, setLanguage }
             onChange={(e) => setSearchQuery(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === 'Enter' && searchQuery.trim()) {
+                const q = searchQuery.trim().toLowerCase();
+                const adminCodes = ['dispar26', 'dispar 26'];
+                if (adminCodes.includes(q)) {
+                  window.location.href = '/admin/login';
+                  return;
+                }
                 window.location.href = `/berita?q=${encodeURIComponent(searchQuery.trim())}`;
               }
             }}

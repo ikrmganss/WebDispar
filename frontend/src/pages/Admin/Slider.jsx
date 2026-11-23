@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { ImagePlus, Trash2, ToggleLeft, ToggleRight, Upload, AlertCircle } from 'lucide-react';
+import { AdminLayout } from './Dashboard';
 import api from '../../services/api';
+import { getImageSrc } from '../../utils/imageHelper';
 
 const BASE_URL = import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5000';
 
@@ -79,7 +81,8 @@ const AdminSlider = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <AdminLayout>
+      <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-black text-slate-900">Kelola Slider</h1>
@@ -179,14 +182,17 @@ const AdminSlider = () => {
         ) : (
           <div className="divide-y divide-slate-100">
             {sliders.map((slider) => {
-              const imgSrc = slider.gambar
-                ? `${BASE_URL}/uploads/slider/${slider.gambar}`
-                : '/slider/Slider.jpg';
+              const imgSrc = getImageSrc(slider.gambar, '/slider/Slider.jpg');
               return (
                 <div key={slider.id} className="flex items-center gap-4 px-6 py-4 hover:bg-slate-50 transition-colors">
                   {/* Thumbnail */}
                   <div className="w-24 h-14 rounded-xl overflow-hidden bg-slate-100 shrink-0">
-                    <img src={imgSrc} alt={slider.judul} className="w-full h-full object-cover" />
+                    <img
+                      src={imgSrc}
+                      alt={slider.judul}
+                      className="w-full h-full object-cover"
+                      onError={(e) => { e.currentTarget.src = '/slider/Slider.jpg'; }}
+                    />
                   </div>
 
                   {/* Info */}
@@ -232,6 +238,7 @@ const AdminSlider = () => {
         )}
       </div>
     </div>
+    </AdminLayout>
   );
 };
 
