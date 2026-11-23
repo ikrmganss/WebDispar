@@ -4,7 +4,6 @@ import { Hotel, Download, FileText, BedDouble, Building2, TrendingUp } from 'luc
 import { motion } from 'framer-motion';
 import api from '../../../services/api';
 import PageHeader from '../../../components/PageHeader';
-import { useLanguage } from '../../../context/LanguageContext';
 
 const HUNIAN_KABUPATEN = [
   { no: 1, kabupaten: 'Kota Palu', bintang: 18, nonBintang: 112, kamar: 3420, restoran: 276, tpk: '54,82%' },
@@ -23,8 +22,6 @@ const HUNIAN_KABUPATEN = [
 ];
 
 const DataHunian = () => {
-  const { language } = useLanguage();
-  const isEn = language === 'EN';
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -37,9 +34,7 @@ const DataHunian = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{isEn ? 'Hotel Occupancy Data - Central Sulawesi Tourism' : 'Data Hunian Hotel - Info Pariwisata Sulawesi Tengah'}</title>
-      </Helmet>
+      <Helmet><title>Data Hunian Hotel - Info Pariwisata Sulawesi Tengah</title></Helmet>
 
       <PageHeader
         badge="Statistik Akomodasi & Perhotelan"
@@ -62,8 +57,8 @@ const DataHunian = () => {
                 <Hotel size={24} />
               </div>
               <div>
-                <p className="text-xs text-gray-500">{isEn ? 'Star-Rated Hotels' : 'Hotel Berbintang'}</p>
-                <p className="text-2xl font-bold text-navy-900">{isEn ? '45 Units' : '45 Unit'}</p>
+                <p className="text-xs text-gray-500">Hotel Berbintang</p>
+                <p className="text-2xl font-bold text-navy-900">45 Unit</p>
               </div>
             </div>
             <div className="card p-5 flex items-center gap-4">
@@ -71,8 +66,8 @@ const DataHunian = () => {
                 <Building2 size={24} />
               </div>
               <div>
-                <p className="text-xs text-gray-500">{isEn ? 'Non-Star & Homestays' : 'Hotel Non-Bintang & Homestay'}</p>
-                <p className="text-2xl font-bold text-navy-900">{isEn ? '776 Units' : '776 Unit'}</p>
+                <p className="text-xs text-gray-500">Hotel Non-Bintang & Homestay</p>
+                <p className="text-2xl font-bold text-navy-900">776 Unit</p>
               </div>
             </div>
             <div className="card p-5 flex items-center gap-4">
@@ -80,8 +75,8 @@ const DataHunian = () => {
                 <BedDouble size={24} />
               </div>
               <div>
-                <p className="text-xs text-gray-500">{isEn ? 'Total Room Capacity' : 'Total Kapasitas Kamar'}</p>
-                <p className="text-2xl font-bold text-navy-900">{isEn ? '14,810 Rooms' : '14.810 Kamar'}</p>
+                <p className="text-xs text-gray-500">Total Kapasitas Kamar</p>
+                <p className="text-2xl font-bold text-navy-900">14.810 Kamar</p>
               </div>
             </div>
             <div className="card p-5 flex items-center gap-4 bg-gradient-to-br from-primary-600 to-navy-800 text-white">
@@ -89,7 +84,7 @@ const DataHunian = () => {
                 <TrendingUp size={24} />
               </div>
               <div>
-                <p className="text-xs text-white/75">{isEn ? 'Provincial Avg Occupancy' : 'Rata-Rata TPK Provinsi'}</p>
+                <p className="text-xs text-white/75">Rata-Rata TPK Provinsi</p>
                 <p className="text-2xl font-bold">46,48%</p>
               </div>
             </div>
@@ -99,14 +94,10 @@ const DataHunian = () => {
           <div className="card overflow-hidden mb-10">
             <div className="p-6 border-b border-gray-100">
               <h2 className="text-lg font-bold text-navy-900">
-                {isEn
-                  ? 'Recapitulation of Hotel Accommodations & Room Occupancy Rate (TPK) by Regency / City'
-                  : 'Rekapitulasi Akomodasi Hotel & Tingkat Penghunian Kamar (TPK) Menurut Kabupaten/Kota'}
+                Rekapitulasi Akomodasi Hotel & Tingkat Penghunian Kamar (TPK) Menurut Kabupaten/Kota
               </h2>
               <p className="text-xs text-gray-500 mt-1">
-                {isEn
-                  ? 'Sectoral data of hospitality accommodation and food & beverage facilities across 13 Regencies/Cities in Central Sulawesi Province'
-                  : 'Data sektoral akomodasi perhotelan dan sarana rumah makan/restoran di 13 Kabupaten/Kota Provinsi Sulawesi Tengah'}
+                Data sektoral akomodasi perhotelan dan sarana rumah makan/restoran di 13 Kabupaten/Kota Provinsi Sulawesi Tengah
               </p>
             </div>
             <div className="overflow-x-auto">
@@ -114,12 +105,12 @@ const DataHunian = () => {
                 <thead className="bg-slate-50 text-navy-800 font-semibold border-b border-gray-200">
                   <tr>
                     <th className="py-3.5 px-4 w-12 text-center">No</th>
-                    <th className="py-3.5 px-4">{isEn ? 'Regency / City' : 'Kabupaten / Kota'}</th>
-                    <th className="py-3.5 px-4 text-center">{isEn ? 'Star Hotels' : 'Hotel Bintang'}</th>
-                    <th className="py-3.5 px-4 text-center">{isEn ? 'Non-Star Hotels' : 'Hotel Non-Bintang'}</th>
-                    <th className="py-3.5 px-4 text-center">{isEn ? 'Total Rooms' : 'Jumlah Kamar'}</th>
-                    <th className="py-3.5 px-4 text-center">{isEn ? 'Restaurants' : 'Rumah Makan / Restoran'}</th>
-                    <th className="py-3.5 px-4 text-center">{isEn ? 'Avg Occupancy' : 'Rata-Rata TPK'}</th>
+                    <th className="py-3.5 px-4">Kabupaten / Kota</th>
+                    <th className="py-3.5 px-4 text-center">Hotel Bintang</th>
+                    <th className="py-3.5 px-4 text-center">Hotel Non-Bintang</th>
+                    <th className="py-3.5 px-4 text-center">Jumlah Kamar</th>
+                    <th className="py-3.5 px-4 text-center">Rumah Makan / Restoran</th>
+                    <th className="py-3.5 px-4 text-center">Rata-Rata TPK</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100">
@@ -127,10 +118,10 @@ const DataHunian = () => {
                     <tr key={row.no} className="hover:bg-slate-50/80 transition-colors">
                       <td className="py-3 px-4 text-center text-gray-500">{row.no}</td>
                       <td className="py-3 px-4 font-medium text-navy-900">{row.kabupaten}</td>
-                      <td className="py-3 px-4 text-center">{row.bintang.toLocaleString(isEn ? 'en-US' : 'id-ID')}</td>
-                      <td className="py-3 px-4 text-center">{row.nonBintang.toLocaleString(isEn ? 'en-US' : 'id-ID')}</td>
-                      <td className="py-3 px-4 text-center font-medium">{row.kamar.toLocaleString(isEn ? 'en-US' : 'id-ID')}</td>
-                      <td className="py-3 px-4 text-center">{row.restoran.toLocaleString(isEn ? 'en-US' : 'id-ID')}</td>
+                      <td className="py-3 px-4 text-center">{row.bintang.toLocaleString('id-ID')}</td>
+                      <td className="py-3 px-4 text-center">{row.nonBintang.toLocaleString('id-ID')}</td>
+                      <td className="py-3 px-4 text-center font-medium">{row.kamar.toLocaleString('id-ID')}</td>
+                      <td className="py-3 px-4 text-center">{row.restoran.toLocaleString('id-ID')}</td>
                       <td className="py-3 px-4 text-center">
                         <span className="inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold bg-primary-50 text-primary-700">
                           {row.tpk}
@@ -141,7 +132,7 @@ const DataHunian = () => {
                 </tbody>
                 <tfoot className="bg-slate-100 font-bold text-navy-900 border-t-2 border-gray-200">
                   <tr>
-                    <td colSpan={2} className="py-3.5 px-4">{isEn ? 'Total / Central Sulawesi Provincial Average' : 'Total / Rata-Rata Provinsi Sulawesi Tengah'}</td>
+                    <td colSpan={2} className="py-3.5 px-4">Total / Rata-Rata Provinsi Sulawesi Tengah</td>
                     <td className="py-3.5 px-4 text-center">45</td>
                     <td className="py-3.5 px-4 text-center">776</td>
                     <td className="py-3.5 px-4 text-center">14.810</td>
@@ -154,13 +145,13 @@ const DataHunian = () => {
           </div>
 
           {/* Dokumen Unduhan Resmi */}
-          <h2 className="text-xl font-bold text-navy-900 mb-4">{isEn ? 'Official Documents & Reports (PDF)' : 'Dokumen & Laporan Data Hunian Hotel (PDF)'}</h2>
+          <h2 className="text-xl font-bold text-navy-900 mb-4">Dokumen & Laporan Data Hunian Hotel (PDF)</h2>
           {loading ? (
             <div className="space-y-4">{[...Array(4)].map((_, i) => <div key={i} className="skeleton h-24 rounded-xl" />)}</div>
           ) : data.length === 0 ? (
             <div className="text-center py-20 text-gray-400 card">
               <Hotel size={48} className="mx-auto mb-4 opacity-30" />
-              <p>{isEn ? 'No occupancy documents available yet' : 'Belum ada data hunian tersedia'}</p>
+              <p>Belum ada data hunian tersedia</p>
             </div>
           ) : (
             <div className="space-y-4">
@@ -188,14 +179,14 @@ const DataHunian = () => {
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-1.5 bg-primary-600 hover:bg-primary-700 text-white text-xs font-semibold py-2.5 px-4 rounded-lg transition-colors"
                       >
-                        <FileText size={15} /> {isEn ? 'View' : 'Lihat'}
+                        <FileText size={15} /> Lihat
                       </a>
                       <a
                         href={item.file.startsWith('http') || item.file.startsWith('/') ? item.file : `/uploads/${item.file}`}
                         download
                         className="inline-flex items-center gap-1.5 border border-primary-600 text-primary-600 hover:bg-primary-50 text-xs font-semibold py-2.5 px-4 rounded-lg transition-colors"
                       >
-                        <Download size={15} /> {isEn ? 'Download' : 'Unduh'}
+                        <Download size={15} /> Unduh
                       </a>
                     </div>
                   )}
@@ -209,8 +200,8 @@ const DataHunian = () => {
             <div className="flex items-start gap-3">
               <FileText size={20} className="text-primary-600 flex-shrink-0 mt-0.5" />
               <div className="text-sm text-gray-700">
-                <p className="font-semibold mb-1">{isEn ? 'Note:' : 'Catatan:'}</p>
-                <p>{isEn ? 'Hotel occupancy and accommodation statistics are sourced from official Central Sulawesi Tourism Department records stored on this server.' : 'Data hunian hotel dan statistik akomodasi bersumber dari dokumen resmi Dinas Pariwisata Provinsi Sulawesi Tengah yang telah disimpan secara lokal di server ini.'}</p>
+                <p className="font-semibold mb-1">Catatan:</p>
+                <p>Data hunian hotel dan statistik akomodasi bersumber dari dokumen resmi Dinas Pariwisata Provinsi Sulawesi Tengah yang telah disimpan secara lokal di server ini.</p>
               </div>
             </div>
           </div>

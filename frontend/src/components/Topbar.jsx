@@ -42,7 +42,7 @@ export const Topbar = () => {
       <div className="max-w-7xl w-full flex items-center justify-between gap-2">
         {/* Left: Status Badge & Slogan */}
         <div className="flex items-center gap-2 min-w-0 flex-1">
-          {theme?.badge_icon && theme.badge_icon !== 'none' ? (
+          {theme.badge_icon && theme.badge_icon !== 'none' ? (
             <div
               className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white/20 border border-white/30 text-[10px] font-bold text-white shadow-sm backdrop-blur-sm shrink-0 max-w-[150px] sm:max-w-[240px]"
               title={theme.seasonal_badge || 'Edisi Khusus Hari Besar'}

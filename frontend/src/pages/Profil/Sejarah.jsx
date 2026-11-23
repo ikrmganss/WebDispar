@@ -3,11 +3,8 @@ import { Helmet } from 'react-helmet-async';
 import PageHeader from '../../components/PageHeader';
 import { Landmark } from 'lucide-react';
 import api from '../../services/api';
-import { useLanguage } from '../../context/LanguageContext';
 
 const Sejarah = () => {
-  const { language } = useLanguage();
-  const isEn = language === 'EN';
   const [data, setData] = useState(null);
 
   useEffect(() => {
@@ -16,21 +13,15 @@ const Sejarah = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{isEn ? 'History - Department of Tourism Central Sulawesi' : 'Sejarah - Dinas Pariwisata Sulteng'}</title>
-      </Helmet>
+      <Helmet><title>Sejarah - Dinas Pariwisata Sulteng</title></Helmet>
       <PageHeader
-        badge={isEn ? "Institutional Profile" : "Profil Kelembagaan"}
+        badge="Profil Kelembagaan"
         badgeIcon={Landmark}
-        title={isEn ? "Brief History" : "Sejarah Singkat"}
-        subtitle={
-          isEn
-            ? "Historical milestones and the journey of the Department of Tourism of Central Sulawesi Province in advancing regional tourism."
-            : "Lintas sejarah pembentukan dan perjalanan Dinas Pariwisata Provinsi Sulawesi Tengah dalam memajukan kepariwisataan daerah."
-        }
+        title="Sejarah Singkat"
+        subtitle="Lintas sejarah pembentukan dan perjalanan Dinas Pariwisata Provinsi Sulawesi Tengah dalam memajukan kepariwisataan daerah."
         breadcrumbs={[
-          { label: isEn ? 'Profile' : 'Profil', path: '/profil' },
-          { label: isEn ? 'History' : 'Sejarah' }
+          { label: 'Profil' },
+          { label: 'Sejarah' }
         ]}
       />
       <section className="py-12 lg:py-16">

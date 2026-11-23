@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MapPin, Mail, Phone } from 'lucide-react';
-import { FaFacebookF, FaInstagram, FaYoutube } from 'react-icons/fa6';
+import { MapPin, Mail, Phone, ExternalLink } from 'lucide-react';
+import { FaFacebookF, FaTwitter, FaInstagram, FaYoutube } from 'react-icons/fa6';
 import { useLanguage } from '../context/LanguageContext';
 import { UI_STRINGS } from '../utils/translations';
 
@@ -22,7 +22,7 @@ const Footer = () => {
           <div className="flex flex-col gap-3">
             <h3 className="font-bold text-[#FBBF24] text-sm flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-[#FBBF24]" />
-              {strings.quickLinks}
+              {strings.quickLinks || 'Quick Links'}
             </h3>
             <div className="flex flex-col gap-2 text-xs">
               {[
@@ -47,34 +47,36 @@ const Footer = () => {
           <div className="flex flex-col gap-3">
             <h3 className="font-bold text-[#FBBF24] text-sm flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-[#FBBF24]" />
-              {strings.contact}
+              {strings.contact || 'Kontak'}
             </h3>
             <div className="flex flex-col gap-2 text-xs text-slate-300">
               <Link to="/profil/hubungi-kami" className="hover:text-amber-300 transition-colors">
-                {strings.officeAddress}
+                {strings.officeAddress || 'Alamat Kantor'}
               </Link>
               <Link to="/profil/hubungi-kami" className="hover:text-amber-300 transition-colors">
-                {strings.complaintEmail}
+                {strings.complaintEmail || 'Email Pengaduan'}
               </Link>
-              <Link to="/ppid/layanan-publik/form-permohonan" className="hover:text-amber-300 transition-colors">
-                {strings.tenganiService}
+              <Link to="/profil/hubungi-kami" className="hover:text-amber-300 transition-colors">
+                {strings.tenganiService || 'Layanan Pengaduan Tengani'}
               </Link>
               <Link to="/ppid/profil" className="hover:text-amber-300 transition-colors">
-                {strings.ppidTourism}
+                {strings.ppidTourism || 'PPID Dinas Pariwisata'}
               </Link>
             </div>
           </div>
 
-          {/* Kolom 3: Alamat & Kontak Detail */}
+          {/* Kolom 3: Alamat & Kontak Resmi */}
           <div className="flex flex-col gap-3">
             <h3 className="font-bold text-[#FBBF24] text-sm flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-[#FBBF24]" />
-              {strings.officialContact}
+              {strings.officialContact || 'Alamat & Kontak Resmi'}
             </h3>
             <div className="flex flex-col gap-2.5 text-xs text-slate-300">
               <div className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-[#FBBF24] shrink-0 mt-0.5" />
-                <span className="leading-relaxed">{strings.fullAddress}</span>
+                <span className="leading-relaxed">
+                  {strings.fullAddress || 'Jalan Dewi Sartika Nomor 45 Palu, Kode Pos 94121, Palu Selatan, Sulawesi Tengah'}
+                </span>
               </div>
               <div className="flex items-center gap-2.5">
                 <Mail className="w-4 h-4 text-[#FBBF24] shrink-0" />
@@ -91,14 +93,14 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Kolom 4: Social Media */}
+          {/* Kolom 4: Media Sosial Resmi */}
           <div className="flex flex-col gap-3">
             <h3 className="font-bold text-[#FBBF24] text-sm flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-[#FBBF24]" />
-              {strings.officialSocial}
+              {strings.officialSocial || 'Media Sosial Resmi'}
             </h3>
             <p className="text-slate-300 text-xs leading-relaxed">
-              {strings.socialDesc}
+              {strings.socialDesc || 'Ikuti akun resmi Dinas Pariwisata Provinsi Sulawesi Tengah untuk informasi festival dan pariwisata terkini.'}
             </p>
             <div className="flex gap-2.5 pt-1">
               {[
@@ -123,11 +125,11 @@ const Footer = () => {
 
         {/* Baris Hak Cipta & Link Bawah */}
         <div className="flex flex-wrap items-center justify-between gap-4 text-xs text-slate-300/80">
-          <p>{strings.copyright}</p>
+          <p>{strings.copyright || '© 2026 Dinas Pariwisata Provinsi Sulawesi Tengah. All Rights Reserved.'}</p>
           <div className="flex gap-5">
-            <span className="hover:text-white transition-colors cursor-pointer">{isEn ? 'Privacy Policy' : 'Kebijakan Privasi'}</span>
-            <span className="hover:text-white transition-colors cursor-pointer">{isEn ? 'Terms & Conditions' : 'Syarat & Ketentuan'}</span>
-            <span className="hover:text-white transition-colors cursor-pointer">{isEn ? 'Sitemap' : 'Peta Situs'}</span>
+            <a href="#" className="hover:text-white transition-colors">{isEn ? 'Privacy Policy' : 'Kebijakan Privasi'}</a>
+            <a href="#" className="hover:text-white transition-colors">{isEn ? 'Terms & Conditions' : 'Syarat & Ketentuan'}</a>
+            <a href="#" className="hover:text-white transition-colors">{isEn ? 'Sitemap' : 'Peta Situs'}</a>
           </div>
         </div>
       </div>

@@ -4,11 +4,8 @@ import { Download, Eye, Package } from 'lucide-react';
 import { motion } from 'framer-motion';
 import api from '../../../services/api';
 import PageHeader from '../../../components/PageHeader';
-import { useLanguage } from '../../../context/LanguageContext';
 
 const PaketWisata = () => {
-  const { language } = useLanguage();
-  const isEn = language === 'EN';
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -21,9 +18,7 @@ const PaketWisata = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{isEn ? 'Tour Packages - Central Sulawesi Tourism' : 'Paket Wisata - Info Pariwisata Sulawesi Tengah'}</title>
-      </Helmet>
+      <Helmet><title>Paket Wisata - Info Pariwisata Sulawesi Tengah</title></Helmet>
 
       <PageHeader
         badge="Paket Wisata & Perjalanan"
@@ -46,7 +41,7 @@ const PaketWisata = () => {
           ) : data.length === 0 ? (
             <div className="text-center py-20 text-gray-400 card">
               <Package size={48} className="mx-auto mb-4 opacity-30" />
-              <p>{isEn ? 'No tour packages available yet' : 'Belum ada paket wisata tersedia'}</p>
+              <p>Belum ada paket wisata tersedia</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -79,14 +74,14 @@ const PaketWisata = () => {
                             rel="noopener noreferrer"
                             className="flex-1 inline-flex items-center justify-center gap-1.5 bg-primary-600 hover:bg-primary-700 text-white text-xs font-semibold py-2 px-3 rounded-lg transition-colors"
                           >
-                            <Eye size={14} /> {isEn ? 'View' : 'Lihat'}
+                            <Eye size={14} /> Lihat
                           </a>
                           <a
                             href={item.file_pdf.startsWith('http') || item.file_pdf.startsWith('/') ? item.file_pdf : `/uploads/${item.file_pdf}`}
                             download
                             className="inline-flex items-center justify-center gap-1.5 border border-primary-600 text-primary-600 hover:bg-primary-50 text-xs font-semibold py-2 px-3 rounded-lg transition-colors"
                           >
-                            <Download size={14} /> {isEn ? 'Download' : 'Unduh'}
+                            <Download size={14} /> Unduh
                           </a>
                         </>
                       )}

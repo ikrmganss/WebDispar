@@ -1,6 +1,5 @@
 import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { useLanguage } from './context/LanguageContext';
 import MainLayout from './components/MainLayout';
 import Home from './pages/Home';
 import Berita from './pages/Berita';
@@ -60,6 +59,7 @@ import AdminPPID from './pages/Admin/PPID';
 import AdminTema from './pages/Admin/Tema';
 
 import api from './services/api';
+import { useLanguage } from './context/LanguageContext';
 
 // Route Guard untuk Admin Internal
 const ProtectedRoute = ({ children }) => {

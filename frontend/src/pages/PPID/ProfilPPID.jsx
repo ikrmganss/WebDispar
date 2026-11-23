@@ -3,28 +3,22 @@ import { Link } from 'react-router-dom';
 import { FileText, Users, Target, Shield, ArrowRight, Info } from 'lucide-react';
 import { motion } from 'framer-motion';
 import PageHeader from '../../components/PageHeader';
-import { useLanguage } from '../../context/LanguageContext';
 
 const ProfilPPID = () => {
-  const { language } = useLanguage();
-  const isEn = language === 'EN';
-
   const subMenu = [
-    { label: isEn ? 'PPID Organizational Structure' : 'Struktur Organisasi PPID', path: '/ppid/profil/struktur-organisasi', icon: Users },
-    { label: isEn ? 'PPID Vision and Mission' : 'Visi dan Misi PPID', path: '/ppid/profil/visi-misi', icon: Target },
-    { label: isEn ? 'Public Information Service Notice' : 'Maklumat Pelayanan Informasi Publik', path: '/ppid/profil/maklumat-pelayanan', icon: Shield },
-    { label: isEn ? 'PPID & Executive Duties' : 'Tugas PPID dan PPID Pelaksana', path: '/ppid/profil/tugas-ppid', icon: FileText },
-    { label: isEn ? 'Public Documents' : 'Dokumen Publik', path: '/ppid/daftar-informasi-publik', icon: FileText },
-    { label: isEn ? 'PPID Annual Report' : 'Laporan Tahunan PPID', path: '/ppid/laporan-tahunan', icon: FileText },
-    { label: isEn ? 'Decrees & Decisions' : 'Surat Keputusan', path: '/ppid/surat-keputusan', icon: FileText },
-    { label: isEn ? 'Public Service Standards' : 'Standar Pelayanan Publik', path: '/ppid/standar-pelayanan', icon: Shield },
+    { label: 'Struktur Organisasi PPID', path: '/ppid/profil/struktur-organisasi', icon: Users },
+    { label: 'Visi dan Misi PPID', path: '/ppid/profil/visi-misi', icon: Target },
+    { label: 'Maklumat Pelayanan Informasi Publik', path: '/ppid/profil/maklumat-pelayanan', icon: Shield },
+    { label: 'Tugas PPID dan PPID Pelaksana', path: '/ppid/profil/tugas-ppid', icon: FileText },
+    { label: 'Dokumen Publik', path: '/ppid/daftar-informasi-publik', icon: FileText },
+    { label: 'Laporan Tahunan PPID', path: '/ppid/laporan-tahunan', icon: FileText },
+    { label: 'Surat Keputusan', path: '/ppid/surat-keputusan', icon: FileText },
+    { label: 'Standar Pelayanan Publik', path: '/ppid/standar-pelayanan', icon: Shield },
   ];
 
   return (
     <>
-      <Helmet>
-        <title>{isEn ? 'PPID Profile - Central Sulawesi Tourism' : 'Profil PPID - Dinas Pariwisata Sulteng'}</title>
-      </Helmet>
+      <Helmet><title>Profil PPID - Dinas Pariwisata Sulteng</title></Helmet>
 
       <PageHeader
         badge="PPID Pelaksana Dinas Pariwisata Sulteng"
@@ -50,18 +44,19 @@ const ProfilPPID = () => {
                 <Info size={24} />
               </div>
               <div>
-                <h2 className="text-2xl font-bold text-navy-900 mb-3">{isEn ? 'What is PPID?' : 'Apa itu PPID?'}</h2>
+                <h2 className="text-2xl font-bold text-navy-900 mb-3">Apa itu PPID?</h2>
                 <p className="text-gray-700 leading-relaxed">
-                  {isEn
-                    ? 'PPID (Information Management and Documentation Officer) is an official responsible for storing, documenting, providing, and servicing public information within government bodies. The PPID of Central Sulawesi Tourism Department is committed to providing transparent, accountable public information in accordance with prevailing laws and regulations.'
-                    : 'PPID (Pejabat Pengelola Informasi dan Dokumentasi) adalah pejabat yang bertanggung jawab di bidang penyimpanan, pendokumentasian, penyediaan, dan/atau pelayanan informasi di badan publik. PPID Dinas Pariwisata Provinsi Sulawesi Tengah berkomitmen memberikan pelayanan informasi publik yang transparan, akuntabel, dan sesuai dengan ketentuan peraturan perundang-undangan.'}
+                  PPID (Pejabat Pengelola Informasi dan Dokumentasi) adalah pejabat yang bertanggung jawab
+                  di bidang penyimpanan, pendokumentasian, penyediaan, dan/atau pelayanan informasi di badan publik.
+                  PPID Dinas Pariwisata Provinsi Sulawesi Tengah berkomitmen memberikan pelayanan informasi publik
+                  yang transparan, akuntabel, dan sesuai dengan ketentuan peraturan perundang-undangan.
                 </p>
               </div>
             </div>
           </motion.div>
 
           {/* Sub Menu Grid */}
-          <h2 className="text-2xl font-bold text-navy-900 mb-6">{isEn ? 'PPID Profile Menu' : 'Menu Profil PPID'}</h2>
+          <h2 className="text-2xl font-bold text-navy-900 mb-6">Menu Profil PPID</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {subMenu.map((item, idx) => (
               <motion.div

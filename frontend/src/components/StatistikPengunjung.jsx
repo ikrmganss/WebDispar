@@ -7,7 +7,6 @@ import {
   RefreshCw
 } from 'lucide-react';
 import api from '../services/api';
-import { useLanguage } from '../context/LanguageContext';
 
 const DEFAULT_STATS = {
   today: 0,
@@ -20,9 +19,7 @@ const DEFAULT_STATS = {
   ip: '127.0.0.1'
 };
 
-const StatistikPengunjung = ({ language: propLanguage }) => {
-  const { language: contextLanguage } = useLanguage();
-  const language = propLanguage || contextLanguage || 'ID';
+const StatistikPengunjung = ({ language = 'ID' }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [stats, setStats] = useState(DEFAULT_STATS);
   const [isLoading, setIsLoading] = useState(false);
@@ -172,7 +169,7 @@ const StatistikPengunjung = ({ language: propLanguage }) => {
 
               {/* Subheading teks putih */}
               <div className="text-left text-xs sm:text-sm font-semibold text-white/90 mb-2.5">
-                {isEN ? 'Visitor Statistics' : 'Statistik Pengunjung'}
+                {isEN ? 'Statistik Pengunjung' : 'Statistik Pengunjung'}
               </div>
 
               {/* Kotak Hitam / Box Counter Dalam */}

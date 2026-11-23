@@ -3,13 +3,11 @@ import { Helmet } from 'react-helmet-async';
 import { Download, Image as ImageIcon, FileText, ExternalLink } from 'lucide-react';
 import { motion } from 'framer-motion';
 import PageHeader from '../../components/PageHeader';
-import { useLanguage } from '../../context/LanguageContext';
 
 const OFFICIAL_LOGOS = [
   {
     label: 'Logo Dinas Pariwisata Sulteng',
     desc: 'Logo resmi instansi Dinas Pariwisata Provinsi Sulawesi Tengah format resolusi tinggi',
-    descEn: 'Official high-resolution agency logo of Central Sulawesi Provincial Tourism Office',
     preview: '/images/dinas_pariwisata-COLOR_BLACK.png',
     link: 'https://drive.google.com/drive/folders/1MFchSdQjgHxKhrMTkgCRYQojPNkq-urZ?usp=sharing',
     format: 'PNG HD'
@@ -17,7 +15,6 @@ const OFFICIAL_LOGOS = [
   {
     label: 'Branding Sulteng Nambaso',
     desc: 'Logo tagline pariwisata daerah Sulteng Nambaso (Sulawesi Tengah Hebat/Luar Biasa)',
-    descEn: 'Regional tourism tagline logo Sulteng Nambaso (Central Sulawesi is Great/Extraordinary)',
     preview: '/images/SultengNambaso.png',
     link: 'https://drive.google.com/file/d/1nrNj20HzegreqIou8Af2StNetltaWVMC/view?usp=drive_link',
     format: 'PNG Transparent'
@@ -25,7 +22,6 @@ const OFFICIAL_LOGOS = [
   {
     label: 'Wonderful Indonesia',
     desc: 'Logo resmi kampanye kepariwisataan nasional Kementerian Pariwisata dan Ekonomi Kreatif',
-    descEn: 'Official national tourism campaign logo of Ministry of Tourism and Creative Economy',
     preview: '/images/media_1587964394_logo_wonderful_indonesia.png',
     link: 'https://drive.google.com/drive/folders/1Q-2fbXuovCZI6sWwF-bzZ2w0GpQJZSAA?usp=sharing',
     format: 'PNG Color & White'
@@ -33,7 +29,6 @@ const OFFICIAL_LOGOS = [
   {
     label: 'Branding Sulawesi Tengah',
     desc: 'City branding Sulawesi Tengah Complete Destination untuk promosi pariwisata internasional',
-    descEn: 'Central Sulawesi Complete Destination regional branding for global tourism promotions',
     preview: '/images/Branding_Sulteng.png',
     link: 'https://drive.google.com/drive/folders/1ZyNtw7_tSY0LkDfh5xFQph6ElFvsXrS6?usp=sharing',
     format: 'PNG HD'
@@ -41,7 +36,6 @@ const OFFICIAL_LOGOS = [
   {
     label: 'Logo 100% Sulawesi Tengah',
     desc: 'Stempel kampanye orisinalitas produk, destinasi, dan kerajinan khas Sulawesi Tengah',
-    descEn: 'Authenticity campaign seal for local crafts, destinations, and products of Central Sulawesi',
     preview: '/images/PPID/Logo_100__Sulawesi_Tengah_-_Outline.png',
     link: 'https://drive.google.com/drive/folders/1O43KtomclfKs2AuojJXYJuDVZBOdyUqw',
     format: 'PNG Outline'
@@ -49,7 +43,6 @@ const OFFICIAL_LOGOS = [
   {
     label: 'Bangga Berwisata di Indonesia (BBWI)',
     desc: 'Gerakan nasional mendorong pergerakan wisatawan nusantara ke destinasi domestik',
-    descEn: 'National movement advocating domestic tourist exploration to Indonesian destinations',
     preview: '/images/PPID/BBWI_logo_2.png',
     link: 'https://drive.google.com/drive/folders/1X18KP8vl9rVxGDExxvanSQCoMU6pt44H?usp=sharing',
     format: 'PNG HD'
@@ -57,7 +50,6 @@ const OFFICIAL_LOGOS = [
   {
     label: 'Desain Berdasarkan Lokus Destinasi',
     desc: 'Kumpulan logo dan template promosi berdasarkan lokus 13 kabupaten/kota se-Sulawesi Tengah',
-    descEn: 'Collection of promotional templates & logos mapped across 13 regencies/cities in Central Sulawesi',
     preview: '/images/PPID/DESAIN_BERDASARKAN_LOKUS.png',
     link: 'https://drive.google.com/file/d/17RxXc5b_i2qWsksOjwR-NgsLfTFD8fnz/view?usp=sharing',
     format: 'Package ZIP'
@@ -67,43 +59,31 @@ const OFFICIAL_LOGOS = [
 const GUIDELINES = [
   {
     title: 'Buku Panduan Brand & Logo Sulawesi Tengah Complete Destination',
-    titleEn: 'Central Sulawesi Complete Destination Brand & Logo Guidelines',
     desc: 'Pedoman standar penggunaan logo, warna korporat, tipografi, dan tata letak promosi Sulawesi Tengah.',
-    descEn: 'Standard guidelines on logo usage, color palette, typography, and promotional layouts for Central Sulawesi.',
     link: 'https://drive.google.com/file/d/1MpHwGaCGTONHBNpRQ37BK61WNFj06RcT/view?usp=sharing'
   },
   {
     title: 'Brand Guidance Wonderful Indonesia (Kemenparekraf RI)',
-    titleEn: 'Wonderful Indonesia Brand Guidance (Ministry of Tourism RI)',
     desc: 'Panduan identitas visual Wonderful Indonesia untuk kolaborasi event dan kemitraan resmi.',
-    descEn: 'Wonderful Indonesia visual identity guide for official event collaborations and co-branding.',
     link: 'https://www.indonesia.travel/id/id/brand-guidance'
   }
 ];
 
 const Logo = () => {
-  const { language } = useLanguage();
-  const isEn = language === 'EN';
   const [activeTab, setActiveTab] = useState('logo');
 
   return (
     <>
-      <Helmet>
-        <title>{isEn ? 'Logo & Visual Identity - Tourism Office Central Sulawesi' : 'Logo & Identitas Visual - Dinas Pariwisata Sulteng'}</title>
-      </Helmet>
+      <Helmet><title>Logo & Identitas Visual - Dinas Pariwisata Sulteng</title></Helmet>
 
       <PageHeader
-        badge={isEn ? "Assets & Visual Identity" : "Aset & Identitas Visual"}
+        badge="Aset & Identitas Visual"
         badgeIcon={ImageIcon}
-        title={isEn ? "Logo & Visual Identity" : "Logo & Identitas Visual"}
-        subtitle={
-          isEn
-            ? "Download official logo assets and brand guidelines for Central Sulawesi tourism"
-            : "Unduh aset logo resmi dan pedoman identitas visual pariwisata Sulawesi Tengah"
-        }
+        title="Logo & Identitas Visual"
+        subtitle="Unduh aset logo resmi dan pedoman identitas visual pariwisata Sulawesi Tengah"
         breadcrumbs={[
-          { label: isEn ? 'Profile' : 'Profil', path: '/profil' },
-          { label: isEn ? 'Logo & Visual Identity' : 'Logo & Identitas Visual' }
+          { label: 'Profil', path: '/profil' },
+          { label: 'Logo & Identitas Visual' }
         ]}
       />
 
@@ -120,7 +100,7 @@ const Logo = () => {
               }`}
             >
               <ImageIcon size={18} />
-              {isEn ? 'Official Logo Assets' : 'Aset Logo Resmi'}
+              Aset Logo Resmi
             </button>
             <button
               onClick={() => setActiveTab('panduan')}
@@ -131,7 +111,7 @@ const Logo = () => {
               }`}
             >
               <FileText size={18} />
-              {isEn ? 'Brand Guidelines' : 'Buku Pedoman (Brand Guidelines)'}
+              Buku Pedoman (Brand Guidelines)
             </button>
           </div>
 
@@ -164,7 +144,7 @@ const Logo = () => {
                           {item.format}
                         </span>
                       </div>
-                      <p className="text-xs text-gray-500 mb-4">{isEn ? item.descEn : item.desc}</p>
+                      <p className="text-xs text-gray-500 mb-4">{item.desc}</p>
                     </div>
                     <a
                       href={item.link}
@@ -172,7 +152,7 @@ const Logo = () => {
                       rel="noopener noreferrer"
                       className="inline-flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs transition-colors shadow-sm"
                     >
-                      <Download size={14} /> {isEn ? 'Download Full Asset' : 'Unduh Aset Lengkap'}
+                      <Download size={14} /> Unduh Aset Lengkap
                     </a>
                   </div>
                 </motion.div>
@@ -195,8 +175,8 @@ const Logo = () => {
                       <FileText size={24} />
                     </div>
                     <div>
-                      <h3 className="font-bold text-navy-900 text-base mb-1">{isEn ? g.titleEn : g.title}</h3>
-                      <p className="text-sm text-gray-500">{isEn ? g.descEn : g.desc}</p>
+                      <h3 className="font-bold text-navy-900 text-base mb-1">{g.title}</h3>
+                      <p className="text-sm text-gray-500">{g.desc}</p>
                     </div>
                   </div>
                   <a
@@ -205,7 +185,7 @@ const Logo = () => {
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center gap-1.5 px-5 py-2.5 rounded-xl bg-primary-600 hover:bg-primary-700 text-white font-semibold text-xs transition-colors flex-shrink-0"
                   >
-                    {isEn ? 'Open Guidelines' : 'Buka Panduan'} <ExternalLink size={14} />
+                    Buka Panduan <ExternalLink size={14} />
                   </a>
                 </motion.div>
               ))}

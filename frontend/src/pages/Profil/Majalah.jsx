@@ -4,7 +4,6 @@ import { BookOpen, Download, Eye } from 'lucide-react';
 import { motion } from 'framer-motion';
 import api from '../../services/api';
 import PageHeader from '../../components/PageHeader';
-import { useLanguage } from '../../context/LanguageContext';
 
 const OFFICIAL_MAJALAH = [
   {
@@ -34,8 +33,6 @@ const OFFICIAL_MAJALAH = [
 ];
 
 const Majalah = () => {
-  const { language } = useLanguage();
-  const isEn = language === 'EN';
   const [majalah, setMajalah] = useState(OFFICIAL_MAJALAH);
 
   useEffect(() => {
@@ -50,22 +47,16 @@ const Majalah = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{isEn ? 'Magazines & Publications - Tourism Office Central Sulawesi' : 'Majalah & Publikasi - Dinas Pariwisata Sulteng'}</title>
-      </Helmet>
+      <Helmet><title>Majalah & Publikasi - Dinas Pariwisata Sulteng</title></Helmet>
 
       <PageHeader
-        badge={isEn ? "Publications & Literature" : "Publikasi & Literasi"}
+        badge="Publikasi & Literasi"
         badgeIcon={BookOpen}
-        title={isEn ? "Magazines & Publications" : "Majalah & Publikasi"}
-        subtitle={
-          isEn
-            ? "Collection of official magazines and promotional tourism booklets of Central Sulawesi"
-            : "Koleksi majalah resmi dan booklet promosi pariwisata Sulawesi Tengah"
-        }
+        title="Majalah & Publikasi"
+        subtitle="Koleksi majalah resmi dan booklet promosi pariwisata Sulawesi Tengah"
         breadcrumbs={[
-          { label: isEn ? 'Profile' : 'Profil', path: '/profil' },
-          { label: isEn ? 'Magazines & Publications' : 'Majalah & Publikasi' }
+          { label: 'Profil', path: '/profil' },
+          { label: 'Majalah & Publikasi' }
         ]}
       />
 
@@ -79,49 +70,51 @@ const Majalah = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.1 }}
-                className="card overflow-hidden group hover:shadow-xl transition-all flex flex-col justify-between"
+                className="card group overflow-hidden flex flex-col justify-between"
               >
-                <div>
-                  <div className="relative aspect-[3/4] overflow-hidden bg-gray-100">
+                {/* Cover Image */}
+                <div className="aspect-[3/4] bg-slate-100 relative overflow-hidden flex items-center justify-center">
+                  {m.cover ? (
                     <img
-                      src={m.cover || '/slider/Slider.jpg'}
+                      src={m.cover}
                       alt={m.judul}
-                      onError={(e) => { e.currentTarget.src = '/slider/Slider.jpg'; }}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                      }}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-                      <span className="text-xs text-white font-medium flex items-center gap-1">
-                        <BookOpen size={14} /> {isEn ? 'Official Publication' : 'Publikasi Resmi'}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="p-4">
-                    <h3 className="font-bold text-navy-900 text-sm line-clamp-2 mb-2 group-hover:text-primary-600 transition-colors">
-                      {m.judul}
-                    </h3>
-                  </div>
+                  ) : (
+                    <BookOpen size={48} className="text-slate-400" />
+                  )}
                 </div>
-                <div className="p-4 pt-0 flex gap-2">
-                  {m.baca_link && (
+
+                {/* Details */}
+                <div className="p-4 flex-1 flex flex-col justify-between">
+                  <div className="mb-4">
+                    <p className="text-xs uppercase tracking-wider text-amber-600 font-semibold mb-1">Edisi Resmi</p>
+                    <h3 className="font-bold text-slate-900 text-sm leading-snug line-clamp-2">{m.judul}</h3>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="flex items-center gap-2 pt-2 border-t border-slate-100">
                     <a
-                      href={m.baca_link}
+                      href={m.baca_link || m.file_pdf || '#'}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-1 btn-outline text-xs py-2 justify-center inline-flex items-center gap-1.5"
+                      className="flex-1 inline-flex items-center justify-center gap-1.5 bg-amber-500 hover:bg-amber-600 text-slate-950 text-xs font-bold py-2.5 px-3 rounded-lg transition-colors"
                     >
-                      <Eye size={14} /> {isEn ? 'Read' : 'Baca'}
+                      <Eye size={14} /> Baca
                     </a>
-                  )}
-                  {m.file_pdf && (
                     <a
-                      href={m.file_pdf}
+                      href={m.file_pdf || '#'}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-1 btn-primary text-xs py-2 justify-center inline-flex items-center gap-1.5"
+                      className="inline-flex items-center justify-center gap-1.5 border border-slate-200 hover:bg-slate-100 text-slate-700 text-xs font-semibold py-2.5 px-3 rounded-lg transition-colors"
+                      title="Unduh PDF"
                     >
-                      <Download size={14} /> {isEn ? 'Download' : 'Unduh'}
+                      <Download size={14} /> Unduh
                     </a>
-                  )}
+                  </div>
                 </div>
               </motion.div>
             ))}
