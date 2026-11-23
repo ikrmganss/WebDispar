@@ -1,5 +1,5 @@
 import { Helmet } from 'react-helmet-async';
-import { Shield, CheckCircle2, Download } from 'lucide-react';
+import { Shield, CheckCircle2, Download, FileText } from 'lucide-react';
 import { motion } from 'framer-motion';
 import PageHeader from '../../components/PageHeader';
 
@@ -71,11 +71,19 @@ const MaklumatPelayanan = () => {
               </div>
             </div>
 
-            {/* Download */}
-            <div className="mt-10 text-center">
+            {/* Download & Preview */}
+            <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
               <a
                 href="/dokumen/maklumat-pelayanan.pdf"
-                download
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-secondary"
+              >
+                <FileText size={18} /> Lihat Dokumen (PDF)
+              </a>
+              <a
+                href="/dokumen/maklumat-pelayanan.pdf"
+                download="Maklumat_Pelayanan_Dinas_Pariwisata_Sulteng.pdf"
                 className="btn-primary"
               >
                 <Download size={18} /> Unduh Maklumat Pelayanan (PDF)

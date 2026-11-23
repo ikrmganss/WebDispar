@@ -3,6 +3,7 @@ import Sidebar from './Sidebar';
 import Topbar from './Topbar';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import StatistikPengunjung from './StatistikPengunjung';
 
 export const MainLayout = ({ children, language, setLanguage }) => {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
@@ -42,6 +43,9 @@ export const MainLayout = ({ children, language, setLanguage }) => {
 
       {/* Footer */}
       <Footer />
+
+      {/* Floating Widget Statistik Pengunjung (Pojok Kiri Bawah) */}
+      <StatistikPengunjung />
     </div>
   );
 };

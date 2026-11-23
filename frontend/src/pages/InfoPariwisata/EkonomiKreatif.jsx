@@ -102,8 +102,9 @@ const EkonomiKreatif = () => {
                       href={item.file.startsWith('http') || item.file.startsWith('/') ? item.file : `/uploads/${item.file}`}
                       target="_blank"
                       rel="noopener noreferrer"
+                      download={!item.file.startsWith('http')}
                       className="flex-shrink-0 inline-flex items-center justify-center w-9 h-9 rounded-lg bg-primary-600 hover:bg-primary-700 text-white transition-colors"
-                      title="Unduh / Buka Direktori"
+                      title="Unduh / Buka Dokumen Ekraf"
                     >
                       <Download size={16} />
                     </a>
