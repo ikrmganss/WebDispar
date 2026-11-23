@@ -2,12 +2,18 @@ import { Helmet } from 'react-helmet-async';
 import { CheckCircle2, Briefcase, Target, Shield } from 'lucide-react';
 import { motion } from 'framer-motion';
 import PageHeader from '../../components/PageHeader';
+import { useLanguage } from '../../context/LanguageContext';
 
 const Tupoksi = () => {
-  const tugasPokok =
-    'Membantu Gubernur dalam melaksanakan urusan pemerintahan di bidang pariwisata dan ekonomi kreatif yang menjadi kewenangan daerah.';
+  const { language } = useLanguage();
+  const isEn = language === 'EN';
 
-  const fungsi = [
+  const tugasPokokId =
+    'Membantu Gubernur dalam melaksanakan urusan pemerintahan di bidang pariwisata dan ekonomi kreatif yang menjadi kewenangan daerah.';
+  const tugasPokokEn =
+    'Assisting the Governor in implementing governmental affairs in the tourism and creative economy sectors within the authority of the regional government.';
+
+  const fungsiId = [
     'Perumusan kebijakan teknis di bidang pariwisata dan ekonomi kreatif.',
     'Pelaksanaan koordinasi, pembinaan, dan pengawasan kebijakan di sektor pariwisata.',
     'Pengelolaan destinasi pariwisata dan pengembangan daya tarik wisata unggulan.',
@@ -15,28 +21,44 @@ const Tupoksi = () => {
     'Peningkatan kesejahteraan masyarakat dan pendapatan asli daerah melalui sektor pariwisata.',
   ];
 
+  const fungsiEn = [
+    'Formulation of technical policies in tourism and creative economy.',
+    'Implementation of policy coordination, guidance, and supervision in the tourism sector.',
+    'Management of tourism destinations and development of premier tourist attractions.',
+    'Formulation of tourism marketing strategies and strengthening the creative economy ecosystem.',
+    'Enhancement of public welfare and regional locally-generated revenue through the tourism sector.',
+  ];
+
   const bidang = [
     {
-      title: 'Bidang Pengembangan Destinasi Pariwisata',
-      desc: 'Bertanggung jawab atas perencanaan tata ruang kawasan wisata, pembangunan infrastruktur pendukung, serta sinkronisasi daya tarik wisata unggulan.',
+      title: isEn ? 'Tourism Destination Development Division' : 'Bidang Pengembangan Destinasi Pariwisata',
+      desc: isEn
+        ? 'Responsible for tourism spatial planning, supporting infrastructure development, and synchronizing featured tourist attractions.'
+        : 'Bertanggung jawab atas perencanaan tata ruang kawasan wisata, pembangunan infrastruktur pendukung, serta sinkronisasi daya tarik wisata unggulan.',
       icon: Target,
       color: 'from-blue-500 to-blue-700',
     },
     {
-      title: 'Bidang Pengembangan Pemasaran Pariwisata',
-      desc: 'Berfokus pada analisis pasar, promosi melalui berbagai kanal media, penyelenggaraan event (kalender wisata), serta penguatan kerja sama antarlembaga dan kemitraan pariwisata.',
+      title: isEn ? 'Tourism Marketing Development Division' : 'Bidang Pengembangan Pemasaran Pariwisata',
+      desc: isEn
+        ? 'Focuses on market analysis, multi-channel promotion, event organization (tourism calendar), and strengthening institutional partnerships.'
+        : 'Berfokus pada analisis pasar, promosi melalui berbagai kanal media, penyelenggaraan event (kalender wisata), serta penguatan kerja sama antarlembaga dan kemitraan pariwisata.',
       icon: Briefcase,
       color: 'from-purple-500 to-purple-700',
     },
     {
-      title: 'Bidang Pengembangan Ekonomi Kreatif, Pemanfaatan & Perlindungan HKI',
-      desc: 'Memfasilitasi 17 subsektor ekraf, mulai dari inkubasi bisnis hingga perlindungan hukum terhadap karya intelektual pelaku kreatif lokal.',
+      title: isEn ? 'Creative Economy, Utilization & IPR Division' : 'Bidang Pengembangan Ekonomi Kreatif, Pemanfaatan & Perlindungan HKI',
+      desc: isEn
+        ? 'Facilitates 17 creative economy subsectors, from business incubation to legal intellectual property protection for local creatives.'
+        : 'Memfasilitasi 17 subsektor ekraf, mulai dari inkubasi bisnis hingga perlindungan hukum terhadap karya intelektual pelaku kreatif lokal.',
       icon: Shield,
       color: 'from-gold-500 to-gold-700',
     },
     {
-      title: 'Bidang Pengembangan Sumber Daya Pariwisata & Ekonomi Kreatif',
-      desc: 'Meningkatkan kapasitas SDM melalui pelatihan standarisasi, sertifikasi profesi, serta penguatan tata kelola kelembagaan masyarakat seperti Pokdarwis.',
+      title: isEn ? 'Tourism & Creative Economy Resources Division' : 'Bidang Pengembangan Sumber Daya Pariwisata & Ekonomi Kreatif',
+      desc: isEn
+        ? 'Elevates human capital capacity via standardization training, professional certification, and institutional community governance like Pokdarwis.'
+        : 'Meningkatkan kapasitas SDM melalui pelatihan standarisasi, sertifikasi profesi, serta penguatan tata kelola kelembagaan masyarakat seperti Pokdarwis.',
       icon: CheckCircle2,
       color: 'from-green-500 to-green-700',
     },
@@ -44,15 +66,21 @@ const Tupoksi = () => {
 
   return (
     <>
-      <Helmet><title>Tugas Pokok dan Fungsi - Dinas Pariwisata Sulteng</title></Helmet>
+      <Helmet>
+        <title>{isEn ? 'Duties and Functions - Tourism Office Central Sulawesi' : 'Tugas Pokok dan Fungsi - Dinas Pariwisata Sulteng'}</title>
+      </Helmet>
 
       <PageHeader
-        badge="Kedudukan & Kewenangan"
-        title="Tugas Pokok dan Fungsi"
-        subtitle="Berdasarkan Peraturan Gubernur Sulawesi Tengah Nomor 57 Tahun 2022 yang dimutakhirkan dengan Peraturan Gubernur Nomor 6 Tahun 2024"
+        badge={isEn ? "Authority & Status" : "Kedudukan & Kewenangan"}
+        title={isEn ? "Duties and Functions" : "Tugas Pokok dan Fungsi"}
+        subtitle={
+          isEn
+            ? "Based on Central Sulawesi Governor Regulation Number 57 of 2022 as amended by Governor Regulation Number 6 of 2024"
+            : "Berdasarkan Peraturan Gubernur Sulawesi Tengah Nomor 57 Tahun 2022 yang dimutakhirkan dengan Peraturan Gubernur Nomor 6 Tahun 2024"
+        }
         breadcrumbs={[
-          { label: 'Profil', path: '/profil' },
-          { label: 'Tugas Pokok & Fungsi' }
+          { label: isEn ? 'Profile' : 'Profil', path: '/profil' },
+          { label: isEn ? 'Duties and Functions' : 'Tugas Pokok & Fungsi' }
         ]}
       />
 
@@ -69,9 +97,9 @@ const Tupoksi = () => {
               <div className="w-10 h-10 rounded-lg bg-gold-400 flex items-center justify-center text-navy-900">
                 <Target size={20} />
               </div>
-              Tugas Pokok
+              {isEn ? 'Main Duties' : 'Tugas Pokok'}
             </h2>
-            <p className="text-lg leading-relaxed">{tugasPokok}</p>
+            <p className="text-lg leading-relaxed">{isEn ? tugasPokokEn : tugasPokokId}</p>
           </motion.div>
 
           {/* Fungsi */}
@@ -81,9 +109,9 @@ const Tupoksi = () => {
             viewport={{ once: true }}
             className="card p-8 lg:p-10 mb-8"
           >
-            <h2 className="text-2xl font-bold text-navy-900 mb-6">Fungsi Utama</h2>
+            <h2 className="text-2xl font-bold text-navy-900 mb-6">{isEn ? 'Key Functions' : 'Fungsi Utama'}</h2>
             <ul className="space-y-3">
-              {fungsi.map((f, idx) => (
+              {(isEn ? fungsiEn : fungsiId).map((f, idx) => (
                 <li key={idx} className="flex gap-3 p-3 rounded-lg hover:bg-gray-50 transition-colors">
                   <CheckCircle2 size={20} className="text-primary-600 flex-shrink-0 mt-0.5" />
                   <span className="text-gray-700 leading-relaxed">{f}</span>
@@ -94,8 +122,12 @@ const Tupoksi = () => {
 
           {/* Rincian Bidang */}
           <div className="mb-6">
-            <h2 className="text-2xl font-bold text-navy-900 mb-2">Rincian Tugas per Bidang</h2>
-            <p className="text-gray-500 text-sm">Empat bidang spesifik untuk tata kelola yang fokus dan terukur</p>
+            <h2 className="text-2xl font-bold text-navy-900 mb-2">
+              {isEn ? 'Field Breakdown & Responsibility' : 'Rincian Tugas per Bidang'}
+            </h2>
+            <p className="text-gray-500 text-sm">
+              {isEn ? 'Four dedicated divisions for focused and accountable governance' : 'Empat bidang spesifik untuk tata kelola yang fokus dan terukur'}
+            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

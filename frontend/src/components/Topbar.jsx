@@ -1,14 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { Mail, Clock, ShieldCheck } from 'lucide-react';
+import { Mail, Clock } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
+import { UI_STRINGS } from '../utils/translations';
 
 export const Topbar = () => {
+  const { language } = useLanguage();
   const [time, setTime] = useState('');
+  const strings = UI_STRINGS[language] || UI_STRINGS.ID;
 
   useEffect(() => {
     const update = () => {
       const now = new Date();
-      const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
-      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+      const daysId = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+      const monthsId = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+      const daysEn = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      const monthsEn = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+      const days = language === 'EN' ? daysEn : daysId;
+      const months = language === 'EN' ? monthsEn : monthsId;
       const day = days[now.getDay()];
       const date = now.getDate();
       const month = months[now.getMonth()];
@@ -20,7 +29,7 @@ export const Topbar = () => {
     update();
     const t = setInterval(update, 60000);
     return () => clearInterval(t);
-  }, []);
+  }, [language]);
 
   return (
     <div className="w-full bg-gradient-to-r from-[#1F5BA6] to-[#5C2180] border-b border-[#1D3D63] text-white text-xs py-1.5 px-4 lg:px-8 flex justify-center items-center z-30">
@@ -29,10 +38,10 @@ export const Topbar = () => {
         <div className="flex items-center gap-2">
           <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-[10px] font-bold text-emerald-400">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            Portal Resmi
+            {strings.officialPortal}
           </div>
           <span className="hidden sm:inline text-xs text-slate-300 font-normal">
-            Pemerintah Provinsi Sulawesi Tengah • <span className="text-amber-400 font-semibold">Bumi Seribu Megalit</span>
+            {strings.govSlogan}
           </span>
         </div>
 

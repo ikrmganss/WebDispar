@@ -3,8 +3,11 @@ import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { Calendar, User, Eye, ArrowLeft, Share2 } from 'lucide-react';
 import api from '../services/api';
+import { useLanguage } from '../context/LanguageContext';
 
 const BeritaDetail = () => {
+  const { language } = useLanguage();
+  const isEn = language === 'EN';
   const { slug } = useParams();
   const [berita, setBerita] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -17,21 +20,27 @@ const BeritaDetail = () => {
   }, [slug]);
 
   if (loading) return <div className="container-custom py-20"><div className="skeleton h-96 w-full rounded-xl" /></div>;
-  if (!berita) return <div className="container-custom py-20 text-center"><p>Berita tidak ditemukan</p></div>;
+  if (!berita) return <div className="container-custom py-20 text-center"><p>{isEn ? 'News not found' : 'Berita tidak ditemukan'}</p></div>;
 
-  const formatDate = (date) => new Date(date).toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  const formatDate = (date) =>
+    new Date(date).toLocaleDateString(isEn ? 'en-US' : 'id-ID', {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric',
+    });
 
   return (
     <>
       <Helmet>
-        <title>{berita.judul} - Dinas Pariwisata Sulteng</title>
+        <title>{`${berita.judul} - ${isEn ? 'Department of Tourism Central Sulawesi' : 'Dinas Pariwisata Sulteng'}`}</title>
       </Helmet>
 
       <div className="bg-gradient-to-r from-[#1F5BA6] via-[#383087] to-[#5C2180] py-12 lg:py-16 text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-white/10 via-transparent to-transparent pointer-events-none" />
         <div className="container mx-auto max-w-7xl px-4 md:px-8 relative z-10">
           <Link to="/berita" className="inline-flex items-center gap-2 text-white/80 hover:text-amber-300 mb-4 transition-colors font-medium text-sm">
-            <ArrowLeft size={16} /> Kembali ke Berita
+            <ArrowLeft size={16} /> {isEn ? 'Back to News' : 'Kembali ke Berita'}
           </Link>
           {berita.kategori && (
             <div>
@@ -44,7 +53,7 @@ const BeritaDetail = () => {
           <div className="flex flex-wrap items-center gap-4 text-xs md:text-sm text-white/80 font-medium">
             <span className="flex items-center gap-1.5"><Calendar size={15} className="text-amber-300" /> {formatDate(berita.tanggal)}</span>
             <span className="flex items-center gap-1.5"><User size={15} className="text-amber-300" /> {berita.penulis}</span>
-            <span className="flex items-center gap-1.5"><Eye size={15} className="text-amber-300" /> {berita.dilihat} dilihat</span>
+            <span className="flex items-center gap-1.5"><Eye size={15} className="text-amber-300" /> {berita.dilihat} {isEn ? 'views' : 'dilihat'}</span>
           </div>
         </div>
       </div>
@@ -66,7 +75,7 @@ const BeritaDetail = () => {
             dangerouslySetInnerHTML={{ __html: berita.konten }}
           />
           <div className="mt-8 pt-8 border-t border-gray-200 flex items-center gap-4">
-            <span className="text-sm font-semibold text-gray-600 flex items-center gap-2"><Share2 size={16} /> Bagikan:</span>
+            <span className="text-sm font-semibold text-gray-600 flex items-center gap-2"><Share2 size={16} /> {isEn ? 'Share:' : 'Bagikan:'}</span>
             <a href={`https://facebook.com/sharer/sharer.php?u=${window.location.href}`} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline text-sm">Facebook</a>
             <a href={`https://twitter.com/intent/tweet?url=${window.location.href}`} target="_blank" rel="noopener noreferrer" className="text-sky-500 hover:underline text-sm">Twitter</a>
             <a href={`https://wa.me/?text=${window.location.href}`} target="_blank" rel="noopener noreferrer" className="text-green-600 hover:underline text-sm">WhatsApp</a>

@@ -4,8 +4,13 @@ import { Search, ChevronLeft, ChevronRight, Newspaper } from 'lucide-react';
 import BeritaCard from '../components/BeritaCard';
 import PageHeader from '../components/PageHeader';
 import api from '../services/api';
+import { useLanguage } from '../context/LanguageContext';
 
-const Berita = () => {
+const Berita = ({ language: propLanguage }) => {
+  const { language: contextLanguage } = useLanguage();
+  const language = propLanguage || contextLanguage || 'ID';
+  const isEn = language === 'EN';
+
   const [berita, setBerita] = useState([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
@@ -26,15 +31,19 @@ const Berita = () => {
   return (
     <>
       <Helmet>
-        <title>Berita - Dinas Pariwisata Sulteng</title>
+        <title>{isEn ? 'News - Tourism Department Sulteng' : 'Berita - Dinas Pariwisata Sulteng'}</title>
       </Helmet>
 
       <PageHeader
-        badge="Warta Pariwisata Sulawesi Tengah"
+        badge={isEn ? 'Central Sulawesi Tourism News' : 'Warta Pariwisata Sulawesi Tengah'}
         badgeIcon={Newspaper}
-        title="Berita Terkini"
-        subtitle="Informasi dan rilis resmi seputar pembangunan pariwisata, destinasi, dan ekonomi kreatif Sulawesi Tengah."
-        breadcrumbs={[{ label: 'Berita' }]}
+        title={isEn ? 'Latest News' : 'Berita Terkini'}
+        subtitle={
+          isEn
+            ? 'Official information and releases on tourism development, destinations, and creative economy in Central Sulawesi.'
+            : 'Informasi dan rilis resmi seputar pembangunan pariwisata, destinasi, dan ekonomi kreatif Sulawesi Tengah.'
+        }
+        breadcrumbs={[{ label: isEn ? 'News' : 'Berita' }]}
       />
 
       <section className="py-12 lg:py-16">
@@ -44,7 +53,7 @@ const Berita = () => {
               <Search size={20} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
               <input
                 type="text"
-                placeholder="Cari berita..."
+                placeholder={isEn ? 'Search news...' : 'Cari berita...'}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="w-full pl-12 pr-4 py-3 rounded-full border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none transition-all"
