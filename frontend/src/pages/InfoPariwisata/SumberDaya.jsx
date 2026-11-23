@@ -4,8 +4,9 @@ import { Users, Award, Download, FileText } from 'lucide-react';
 import { motion } from 'framer-motion';
 import api from '../../services/api';
 import PageHeader from '../../components/PageHeader';
+import { useLanguage } from '../../context/LanguageContext';
 
-const DEFAULT_ITEMS = [
+const DEFAULT_ITEMS_ID = [
   {
     judul: 'Laporan Tenaga Kerja Pariwisata & Ekonomi Kreatif',
     deskripsi: 'Data tenaga kerja di sektor pariwisata dan ekonomi kreatif Sulawesi Tengah',
@@ -22,8 +23,27 @@ const DEFAULT_ITEMS = [
   },
 ];
 
+const DEFAULT_ITEMS_EN = [
+  {
+    judul: 'Tourism & Creative Economy Workforce Report',
+    deskripsi: 'Employment and labor data in the tourism and creative sectors of Central Sulawesi',
+    icon: Users,
+    color: 'from-blue-500 to-blue-700',
+    file: '/dokumen/laporan-tenaga-kerja.pdf',
+  },
+  {
+    judul: 'Training & Competency Certification Data in Tourism & Creative Industries',
+    deskripsi: 'Data on vocational training and competency certificates for tourism & creative human resources',
+    icon: Award,
+    color: 'from-gold-500 to-orange-700',
+    file: '/dokumen/data-pelatihan-sertifikasi.pdf',
+  },
+];
+
 const SumberDaya = () => {
-  const [items, setItems] = useState(DEFAULT_ITEMS);
+  const { language } = useLanguage();
+  const isEn = language === 'EN';
+  const [items, setItems] = useState(isEn ? DEFAULT_ITEMS_EN : DEFAULT_ITEMS_ID);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -39,15 +59,21 @@ const SumberDaya = () => {
               file: item.file ? (item.file.startsWith('http') || item.file.startsWith('/') ? item.file : `/uploads/${item.file}`) : null,
             }))
           );
+        } else {
+          setItems(isEn ? DEFAULT_ITEMS_EN : DEFAULT_ITEMS_ID);
         }
       })
-      .catch(() => {})
+      .catch(() => {
+        setItems(isEn ? DEFAULT_ITEMS_EN : DEFAULT_ITEMS_ID);
+      })
       .finally(() => setLoading(false));
-  }, []);
+  }, [isEn]);
 
   return (
     <>
-      <Helmet><title>Sumber Daya Pariwisata & Ekonomi Kreatif - Dinas Pariwisata Sulteng</title></Helmet>
+      <Helmet>
+        <title>{isEn ? 'Tourism & Creative Economy Resources - Central Sulawesi Tourism' : 'Sumber Daya Pariwisata & Ekonomi Kreatif - Dinas Pariwisata Sulteng'}</title>
+      </Helmet>
 
       <PageHeader
         badge="Pengembangan Kapasitas & SDM"
@@ -91,7 +117,7 @@ const SumberDaya = () => {
                     download={item.file && !item.file.startsWith('http')}
                     className="flex-shrink-0 btn-primary text-sm inline-flex items-center gap-2"
                   >
-                    <Download size={16} /> Unduh / Lihat
+                    <Download size={16} /> {isEn ? 'Download / View' : 'Unduh / Lihat'}
                   </a>
                 </motion.div>
               ))}
@@ -103,11 +129,11 @@ const SumberDaya = () => {
             <div className="flex items-start gap-3">
               <FileText size={20} className="text-primary-600 flex-shrink-0 mt-0.5" />
               <div className="text-sm text-gray-700">
-                <p className="font-semibold mb-1">Tentang Data Ini:</p>
+                <p className="font-semibold mb-1">{isEn ? 'About This Data:' : 'Tentang Data Ini:'}</p>
                 <p>
-                  Data sumber daya pariwisata dan ekonomi kreatif mencakup informasi tenaga kerja, pelatihan,
-                  sertifikasi kompetensi, serta data pendukung lainnya yang berkaitan dengan pengembangan SDM
-                  di sektor pariwisata dan ekonomi kreatif Provinsi Sulawesi Tengah.
+                  {isEn
+                    ? 'Tourism and creative economy resource data covers employment statistics, competency training, skill certifications, and human resource development programs across Central Sulawesi Province.'
+                    : 'Data sumber daya pariwisata dan ekonomi kreatif mencakup informasi tenaga kerja, pelatihan, sertifikasi kompetensi, serta data pendukung lainnya yang berkaitan dengan pengembangan SDM di sektor pariwisata dan ekonomi kreatif Provinsi Sulawesi Tengah.'}
                 </p>
               </div>
             </div>

@@ -1,5 +1,6 @@
 import { Routes, Route, useLocation } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useLanguage } from './context/LanguageContext';
 import MainLayout from './components/MainLayout';
 import Home from './pages/Home';
 import Berita from './pages/Berita';
@@ -61,7 +62,7 @@ import AdminTema from './pages/Admin/Tema';
 import api from './services/api';
 
 function App() {
-  const [language, setLanguage] = useState('ID');
+  const { language, setLanguage } = useLanguage();
   const location = useLocation();
   const isAdmin = location.pathname.startsWith('/admin');
 

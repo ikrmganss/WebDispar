@@ -1,83 +1,88 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
+import { UI_STRINGS } from '../utils/translations';
 
-const SLIDES = [
-  {
-    isDual: true,
-    alt: 'Dinas Pariwisata Provinsi Sulawesi Tengah - Destinasi Wisata Unggulan',
-    title: 'Destinasi Wisata Unggulan Sulawesi Tengah',
-    subtitle: 'Pesona Megalit, Bukit Selena, Danau Paisupok, Lore Lindu, dan Kepulauan Togean',
-    link: '#',
-  },
-  {
-    image: '/images/slider/slider-1-kantor-dispar.jpg',
-    fallbackImage: '/slider/Slider.jpg',
-    alt: 'Kantor Dinas Pariwisata Provinsi Sulawesi Tengah',
-    title: 'Dinas Pariwisata Provinsi Sulawesi Tengah',
-    subtitle: 'Mewujudkan Pariwisata Sulteng yang Maju, Berdaya Saing, dan Berkelanjutan',
-    link: '#',
-  },
-  {
-    image: '/images/slider/slider2.jpg',
-    fallbackImage: '/slider/Slider.jpg',
-    alt: 'Komitmen Keterbukaan Informasi Publik PPID',
-    title: 'Komitmen Keterbukaan Informasi Publik',
-    subtitle: 'Layanan Transparan, Akuntabel, dan Terpercaya',
-    link: '/ppid',
-  },
-  {
-    image: '/images/slider/slider3.jpg',
-    fallbackImage: '/slider/Slider.jpg',
-    alt: 'PPID Dinas Pariwisata Sulawesi Tengah',
-    title: 'PPID Dinas Pariwisata Sulteng',
-    subtitle: 'Akses Dokumen, Regulasi, dan Pelayanan Informasi Publik',
-    link: '/ppid',
-  },
-  {
-    image: '/images/slider/slider4.jpg',
-    fallbackImage: '/slider/Slider.jpg',
-    alt: 'Indikator Kinerja Utama Dispar 2026',
-    title: 'Indikator Kinerja Utama (IKU) 2026',
-    subtitle: 'Target dan Capaian Pembangunan Kepariwisataan',
-    link: '#',
-  },
-  {
-    image: '/images/slider/slider5.jpg',
-    fallbackImage: '/slider/Slider.jpg',
-    alt: 'Command Center Berani Samporoa',
-    title: 'Command Center BERANI - SAMPOROA',
-    subtitle: 'Hotline Layanan Cepat Tanggap Pariwisata Sulteng',
-    link: 'https://wa.me/08116662222',
-    isExternal: true,
-  },
-  {
-    image: '/images/slider/slider6.png',
-    fallbackImage: '/slider/Slider.jpg',
-    alt: 'SP4N-LAPOR Pengaduan Pelayanan Publik',
-    title: 'Layanan Aspirasi & Pengaduan SP4N-LAPOR',
-    subtitle: 'Sampaikan Aspirasi dan Laporan Anda Secara Online',
-    link: 'https://www.lapor.go.id/instansi/pemerintah-provinsi-sulawesi-tengah',
-    isExternal: true,
-  },
-  {
-    image: '/images/slider/slider7.jpg',
-    fallbackImage: '/images/slider/slider7.png',
-    alt: 'Kampanye Pariwisata Anti Korupsi',
-    title: 'Pariwisata Berintegritas & Anti Korupsi',
-    subtitle: 'Menjaga Tata Kelola Pemerintahan yang Bersih dan Berwibawa',
-    link: '#',
-  },
-  {
-    image: '/images/slider/slider8.jpg',
-    fallbackImage: '/slider/Slider.jpg',
-    alt: 'Aplikasi Cekidot Persuratan Dispar',
-    title: 'Layanan Cekidot Dispar Sulteng',
-    subtitle: 'Digitalisasi Persuratan dan Pelayanan Dinas',
-    link: 'https://cekidot.dispar.my.id/kirim-surat',
-    isExternal: true,
-  },
-];
+const getSlides = (language = 'ID') => {
+  const isEn = language === 'EN';
+  return [
+    {
+      isDual: true,
+      alt: isEn ? 'Department of Tourism Central Sulawesi - Featured Destinations' : 'Dinas Pariwisata Provinsi Sulawesi Tengah - Destinasi Wisata Unggulan',
+      title: isEn ? 'Featured Destinations of Central Sulawesi' : 'Destinasi Wisata Unggulan Sulawesi Tengah',
+      subtitle: isEn ? 'Charm of Megaliths, Selena Hill, Paisupok Lake, Lore Lindu, and Togean Islands' : 'Pesona Megalit, Bukit Selena, Danau Paisupok, Lore Lindu, dan Kepulauan Togean',
+      link: '#',
+    },
+    {
+      image: '/images/slider/slider-1-kantor-dispar.jpg',
+      fallbackImage: '/slider/Slider.jpg',
+      alt: isEn ? 'Office of the Department of Tourism Central Sulawesi' : 'Kantor Dinas Pariwisata Provinsi Sulawesi Tengah',
+      title: isEn ? 'Department of Tourism Central Sulawesi Province' : 'Dinas Pariwisata Provinsi Sulawesi Tengah',
+      subtitle: isEn ? 'Fostering Advanced, Competitive, and Sustainable Tourism' : 'Mewujudkan Pariwisata Sulteng yang Maju, Berdaya Saing, dan Berkelanjutan',
+      link: '#',
+    },
+    {
+      image: '/images/slider/slider2.jpg',
+      fallbackImage: '/slider/Slider.jpg',
+      alt: isEn ? 'PPID Public Information Transparency Commitment' : 'Komitmen Keterbukaan Informasi Publik PPID',
+      title: isEn ? 'Public Information Openness Commitment' : 'Komitmen Keterbukaan Informasi Publik',
+      subtitle: isEn ? 'Transparent, Accountable, and Trustworthy Services' : 'Layanan Transparan, Akuntabel, dan Terpercaya',
+      link: '/ppid',
+    },
+    {
+      image: '/images/slider/slider3.jpg',
+      fallbackImage: '/slider/Slider.jpg',
+      alt: isEn ? 'PPID Tourism Office Central Sulawesi' : 'PPID Dinas Pariwisata Sulawesi Tengah',
+      title: isEn ? 'PPID Tourism Office Central Sulawesi' : 'PPID Dinas Pariwisata Sulteng',
+      subtitle: isEn ? 'Access Documents, Regulations, and Public Information Services' : 'Akses Dokumen, Regulasi, dan Pelayanan Informasi Publik',
+      link: '/ppid',
+    },
+    {
+      image: '/images/slider/slider4.jpg',
+      fallbackImage: '/slider/Slider.jpg',
+      alt: isEn ? 'Key Performance Indicators 2026' : 'Indikator Kinerja Utama Dispar 2026',
+      title: isEn ? 'Key Performance Indicators (IKU) 2026' : 'Indikator Kinerja Utama (IKU) 2026',
+      subtitle: isEn ? 'Targets and Achievements of Tourism Development' : 'Target dan Capaian Pembangunan Kepariwisataan',
+      link: '#',
+    },
+    {
+      image: '/images/slider/slider5.jpg',
+      fallbackImage: '/slider/Slider.jpg',
+      alt: isEn ? 'Command Center Berani Samporoa' : 'Command Center Berani Samporoa',
+      title: 'Command Center BERANI - SAMPOROA',
+      subtitle: isEn ? 'Fast Response Hotline for Central Sulawesi Tourism' : 'Hotline Layanan Cepat Tanggap Pariwisata Sulteng',
+      link: 'https://wa.me/08116662222',
+      isExternal: true,
+    },
+    {
+      image: '/images/slider/slider6.png',
+      fallbackImage: '/slider/Slider.jpg',
+      alt: isEn ? 'SP4N-LAPOR Public Service Complaints' : 'SP4N-LAPOR Pengaduan Pelayanan Publik',
+      title: isEn ? 'SP4N-LAPOR Aspiration & Complaint Service' : 'Layanan Aspirasi & Pengaduan SP4N-LAPOR',
+      subtitle: isEn ? 'Submit Your Aspirations and Complaints Online' : 'Sampaikan Aspirasi dan Laporan Anda Secara Online',
+      link: 'https://www.lapor.go.id/instansi/pemerintah-provinsi-sulawesi-tengah',
+      isExternal: true,
+    },
+    {
+      image: '/images/slider/slider7.jpg',
+      fallbackImage: '/images/slider/slider7.png',
+      alt: isEn ? 'Anti-Corruption Tourism Campaign' : 'Kampanye Pariwisata Anti Korupsi',
+      title: isEn ? 'Tourism with Integrity & Anti-Corruption' : 'Pariwisata Berintegritas & Anti Korupsi',
+      subtitle: isEn ? 'Maintaining Clean and Dignified Governance' : 'Menjaga Tata Kelola Pemerintahan yang Bersih dan Berwibawa',
+      link: '#',
+    },
+    {
+      image: '/images/slider/slider8.jpg',
+      fallbackImage: '/slider/Slider.jpg',
+      alt: isEn ? 'Cekidot Correspondence Application' : 'Aplikasi Cekidot Persuratan Dispar',
+      title: isEn ? 'Dispar Sulteng Cekidot Service' : 'Layanan Cekidot Dispar Sulteng',
+      subtitle: isEn ? 'Digitalization of Correspondence and Agency Services' : 'Digitalisasi Persuratan dan Pelayanan Dinas',
+      link: 'https://cekidot.dispar.my.id/kirim-surat',
+      isExternal: true,
+    },
+  ];
+};
 
 const AUTOPLAY_INTERVAL = 5000;
 const DUAL_SLIDE_DURATION = 11000;
@@ -165,13 +170,18 @@ const LetterSweep = ({ text, baseColor, highlightColor, glowColor, delayOffset =
   );
 };
 
-const Hero = () => {
+const Hero = ({ language: propLanguage }) => {
+  const { language: contextLanguage } = useLanguage();
+  const language = propLanguage || contextLanguage || 'ID';
+  const slides = getSlides(language);
+  const strings = UI_STRINGS[language] || UI_STRINGS.ID;
+
   const [current, setCurrent] = useState(0);
   const [subImageIdx, setSubImageIdx] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
-  const next = useCallback(() => setCurrent((prev) => (prev + 1) % SLIDES.length), []);
-  const prev = useCallback(() => setCurrent((prev) => (prev - 1 + SLIDES.length) % SLIDES.length), []);
+  const next = useCallback(() => setCurrent((prev) => (prev + 1) % slides.length), [slides.length]);
+  const prev = useCallback(() => setCurrent((prev) => (prev - 1 + slides.length) % slides.length), [slides.length]);
 
   // Continuous video-like cycling between Adegan 1 (Megalit) and Adegan 2 (Lore Lindu) on Slide 0
   useEffect(() => {
@@ -189,7 +199,7 @@ const Hero = () => {
 
   // Carousel Autoplay management for advancing slides
   useEffect(() => {
-    if (isPaused || SLIDES.length <= 1) return;
+    if (isPaused || slides.length <= 1) return;
 
     const duration = current === 0 ? DUAL_SLIDE_DURATION : AUTOPLAY_INTERVAL;
 
@@ -198,7 +208,7 @@ const Hero = () => {
     }, duration);
 
     return () => clearTimeout(slideTimer);
-  }, [current, isPaused, next]);
+  }, [current, isPaused, next, slides.length]);
 
   useEffect(() => {
     const handleKey = (e) => {
@@ -209,7 +219,7 @@ const Hero = () => {
     return () => window.removeEventListener('keydown', handleKey);
   }, [next, prev]);
 
-  const slide = SLIDES[current] ?? SLIDES[0];
+  const slide = slides[current] ?? slides[0];
   const activeDuration = current === 0 ? DUAL_SLIDE_DURATION : AUTOPLAY_INTERVAL;
 
   return (
@@ -274,7 +284,7 @@ const Hero = () => {
             {/* Line 1: Selamat Datang di Website Resmi (Emas/Kuning Italic Serif Gambar 2) */}
             <div className="whitespace-nowrap">
               <LetterSweep
-                text="Selamat Datang di Website Resmi"
+                text={strings?.welcomeLine1 || "Selamat Datang di Website Resmi"}
                 baseColor="#F6C843"
                 highlightColor="#FFFBEB"
                 glowColor="rgba(254, 240, 138, 0.95)"
@@ -291,7 +301,7 @@ const Hero = () => {
             {/* Line 3: PROVINSI SULAWESI TENGAH */}
             <div className="whitespace-nowrap">
               <LetterSweep
-                text="PROVINSI SULAWESI TENGAH"
+                text={strings.welcomeLine3}
                 baseColor="#FFFFFF"
                 highlightColor="#F8FAFC"
                 glowColor="rgba(255, 255, 255, 0.95)"
@@ -369,7 +379,7 @@ const Hero = () => {
 
       {/* Slide Indicators (Dots) */}
       <div className="z-20 absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/30 backdrop-blur-md border border-white/15">
-        {SLIDES.map((s, idx) => (
+        {slides.map((s, idx) => (
           <button
             key={idx}
             onClick={() => setCurrent(idx)}

@@ -4,6 +4,7 @@ import { Palette, Download, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
 import api from '../../services/api';
 import PageHeader from '../../components/PageHeader';
+import { useLanguage } from '../../context/LanguageContext';
 
 const SUBSEKTOR = [
   'Kuliner', 'Kriya', 'Musik', 'Fesyen', 'Film', 'Animasi & Video',
@@ -12,7 +13,16 @@ const SUBSEKTOR = [
   'Periklanan', 'Televisi & Radio', 'Fotografi',
 ];
 
+const SUBSEKTOR_EN = [
+  'Culinary', 'Crafts', 'Music', 'Fashion', 'Film', 'Animation & Video',
+  'Apps & Games', 'Product Design', 'Interior Design', 'Visual Communication Design',
+  'Architecture', 'Performing Arts', 'Fine Arts', 'Publishing',
+  'Advertising', 'Television & Radio', 'Photography',
+];
+
 const EkonomiKreatif = () => {
+  const { language } = useLanguage();
+  const isEn = language === 'EN';
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -27,7 +37,9 @@ const EkonomiKreatif = () => {
 
   return (
     <>
-      <Helmet><title>Ekonomi Kreatif - Info Pariwisata Sulawesi Tengah</title></Helmet>
+      <Helmet>
+        <title>{isEn ? 'Creative Economy - Central Sulawesi Tourism' : 'Ekonomi Kreatif - Info Pariwisata Sulawesi Tengah'}</title>
+      </Helmet>
 
       <PageHeader
         badge="Inovasi & Karya Kreatif Lokal"
@@ -44,10 +56,14 @@ const EkonomiKreatif = () => {
         <div className="container-custom">
           {/* 17 Subsektor */}
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="card p-8 mb-10">
-            <h2 className="text-2xl font-bold text-navy-900 mb-2">17 Subsektor Ekonomi Kreatif</h2>
-            <p className="text-gray-500 text-sm mb-6">Sektor-sektor kreatif yang dikembangkan di Sulawesi Tengah</p>
+            <h2 className="text-2xl font-bold text-navy-900 mb-2">
+              {isEn ? '17 Creative Economy Subsectors' : '17 Subsektor Ekonomi Kreatif'}
+            </h2>
+            <p className="text-gray-500 text-sm mb-6">
+              {isEn ? 'Creative industry subsectors fostered in Central Sulawesi' : 'Sektor-sektor kreatif yang dikembangkan di Sulawesi Tengah'}
+            </p>
             <div className="flex flex-wrap gap-2">
-              {SUBSEKTOR.map((s, idx) => (
+              {(isEn ? SUBSEKTOR_EN : SUBSEKTOR).map((s, idx) => (
                 <span key={idx} className="px-4 py-2 bg-primary-50 text-primary-700 text-sm font-medium rounded-full border border-primary-200 hover:bg-primary-100 transition-colors">
                   {s}
                 </span>
@@ -59,9 +75,9 @@ const EkonomiKreatif = () => {
           <div className="mb-6">
             <h2 className="text-2xl font-bold text-navy-900 mb-2 flex items-center gap-2">
               <Sparkles size={24} className="text-gold-500" />
-              Data Pelaku Ekonomi Kreatif
+              {isEn ? 'Creative Economy Directories & Data' : 'Data Pelaku Ekonomi Kreatif'}
             </h2>
-            <p className="text-gray-500 text-sm">Data yang tersedia untuk diunduh</p>
+            <p className="text-gray-500 text-sm">{isEn ? 'Available directories and reports for download' : 'Data yang tersedia untuk diunduh'}</p>
           </div>
 
           {loading ? (
@@ -72,11 +88,15 @@ const EkonomiKreatif = () => {
                 <Palette size={26} />
               </div>
               <div className="flex-1">
-                <h3 className="font-semibold text-navy-900 mb-1">Data Pelaku Ekonomi Kreatif Sulawesi Tengah</h3>
-                <p className="text-xs text-gray-500">Data lengkap pelaku ekonomi kreatif per subsektor</p>
+                <h3 className="font-semibold text-navy-900 mb-1">
+                  {isEn ? 'Central Sulawesi Creative Economy Directory' : 'Data Pelaku Ekonomi Kreatif Sulawesi Tengah'}
+                </h3>
+                <p className="text-xs text-gray-500">
+                  {isEn ? 'Complete registry of creative industry practitioners by subsector' : 'Data lengkap pelaku ekonomi kreatif per subsektor'}
+                </p>
               </div>
-              <a href="/dokumen/ekraf-sulteng.pdf" download className="flex-shrink-0 btn-primary text-sm">
-                <Download size={16} /> Unduh
+              <a href="/dokumen/ekraf-sulteng.pdf" download className="flex-shrink-0 btn-primary text-sm inline-flex items-center gap-1.5">
+                <Download size={16} /> {isEn ? 'Download' : 'Unduh'}
               </a>
             </div>
           ) : (
@@ -102,9 +122,8 @@ const EkonomiKreatif = () => {
                       href={item.file.startsWith('http') || item.file.startsWith('/') ? item.file : `/uploads/${item.file}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      download={!item.file.startsWith('http')}
                       className="flex-shrink-0 inline-flex items-center justify-center w-9 h-9 rounded-lg bg-primary-600 hover:bg-primary-700 text-white transition-colors"
-                      title="Unduh / Buka Dokumen Ekraf"
+                      title={isEn ? "Download / Open Document" : "Unduh / Buka Direktori"}
                     >
                       <Download size={16} />
                     </a>

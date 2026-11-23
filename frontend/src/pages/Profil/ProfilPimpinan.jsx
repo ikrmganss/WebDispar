@@ -4,6 +4,25 @@ import { Users, Download, Network, Award, FileText, CheckCircle2, RefreshCw } fr
 import PageHeader from '../../components/PageHeader';
 import { motion } from 'framer-motion';
 import api from '../../services/api';
+import { useLanguage } from '../../context/LanguageContext';
+
+const JABATAN_MAP_EN = {
+  'Kepala Dinas': 'Head of Department',
+  'Sekretaris Dinas': 'Department Secretary',
+  'Kepala Sub. Bagian Keuangan dan Aset': 'Head of Sub-Division for Finance & Assets',
+  'Kepala Sub. Bagian Kepegawaian dan Umum': 'Head of Sub-Division for Personnel & General Affairs',
+  'Kepala Bidang Pengembangan Destinasi Pariwisata': 'Head of Division for Tourism Destination Development',
+  'Kepala Bidang Pengembangan Pemasaran Pariwisata': 'Head of Division for Tourism Marketing Development',
+  'Kepala Bidang Pengembangan Ekonomi Kreatif, Pemanfaatan & Perlindungan HKI': 'Head of Division for Creative Economy Development, Utilization & IPR Protection',
+  'Kepala Bidang Sumber Daya Pariwisata dan Ekonomi Kreatif': 'Head of Division for Tourism & Creative Economy Resources',
+  'Adyatama Kepariwisataan Ekonomi Kreatif Ahli Muda': 'Associate Tourism & Creative Economy Specialist',
+  'Adyatama Kepariwisataan dan Ekonomi Kreatif': 'Tourism & Creative Economy Specialist',
+};
+
+const translateJabatan = (jabatan, lang) => {
+  if (lang !== 'EN') return jabatan;
+  return JABATAN_MAP_EN[jabatan] || jabatan;
+};
 
 // Pemetaan dokumen CV / profil PDF resmi pimpinan jika tersedia
 const PDF_PROFIL_MAP = {
@@ -35,7 +54,9 @@ const DEFAULT_PEJABAT = [
   { nama: 'Husen, S.Kom', nip: '197908112010011007', jabatan: 'Adyatama Kepariwisataan Ekonomi Kreatif Ahli Muda', foto: 'husein.jpg', urutan: 16 },
 ];
 
-const ProfilPimpinan = ({ language = 'ID' }) => {
+const ProfilPimpinan = ({ language: propLanguage }) => {
+  const { language: contextLang } = useLanguage();
+  const language = propLanguage || contextLang || 'ID';
   const [pejabat, setPejabat] = useState(DEFAULT_PEJABAT);
   const [loading, setLoading] = useState(true);
   const [isLiveFromDb, setIsLiveFromDb] = useState(false);
@@ -177,7 +198,7 @@ const ProfilPimpinan = ({ language = 'ID' }) => {
                     <h3 className="font-bold text-navy-900 text-sm mb-1 line-clamp-2">{p.nama}</h3>
                     <p className="text-xs text-gray-500 mb-2">NIP. {p.nip || '-'}</p>
                     <p className="text-xs font-semibold text-primary-600 bg-primary-50 rounded-full px-3 py-1 inline-block">
-                      {p.jabatan}
+                      {translateJabatan(p.jabatan, language)}
                     </p>
                   </div>
 
@@ -189,7 +210,7 @@ const ProfilPimpinan = ({ language = 'ID' }) => {
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-1.5 text-xs text-primary-600 hover:text-primary-800 font-medium hover:underline"
                       >
-                        <FileText size={14} /> Lihat Profil Resmi (PDF)
+                        <FileText size={14} /> {language === 'EN' ? 'View Official Profile (PDF)' : 'Lihat Profil Resmi (PDF)'}
                       </a>
                     </div>
                   )}
