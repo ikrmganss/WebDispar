@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const {
-  getDTW, createDTW,
-  getDesaWisata, createDesaWisata,
+  getDTW, createDTW, updateDTW, deleteDTW,
+  getDesaWisata, createDesaWisata, updateDesaWisata, deleteDesaWisata,
   getPaketWisata, createPaketWisata,
   getKalenderEvent, createKalenderEvent,
   getDataHunian, createDataHunian,
@@ -15,8 +15,12 @@ const upload = require('../middlewares/uploadMiddleware');
 
 router.get('/dtw', getDTW);
 router.post('/dtw', verifyToken, isAdmin, upload.single('gambar'), createDTW);
+router.put('/dtw/:id', verifyToken, isAdmin, upload.single('gambar'), updateDTW);
+router.delete('/dtw/:id', verifyToken, isAdmin, deleteDTW);
 router.get('/desa-wisata', getDesaWisata);
 router.post('/desa-wisata', verifyToken, isAdmin, upload.single('gambar'), createDesaWisata);
+router.put('/desa-wisata/:id', verifyToken, isAdmin, upload.single('gambar'), updateDesaWisata);
+router.delete('/desa-wisata/:id', verifyToken, isAdmin, deleteDesaWisata);
 router.get('/paket-wisata', getPaketWisata);
 router.post('/paket-wisata', verifyToken, isAdmin, upload.fields([{ name: 'gambar', maxCount: 1 }, { name: 'file_pdf', maxCount: 1 }]), createPaketWisata);
 router.get('/kalender-event', getKalenderEvent);

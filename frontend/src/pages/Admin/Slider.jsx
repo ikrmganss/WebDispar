@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { ImagePlus, Trash2, ToggleLeft, ToggleRight, Upload, AlertCircle } from 'lucide-react';
 import api from '../../services/api';
+import { GlassCard } from './AdminShared';
 
 const BASE_URL = import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5000';
 
@@ -103,7 +104,7 @@ const AdminSlider = () => {
       )}
 
       {/* Form Tambah */}
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
+      <GlassCard className="p-6">
         <h2 className="font-bold text-slate-900 text-base mb-4 flex items-center gap-2">
           <ImagePlus className="w-5 h-5 text-amber-500" /> Tambah Slider Baru
         </h2>
@@ -162,10 +163,10 @@ const AdminSlider = () => {
             {uploading ? 'Mengupload...' : <><ImagePlus className="w-4 h-4" /> Tambah Slider</>}
           </button>
         </form>
-      </div>
+      </GlassCard>
 
       {/* Daftar Slider */}
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+      <GlassCard className="overflow-hidden">
         <div className="px-6 py-4 border-b border-slate-100">
           <h2 className="font-bold text-slate-900 text-base">Daftar Slider ({sliders.length})</h2>
         </div>
@@ -230,7 +231,7 @@ const AdminSlider = () => {
             })}
           </div>
         )}
-      </div>
+      </GlassCard>
     </div>
   );
 };

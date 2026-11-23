@@ -17,6 +17,7 @@ app.use('/api/berita', require('./routes/beritaRoutes'));
 app.use('/api/profil', require('./routes/profilRoutes'));
 app.use('/api/ppid', require('./routes/ppidRoutes'));
 app.use('/api/info-pariwisata', require('./routes/infoPariwisataRoutes'));
+app.use('/api/slider', require('./routes/sliderRoutes'));
 app.use('/api/rencana-terbit', require('./routes/rencanaTerbitRoutes'));
 app.use('/api/statistik', require('./routes/statistikRoutes'));
 

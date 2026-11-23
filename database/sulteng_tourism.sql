@@ -508,6 +508,34 @@ INSERT INTO `rencana_terbit` VALUES (1,'Data Statistik Kunjungan Wisatawan Tahun
 UNLOCK TABLES;
 
 --
+-- Table structure for table `slider`
+--
+
+DROP TABLE IF EXISTS `slider`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `slider` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `judul` varchar(255) DEFAULT NULL,
+  `gambar` varchar(255) DEFAULT NULL,
+  `urutan` int DEFAULT '1',
+  `aktif` tinyint(1) DEFAULT '1',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `slider`
+--
+
+LOCK TABLES `slider` WRITE;
+/*!40000 ALTER TABLE `slider` DISABLE KEYS */;
+INSERT INTO `slider` VALUES (1,'Dinas Pariwisata Provinsi Sulawesi Tengah',NULL,1,1,DEFAULT),(2,'Komitmen Keterbukaan Informasi Publik',NULL,2,1,DEFAULT),(3,'PPID Dinas Pariwisata Sulteng',NULL,3,1,DEFAULT),(4,'Indikator Kinerja Utama (IKU) 2026',NULL,4,1,DEFAULT),(5,'Command Center BERANI - SAMPOROA',NULL,5,1,DEFAULT),(6,'Layanan Aspirasi & Pengaduan SP4N-LAPOR',NULL,6,1,DEFAULT),(7,'Pariwisata Berintegritas & Anti Korupsi',NULL,7,1,DEFAULT),(8,'Layanan Cekidot Dispar Sulteng',NULL,8,1,DEFAULT);
+/*!40000 ALTER TABLE `slider` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `statistik_kunjungan`
 --
 

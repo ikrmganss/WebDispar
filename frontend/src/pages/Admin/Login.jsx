@@ -22,8 +22,8 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-navy-900 to-primary-800 p-4">
-      <div className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md">
+    <div className="flex min-h-screen items-center justify-center bg-[linear-gradient(135deg,#1F5BA6_0%,#383087_50%,#5C2180_100%)] p-4">
+      <div className="w-full max-w-md rounded-2xl border border-white/40 bg-white/95 p-8 shadow-2xl backdrop-blur-md">
         <div className="text-center mb-8">
           <img src="/logo-sulteng.png" alt="Logo" className="h-16 mx-auto mb-4" />
           <h1 className="text-2xl font-bold text-navy-900">Admin Panel</h1>

@@ -30,6 +30,26 @@ exports.createItem = async (req, res) => {
   }
 };
 
+exports.updateItem = async (req, res) => {
+  const { kategori_id, judul, link, tahun } = req.body;
+  const file = req.file ? req.file.filename : req.body.file_lama;
+  try {
+    await db.query('UPDATE ppid_item SET kategori_id=?, judul=?, file=?, link=?, tahun=? WHERE id=?', [kategori_id, judul, file, link, tahun, req.params.id]);
+    res.json({ message: 'Item berhasil diupdate' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.deleteItem = async (req, res) => {
+  try {
+    await db.query('DELETE FROM ppid_item WHERE id = ?', [req.params.id]);
+    res.json({ message: 'Item berhasil dihapus' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 // Regulasi
 exports.getRegulasi = async (req, res) => {
   try {
@@ -51,6 +71,26 @@ exports.createRegulasi = async (req, res) => {
   }
 };
 
+exports.updateRegulasi = async (req, res) => {
+  const { judul, kategori } = req.body;
+  const file = req.file ? req.file.filename : req.body.file_lama;
+  try {
+    await db.query('UPDATE ppid_regulasi SET judul=?, file=?, kategori=? WHERE id=?', [judul, file, kategori || 'umum', req.params.id]);
+    res.json({ message: 'Regulasi berhasil diupdate' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.deleteRegulasi = async (req, res) => {
+  try {
+    await db.query('DELETE FROM ppid_regulasi WHERE id = ?', [req.params.id]);
+    res.json({ message: 'Regulasi berhasil dihapus' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 // SK
 exports.getSK = async (req, res) => {
   try {
@@ -67,6 +107,26 @@ exports.createSK = async (req, res) => {
   try {
     await db.query('INSERT INTO ppid_sk (judul, tahun, file) VALUES (?, ?, ?)', [judul, tahun, file]);
     res.status(201).json({ message: 'SK berhasil dibuat' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.updateSK = async (req, res) => {
+  const { judul, tahun } = req.body;
+  const file = req.file ? req.file.filename : req.body.file_lama;
+  try {
+    await db.query('UPDATE ppid_sk SET judul=?, tahun=?, file=? WHERE id=?', [judul, tahun, file, req.params.id]);
+    res.json({ message: 'SK berhasil diupdate' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.deleteSK = async (req, res) => {
+  try {
+    await db.query('DELETE FROM ppid_sk WHERE id = ?', [req.params.id]);
+    res.json({ message: 'SK berhasil dihapus' });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

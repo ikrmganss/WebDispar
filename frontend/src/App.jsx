@@ -49,8 +49,14 @@ import RencanaTerbit from './pages/RencanaTerbit';
 import Lapor from './pages/Lapor';
 
 // Admin
+import AdminLayout from './pages/Admin/AdminLayout';
 import AdminLogin from './pages/Admin/Login';
 import AdminDashboard from './pages/Admin/Dashboard';
+import AdminSlider from './pages/Admin/Slider';
+import AdminBerita from './pages/Admin/Berita';
+import AdminDTW from './pages/Admin/DTW';
+import AdminDesaWisata from './pages/Admin/DesaWisata';
+import AdminPPID from './pages/Admin/PPID';
 
 import api from './services/api';
 
@@ -67,7 +73,54 @@ function App() {
     return (
       <Routes>
         <Route path="/admin/login" element={<AdminLogin />} />
-        <Route path="/admin/dashboard" element={<AdminDashboard />} />
+        <Route
+          path="/admin/dashboard"
+          element={
+            <AdminLayout>
+              <AdminDashboard />
+            </AdminLayout>
+          }
+        />
+        <Route
+          path="/admin/slider"
+          element={
+            <AdminLayout>
+              <AdminSlider />
+            </AdminLayout>
+          }
+        />
+        <Route
+          path="/admin/berita"
+          element={
+            <AdminLayout>
+              <AdminBerita />
+            </AdminLayout>
+          }
+        />
+        <Route
+          path="/admin/dtw"
+          element={
+            <AdminLayout>
+              <AdminDTW />
+            </AdminLayout>
+          }
+        />
+        <Route
+          path="/admin/desa-wisata"
+          element={
+            <AdminLayout>
+              <AdminDesaWisata />
+            </AdminLayout>
+          }
+        />
+        <Route
+          path="/admin/ppid"
+          element={
+            <AdminLayout>
+              <AdminPPID />
+            </AdminLayout>
+          }
+        />
       </Routes>
     );
   }
