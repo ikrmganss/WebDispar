@@ -378,7 +378,7 @@ export const Sidebar = ({ isMobileOpen, setIsMobileOpen, language, setLanguage }
                 const q = searchQuery.trim().toLowerCase();
                 const adminCodes = ['dispar26', 'dispar 26'];
                 if (adminCodes.includes(q)) {
-                  window.location.href = '/admin/login';
+                  window.location.href = '/portal-internal-dispar/login';
                   return;
                 }
                 window.location.href = `/berita?q=${encodeURIComponent(searchQuery.trim())}`;
