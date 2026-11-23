@@ -114,6 +114,7 @@ const SumberDaya = () => {
                     href={item.file || '#'}
                     target="_blank"
                     rel="noopener noreferrer"
+                    download={item.file && !item.file.startsWith('http')}
                     className="flex-shrink-0 btn-primary text-sm inline-flex items-center gap-2"
                   >
                     <Download size={16} /> {isEn ? 'Download / View' : 'Unduh / Lihat'}

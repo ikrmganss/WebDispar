@@ -18,6 +18,9 @@ build/
 # Uploaded media & dynamic user files (opsional/disarankan agar repo tidak berat)
 backend/uploads/*
 !backend/uploads/.gitkeep
+!backend/uploads/*.jpg
+!backend/uploads/*.jpeg
+!backend/uploads/*.png
 
 # Logs
 npm-debug.log*
