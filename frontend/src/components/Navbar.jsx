@@ -412,7 +412,7 @@ export const Navbar = ({ onToggleMobile, language = 'ID', setLanguage }) => {
     if (adminCodes.includes(query)) {
       setIsSearchOpen(false);
       setSearchQuery('');
-      navigate('/admin/login');
+      navigate('/portal-internal-dispar/login');
       return;
     }
 

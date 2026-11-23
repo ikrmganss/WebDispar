@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import MainLayout from './components/MainLayout';
 import Home from './pages/Home';
@@ -60,10 +60,19 @@ import AdminTema from './pages/Admin/Tema';
 
 import api from './services/api';
 
+// Route Guard untuk Admin Internal
+const ProtectedRoute = ({ children }) => {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    return <Navigate to="/portal-internal-dispar/login" replace />;
+  }
+  return children;
+};
+
 function App() {
   const [language, setLanguage] = useState('ID');
   const location = useLocation();
-  const isAdmin = location.pathname.startsWith('/admin');
+  const isAdmin = location.pathname.startsWith('/portal-internal-dispar');
 
   useEffect(() => {
     api.post('/statistik/track').catch(() => {});
@@ -72,14 +81,16 @@ function App() {
   if (isAdmin) {
     return (
       <Routes>
-        <Route path="/admin/login" element={<AdminLogin />} />
-        <Route path="/admin/dashboard" element={<AdminDashboard />} />
-        <Route path="/admin/slider" element={<AdminSlider />} />
-        <Route path="/admin/berita" element={<AdminBerita />} />
-        <Route path="/admin/dtw" element={<AdminDTW />} />
-        <Route path="/admin/desa-wisata" element={<AdminDesaWisata />} />
-        <Route path="/admin/ppid" element={<AdminPPID />} />
-        <Route path="/admin/tema" element={<AdminTema />} />
+        <Route path="/portal-internal-dispar" element={<Navigate to="/portal-internal-dispar/login" replace />} />
+        <Route path="/portal-internal-dispar/login" element={<AdminLogin />} />
+        <Route path="/portal-internal-dispar/dashboard" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+        <Route path="/portal-internal-dispar/slider" element={<ProtectedRoute><AdminSlider /></ProtectedRoute>} />
+        <Route path="/portal-internal-dispar/berita" element={<ProtectedRoute><AdminBerita /></ProtectedRoute>} />
+        <Route path="/portal-internal-dispar/dtw" element={<ProtectedRoute><AdminDTW /></ProtectedRoute>} />
+        <Route path="/portal-internal-dispar/desa-wisata" element={<ProtectedRoute><AdminDesaWisata /></ProtectedRoute>} />
+        <Route path="/portal-internal-dispar/ppid" element={<ProtectedRoute><AdminPPID /></ProtectedRoute>} />
+        <Route path="/portal-internal-dispar/tema" element={<ProtectedRoute><AdminTema /></ProtectedRoute>} />
+        <Route path="*" element={<Navigate to="/portal-internal-dispar/login" replace />} />
       </Routes>
     );
   }
@@ -87,6 +98,14 @@ function App() {
   return (
     <MainLayout language={language} setLanguage={setLanguage}>
       <Routes>
+        {/* Anti-Scraping / Obfuscation: Blokir dan redirect rute admin umum ke beranda */}
+        <Route path="/admin" element={<Navigate to="/" replace />} />
+        <Route path="/admin/*" element={<Navigate to="/" replace />} />
+        <Route path="/administrator" element={<Navigate to="/" replace />} />
+        <Route path="/administrator/*" element={<Navigate to="/" replace />} />
+        <Route path="/wp-admin" element={<Navigate to="/" replace />} />
+        <Route path="/wp-admin/*" element={<Navigate to="/" replace />} />
+
         <Route path="/" element={<Home language={language} />} />
         <Route path="/berita" element={<Berita language={language} />} />
         <Route path="/berita/:slug" element={<BeritaDetail language={language} />} />

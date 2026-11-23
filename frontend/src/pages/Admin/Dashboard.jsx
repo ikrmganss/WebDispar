@@ -4,22 +4,29 @@ import { Newspaper, MapPin, FileText, LogOut, LayoutDashboard, Images, Globe, Co
 import api from '../../services/api';
 
 const MENU = [
-  { label: 'Dashboard', path: '/admin/dashboard', icon: LayoutDashboard },
-  { label: 'Slider Hero', path: '/admin/slider', icon: Images },
-  { label: 'Berita & Artikel', path: '/admin/berita', icon: Newspaper },
-  { label: 'Daya Tarik Wisata', path: '/admin/dtw', icon: MapPin },
-  { label: 'Desa Wisata', path: '/admin/desa-wisata', icon: Compass },
-  { label: 'Dokumen PPID', path: '/admin/ppid', icon: FileText },
-  { label: 'Warna Tema', path: '/admin/tema', icon: Palette },
+  { label: 'Dashboard', path: '/portal-internal-dispar/dashboard', icon: LayoutDashboard },
+  { label: 'Slider Hero', path: '/portal-internal-dispar/slider', icon: Images },
+  { label: 'Berita & Artikel', path: '/portal-internal-dispar/berita', icon: Newspaper },
+  { label: 'Daya Tarik Wisata', path: '/portal-internal-dispar/dtw', icon: MapPin },
+  { label: 'Desa Wisata', path: '/portal-internal-dispar/desa-wisata', icon: Compass },
+  { label: 'Dokumen PPID', path: '/portal-internal-dispar/ppid', icon: FileText },
+  { label: 'Warna Tema', path: '/portal-internal-dispar/tema', icon: Palette },
 ];
 
 export const AdminLayout = ({ children }) => {
   const location = useLocation();
 
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      window.location.href = '/portal-internal-dispar/login';
+    }
+  }, []);
+
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
-    window.location.href = '/admin/login';
+    window.location.href = '/portal-internal-dispar/login';
   };
 
   return (
@@ -62,7 +69,7 @@ export const AdminLayout = ({ children }) => {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-8 h-20 flex items-center justify-between gap-4">
           {/* Brand & Logo */}
-          <Link to="/admin/dashboard" className="flex items-center gap-3 shrink-0">
+          <Link to="/portal-internal-dispar/dashboard" className="flex items-center gap-3 shrink-0">
             <div className="h-11 px-2 rounded-xl bg-white/10 backdrop-blur border border-white/20 flex items-center justify-center shadow-sm">
               <img
                 src="/dinas pariwisata-COLOR WHITE.png"
@@ -169,10 +176,10 @@ const Dashboard = () => {
   }, []);
 
   const cards = [
-    { label: 'Total Berita', value: stats.berita, icon: Newspaper, color: 'bg-gradient-to-br from-[#1F5BA6] to-[#0369a1]', path: '/admin/berita' },
-    { label: 'Slider Hero Aktif', value: stats.slider, icon: Images, color: 'bg-gradient-to-br from-[#eab308] to-[#ca8a04]', path: '/admin/slider' },
-    { label: 'Daya Tarik Wisata', value: stats.dtw, icon: MapPin, color: 'bg-gradient-to-br from-[#059669] to-[#047857]', path: '/admin/dtw' },
-    { label: 'Desa Wisata', value: stats.desa, icon: Compass, color: 'bg-gradient-to-br from-[#5C2180] to-[#7c3aed]', path: '/admin/desa-wisata' },
+    { label: 'Total Berita', value: stats.berita, icon: Newspaper, color: 'bg-gradient-to-br from-[#1F5BA6] to-[#0369a1]', path: '/portal-internal-dispar/berita' },
+    { label: 'Slider Hero Aktif', value: stats.slider, icon: Images, color: 'bg-gradient-to-br from-[#eab308] to-[#ca8a04]', path: '/portal-internal-dispar/slider' },
+    { label: 'Daya Tarik Wisata', value: stats.dtw, icon: MapPin, color: 'bg-gradient-to-br from-[#059669] to-[#047857]', path: '/portal-internal-dispar/dtw' },
+    { label: 'Desa Wisata', value: stats.desa, icon: Compass, color: 'bg-gradient-to-br from-[#5C2180] to-[#7c3aed]', path: '/portal-internal-dispar/desa-wisata' },
   ];
 
   return (
