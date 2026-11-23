@@ -45,7 +45,7 @@ export const MainLayout = ({ children, language, setLanguage }) => {
       <Footer />
 
       {/* Floating Widget Statistik Pengunjung (Pojok Kiri Bawah) */}
-      <StatistikPengunjung />
+      <StatistikPengunjung language={language} />
     </div>
   );
 };

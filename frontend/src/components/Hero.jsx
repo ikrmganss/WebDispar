@@ -83,6 +83,55 @@ const AUTOPLAY_INTERVAL = 5000;
 const DUAL_SLIDE_DURATION = 11000;
 const SUB_SCENE_INTERVAL = 5500;
 
+// Stylized "DINAS PARIWISATA" with dynamic light sweep (animasi cahaya anggun & modern)
+// Bebas kotak transparan (zero bounding box artifacts) & kualitas ultra HD (jernih)
+const StylizedDinasPariwisata = () => {
+  return (
+    <div className="relative inline-block select-none pointer-events-none">
+      {/* Base Stylized Golden Yellow Typography (Kuning Keemasan Gambar 1 + Tipografi Khas Gambar 2, HD 4K) */}
+      <img
+        src="/images/dinas-pariwisata-yellow.png?v=4kultra2"
+        alt="Dinas Pariwisata"
+        className="h-7 sm:h-10 md:h-14 lg:h-16 xl:h-20 max-w-full w-auto object-contain block drop-shadow-[0_2px_4px_rgba(0,0,0,0.95)] drop-shadow-[0_4px_12px_rgba(0,0,0,0.7)] drop-shadow-[0_0_20px_rgba(246,193,44,0.3)]"
+        style={{ imageRendering: 'high-quality', transform: 'translateZ(0)' }}
+        draggable={false}
+      />
+
+      {/* Animasi Cahaya: Berkilau Anggun & Modern melintasi huruf tanpa kotak latar (clip-path beam) */}
+      <motion.div
+        className="absolute inset-0 w-full h-full pointer-events-none"
+        initial={{
+          clipPath: 'polygon(-35% 0%, -10% 0%, -20% 100%, -45% 100%)',
+          opacity: 0,
+        }}
+        animate={{
+          clipPath: [
+            'polygon(-35% 0%, -10% 0%, -20% 100%, -45% 100%)',
+            'polygon(35% 0%, 65% 0%, 55% 100%, 25% 100%)',
+            'polygon(115% 0%, 145% 0%, 135% 100%, 105% 100%)',
+          ],
+          opacity: [0, 1, 0],
+        }}
+        transition={{
+          duration: 3.8,
+          repeat: Infinity,
+          repeatDelay: 3.2,
+          times: [0, 0.5, 1],
+          ease: [0.25, 0.1, 0.25, 1.0],
+        }}
+      >
+        <img
+          src="/images/dinas-pariwisata-shine-hd.png?v=4kultra2"
+          alt=""
+          className="w-full h-full object-contain block filter drop-shadow-[0_0_12px_rgba(255,255,255,0.95)] drop-shadow-[0_0_24px_rgba(254,240,138,0.7)]"
+          style={{ imageRendering: 'high-quality', transform: 'translateZ(0)' }}
+          draggable={false}
+        />
+      </motion.div>
+    </div>
+  );
+};
+
 // Per-letter sweep animation without any bounding boxes or div highlights
 const LetterSweep = ({ text, baseColor, highlightColor, glowColor, delayOffset = 0, className = '' }) => {
   return (
@@ -222,28 +271,21 @@ const Hero = () => {
           {/* Animated Welcome Text Overlay - Centered Vertically on Left (Zero Boxes, Pure Letter-by-Letter Sweep) */}
           <div className="absolute left-5 sm:left-10 md:left-14 lg:left-20 xl:left-24 top-1/2 -translate-y-1/2 z-20 max-w-[95%] sm:max-w-2xl lg:max-w-3xl xl:max-w-4xl text-left pointer-events-none flex flex-col gap-1 sm:gap-1.5 md:gap-2">
             
-            {/* Line 1: Selamat Datang di Website Resmi */}
+            {/* Line 1: Selamat Datang di Website Resmi (Emas/Kuning Italic Serif Gambar 2) */}
             <div className="whitespace-nowrap">
               <LetterSweep
                 text="Selamat Datang di Website Resmi"
-                baseColor="#FFFFFF"
-                highlightColor="#E0F2FE"
-                glowColor="rgba(255, 255, 255, 0.95)"
-                delayOffset={0}
-                className="italic font-medium tracking-wide text-xs sm:text-sm md:text-base lg:text-xl xl:text-2xl"
-              />
-            </div>
-
-            {/* Line 2: DINAS PARIWISATA (Golden Yellow Sweep per-huruf) */}
-            <div className="whitespace-nowrap">
-              <LetterSweep
-                text="DINAS PARIWISATA"
                 baseColor="#F6C843"
                 highlightColor="#FFFBEB"
                 glowColor="rgba(254, 240, 138, 0.95)"
-                delayOffset={0.5}
-                className="font-black tracking-tight text-lg sm:text-2xl md:text-4xl lg:text-5xl xl:text-6xl leading-none"
+                delayOffset={0}
+                className="italic font-serif font-medium tracking-wide text-xs sm:text-sm md:text-base lg:text-xl xl:text-2xl"
               />
+            </div>
+
+            {/* Line 2: DINAS PARIWISATA (Tipografi Khusus Gambar 2 + Warna Kuning Gambar 1 + Animasi Cahaya) */}
+            <div className="whitespace-nowrap my-0.5 sm:my-1">
+              <StylizedDinasPariwisata />
             </div>
 
             {/* Line 3: PROVINSI SULAWESI TENGAH */}
@@ -251,10 +293,10 @@ const Hero = () => {
               <LetterSweep
                 text="PROVINSI SULAWESI TENGAH"
                 baseColor="#FFFFFF"
-                highlightColor="#E2E8F0"
+                highlightColor="#F8FAFC"
                 glowColor="rgba(255, 255, 255, 0.95)"
-                delayOffset={1.2}
-                className="font-extrabold uppercase tracking-wider text-xs sm:text-sm md:text-lg lg:text-xl xl:text-2xl leading-tight"
+                delayOffset={1.0}
+                className="font-extrabold uppercase tracking-[0.16em] sm:tracking-[0.22em] text-xs sm:text-sm md:text-base lg:text-xl xl:text-2xl leading-tight"
               />
             </div>
 

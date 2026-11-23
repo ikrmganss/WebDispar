@@ -2,9 +2,9 @@ import React, { useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   X,
-  RefreshCw,
+  User,
   BarChart3,
-  ChevronUp
+  RefreshCw
 } from 'lucide-react';
 import api from '../services/api';
 
@@ -19,13 +19,16 @@ const DEFAULT_STATS = {
   ip: '127.0.0.1'
 };
 
-const StatistikPengunjung = () => {
+const StatistikPengunjung = ({ language = 'ID' }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [stats, setStats] = useState(DEFAULT_STATS);
   const [isLoading, setIsLoading] = useState(false);
-  const popupRef = useRef(null);
+  const [currentTime, setCurrentTime] = useState(new Date());
+  const modalRef = useRef(null);
 
-  // Ambil statistik real-time dari backend
+  const isEN = language === 'EN';
+
+  // Fetch statistik pengunjung dari backend
   const fetchStats = async () => {
     setIsLoading(true);
     try {
@@ -43,7 +46,7 @@ const StatistikPengunjung = () => {
         });
       }
     } catch {
-      // Jika offline, tetap tampilkan 0
+      // Jika backend offline, tetap 0
     } finally {
       setIsLoading(false);
     }
@@ -51,179 +54,209 @@ const StatistikPengunjung = () => {
 
   useEffect(() => {
     fetchStats();
+    // Update live clock
+    const clockInterval = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+    return () => clearInterval(clockInterval);
   }, []);
 
-  // Tutup popup jika mengklik di luar area card
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (popupRef.current && !popupRef.current.contains(e.target)) {
-        const toggleBtn = document.getElementById('floating-stats-toggle-btn');
-        if (toggleBtn && toggleBtn.contains(e.target)) return;
-        setIsOpen(false);
-      }
-    };
+  // Format tanggal & jam sesuai gambar (contoh: 2026-11-23 20:25)
+  const formatDateTime = (date) => {
+    const pad = (n) => String(n).padStart(2, '0');
+    const yyyy = date.getFullYear();
+    const mm = pad(date.getMonth() + 1);
+    const dd = pad(date.getDate());
+    const hh = pad(date.getHours());
+    const min = pad(date.getMinutes());
+    return `${yyyy}-${mm}-${dd} ${hh}:${min}`;
+  };
 
-    if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
+  // Tutup jika klik backdrop
+  const handleBackdropClick = (e) => {
+    if (modalRef.current && !modalRef.current.contains(e.target)) {
+      setIsOpen(false);
     }
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [isOpen]);
+  };
+
+  // Format digit odometer: 7 digit (misal 0000000)
+  const odometerDigits = String(stats.allDays).padStart(7, '0').split('');
+
+  const items = [
+    {
+      label: isEN ? 'Today' : 'Hari Ini',
+      value: stats.today,
+      icon: User,
+      color: 'text-sky-400'
+    },
+    {
+      label: isEN ? 'Yesterday' : 'Kemarin',
+      value: stats.yesterday,
+      icon: User,
+      color: 'text-emerald-400'
+    },
+    {
+      label: isEN ? 'This Week' : 'Minggu Ini',
+      value: stats.thisWeek,
+      icon: User,
+      color: 'text-amber-400'
+    },
+    {
+      label: isEN ? 'Last Week' : 'Minggu Lalu',
+      value: stats.lastWeek,
+      icon: User,
+      color: 'text-orange-400'
+    },
+    {
+      label: isEN ? 'This Month' : 'Bulan Ini',
+      value: stats.thisMonth,
+      icon: User,
+      color: 'text-rose-400'
+    },
+    {
+      label: isEN ? 'Last Month' : 'Bulan Lalu',
+      value: stats.lastMonth,
+      icon: User,
+      color: 'text-pink-400'
+    },
+    {
+      label: isEN ? 'All days' : 'Semua Hari',
+      value: stats.allDays,
+      icon: BarChart3,
+      color: 'text-blue-400'
+    },
+  ];
 
   return (
     <>
-      {/* Backdrop overlay untuk perangkat layar kecil */}
+      {/* Modal Popup Sesuai Gambar yang Diminta */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={() => setIsOpen(false)}
-            className="fixed inset-0 bg-slate-950/30 backdrop-blur-xs z-40 sm:hidden"
-          />
+            transition={{ duration: 0.2 }}
+            onClick={handleBackdropClick}
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 select-none"
+          >
+            <motion.div
+              ref={modalRef}
+              initial={{ scale: 0.92, opacity: 0, y: 15 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.92, opacity: 0, y: 15 }}
+              transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+              className="relative w-full max-w-[390px] sm:max-w-[420px] bg-slate-900/80 backdrop-blur-xl border border-white/20 rounded-3xl p-5 sm:p-6 shadow-2xl text-white"
+            >
+              {/* Header Modal Bar */}
+              <div className="relative flex items-center justify-between pb-3">
+                <div className="flex-1 flex items-center justify-center gap-2 pl-6">
+                  <span className="text-lg">📊</span>
+                  <h3 className="text-sm sm:text-base font-bold text-white tracking-wide">
+                    {isEN ? 'Visitor Statistics' : 'Statistik Pengunjung'}
+                  </h3>
+                </div>
+
+                {/* Close Button Lingkaran Abu-abu seperti pada gambar */}
+                <button
+                  onClick={() => setIsOpen(false)}
+                  title={isEN ? 'Close' : 'Tutup'}
+                  className="w-6 h-6 rounded-full bg-white/20 hover:bg-white/30 text-white/80 hover:text-white flex items-center justify-center transition-colors cursor-pointer text-xs"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              </div>
+
+              {/* Subheading teks putih */}
+              <div className="text-left text-xs sm:text-sm font-semibold text-white/90 mb-2.5">
+                {isEN ? 'Statistik Pengunjung' : 'Statistik Pengunjung'}
+              </div>
+
+              {/* Kotak Hitam / Box Counter Dalam */}
+              <div className="bg-[#181B22] border border-gray-700/80 rounded-2xl p-4 sm:p-5 shadow-inner">
+                {/* Odometer Horizontal Bar di Atas */}
+                <div className="flex items-center justify-center gap-0.5 pb-4">
+                  <div className="inline-flex items-center bg-black border border-gray-700 rounded-sm px-1.5 py-0.5 shadow-sm">
+                    {odometerDigits.map((digit, i) => (
+                      <span
+                        key={i}
+                        className="inline-flex items-center justify-center w-5 sm:w-6 h-6 sm:h-7 bg-[#101216] text-white font-mono text-xs sm:text-sm font-bold border-r border-gray-800 last:border-r-0"
+                      >
+                        {digit}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Baris Statistik dengan Icon dan Nilai */}
+                <div className="space-y-1.5 font-mono text-xs sm:text-sm">
+                  {items.map((item, idx) => (
+                    <div
+                      key={idx}
+                      className="flex items-center justify-between py-1 border-b border-gray-800/40 last:border-b-0"
+                    >
+                      <div className="flex items-center gap-2">
+                        <item.icon className={`w-3.5 h-3.5 ${item.color}`} />
+                        <span className="text-gray-300 font-sans text-xs">
+                          {item.label}
+                        </span>
+                      </div>
+                      <span className="font-mono text-white text-xs sm:text-sm font-bold">
+                        {item.value.toLocaleString('en-US')}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Garis Pemisah Tipis */}
+                <div className="border-t border-gray-800/80 my-3.5" />
+
+                {/* Info Footer Box */}
+                <div className="text-center space-y-1 text-[11px] text-gray-400 font-mono">
+                  <div>
+                    {isEN ? 'Your IP: ' : 'IP Anda: '}
+                    <span className="text-gray-200 font-semibold">{stats.ip}</span>
+                  </div>
+                  <div className="text-gray-400">
+                    {formatDateTime(currentTime)}
+                  </div>
+                  <div className="text-gray-300 font-sans text-[11px] pt-0.5 font-medium flex items-center justify-center gap-1.5">
+                    <span>{isEN ? 'Visitors Counter' : 'Penghitung Pengunjung'}</span>
+                    <button
+                      onClick={fetchStats}
+                      disabled={isLoading}
+                      title={isEN ? 'Refresh' : 'Muat Ulang'}
+                      className="p-1 rounded hover:bg-gray-800 text-gray-400 hover:text-white transition-colors cursor-pointer"
+                    >
+                      <RefreshCw className={`w-2.5 h-2.5 ${isLoading ? 'animate-spin text-amber-400' : ''}`} />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Floating Container di Pojok Kiri Bawah */}
-      <div className="fixed bottom-6 left-6 z-50 flex flex-col items-start select-none">
-        {/* Popup Card Statistik (Sesuai Desain Acuan) */}
-        <AnimatePresence>
-          {isOpen && (
-            <motion.div
-              ref={popupRef}
-              initial={{ opacity: 0, scale: 0.94, y: 14 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.94, y: 14 }}
-              transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
-              className="mb-3 w-[370px] sm:w-[440px] max-w-[calc(100vw-2.5rem)] bg-[#EEF9F3] text-[#0A3828] rounded-3xl p-6 sm:p-7 shadow-2xl shadow-emerald-950/25 border border-[#CDEEDF] overflow-hidden"
-            >
-              {/* Header: Title, Subtitle, & Actions */}
-              <div className="flex items-start justify-between gap-3 mb-5">
-                <div>
-                  <h3 className="text-xl sm:text-2xl font-bold text-[#0A3828] tracking-tight leading-tight">
-                    Small space. Clear numbers.
-                  </h3>
-                  <p className="text-xs sm:text-sm text-[#3E6858] mt-1 font-medium">
-                    A compact view of your website visitors
-                  </p>
-                </div>
-
-                <div className="flex items-center gap-1 -mt-1 -mr-1">
-                  {/* Refresh Button */}
-                  <button
-                    onClick={fetchStats}
-                    disabled={isLoading}
-                    title="Perbarui data"
-                    className="w-8 h-8 rounded-full flex items-center justify-center text-[#3E6858] hover:text-[#0A3828] hover:bg-[#DDF2E7] transition-all cursor-pointer"
-                  >
-                    <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin' : ''}`} />
-                  </button>
-
-                  {/* Close Button */}
-                  <button
-                    onClick={() => setIsOpen(false)}
-                    title="Tutup"
-                    className="w-8 h-8 rounded-full flex items-center justify-center text-[#3E6858] hover:text-[#0A3828] hover:bg-[#DDF2E7] transition-all cursor-pointer"
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
-
-              {/* Baris 1: Total Visitors & Today's Visitors */}
-              <div className="grid grid-cols-2 gap-x-6 gap-y-2 pt-1">
-                <div>
-                  <span className="block text-[11px] sm:text-xs font-bold text-[#144734] uppercase tracking-wider">
-                    TOTAL VISITORS
-                  </span>
-                  <span className="block text-2xl sm:text-3xl font-extrabold text-[#0A3828] mt-1 tracking-tight font-sans">
-                    {stats.allDays.toLocaleString('en-US')}
-                  </span>
-                </div>
-
-                <div>
-                  <span className="block text-[11px] sm:text-xs font-bold text-[#144734] uppercase tracking-wider">
-                    TODAY'S VISITORS
-                  </span>
-                  <span className="block text-2xl sm:text-3xl font-extrabold text-[#0A3828] mt-1 tracking-tight font-sans">
-                    {stats.today.toLocaleString('en-US')}
-                  </span>
-                </div>
-              </div>
-
-              {/* Horizontal Divider Line */}
-              <div className="border-t border-[#C3E8D7] my-4 sm:my-5" />
-
-              {/* Baris 2: This Week's Visitors & This Month's Visitors */}
-              <div className="grid grid-cols-2 gap-x-6 gap-y-2">
-                <div>
-                  <span className="block text-[11px] sm:text-xs font-bold text-[#144734] uppercase tracking-wider">
-                    THIS WEEK'S VISITORS
-                  </span>
-                  <span className="block text-2xl sm:text-3xl font-extrabold text-[#0A3828] mt-1 tracking-tight font-sans">
-                    {stats.thisWeek.toLocaleString('en-US')}
-                  </span>
-                </div>
-
-                <div>
-                  <span className="block text-[11px] sm:text-xs font-bold text-[#144734] uppercase tracking-wider">
-                    THIS MONTH'S VISITORS
-                  </span>
-                  <span className="block text-2xl sm:text-3xl font-extrabold text-[#0A3828] mt-1 tracking-tight font-sans">
-                    {stats.thisMonth.toLocaleString('en-US')}
-                  </span>
-                </div>
-              </div>
-
-              {/* Footer info: IP & Live status */}
-              <div className="mt-5 pt-3 border-t border-[#CDEEDF] flex items-center justify-between text-[11px] text-[#4A7463]">
-                <span className="flex items-center gap-1.5 font-medium">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                  Your IP: <span className="font-mono text-[#0A3828] font-semibold">{stats.ip}</span>
-                </span>
-                <span className="text-[10px] text-[#55806F] font-medium">
-                  Live Counter
-                </span>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Floating Button Trigger (Pojok Kiri Bawah) */}
+      {/* Floating Button Icon di Pojok Kiri Bawah (Persis Posisi Gambar) */}
+      <div className="fixed bottom-6 left-6 z-40 select-none">
         <motion.button
-          id="floating-stats-toggle-btn"
           onClick={() => setIsOpen((prev) => !prev)}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          aria-label="Statistik Pengunjung"
-          className="group relative flex items-center gap-2.5 px-3.5 py-2.5 rounded-full bg-[#0A3828] text-white shadow-xl shadow-emerald-950/25 border border-[#CDEEDF]/40 hover:bg-[#114734] hover:border-[#CDEEDF] transition-all cursor-pointer"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.92 }}
+          aria-label={isEN ? 'Visitor Statistics' : 'Statistik Pengunjung'}
+          className="w-12 h-12 rounded-full bg-slate-900/85 backdrop-blur-md border border-white/25 text-white shadow-2xl shadow-black/50 flex items-center justify-center hover:border-amber-400 transition-all cursor-pointer group relative overflow-hidden"
         >
-          {/* Icon dengan Indikator Aktif */}
-          <div className="relative">
-            <div className="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center border border-white/20">
-              <BarChart3 className="w-3.5 h-3.5 text-emerald-300 group-hover:rotate-6 transition-transform" />
-            </div>
-            <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-emerald-400 ring-2 ring-[#0A3828] animate-pulse" />
-          </div>
+          {/* Subtle Glow */}
+          <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity" />
 
-          {/* Label Text */}
-          <div className="flex flex-col text-left pr-1">
-            <span className="text-[11px] font-bold text-white tracking-wide leading-tight group-hover:text-emerald-200 transition-colors">
-              Statistik Web
-            </span>
-            <span className="text-[9px] text-emerald-200/80 font-mono">
-              {stats.allDays.toLocaleString('en-US')} Visitors
-            </span>
-          </div>
+          {/* Icon Chart sesuai gambar */}
+          <span className="text-xl group-hover:scale-110 transition-transform">
+            📊
+          </span>
 
-          {/* Toggle Indicator Arrow */}
-          <div className="text-white/60 group-hover:text-white transition-colors">
-            <ChevronUp
-              className={`w-3.5 h-3.5 transition-transform duration-300 ${isOpen ? 'rotate-180 text-emerald-300' : ''}`}
-            />
-          </div>
+          {/* Indicator Dot */}
+          <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-emerald-400 ring-2 ring-slate-900 animate-pulse" />
         </motion.button>
       </div>
     </>
