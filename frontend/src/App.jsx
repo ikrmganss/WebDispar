@@ -59,6 +59,7 @@ import AdminPPID from './pages/Admin/PPID';
 import AdminTema from './pages/Admin/Tema';
 
 import api from './services/api';
+import { useLanguage } from './context/LanguageContext';
 
 // Route Guard untuk Admin Internal
 const ProtectedRoute = ({ children }) => {
@@ -70,7 +71,7 @@ const ProtectedRoute = ({ children }) => {
 };
 
 function App() {
-  const [language, setLanguage] = useState('ID');
+  const { language, setLanguage } = useLanguage();
   const location = useLocation();
   const isAdmin = location.pathname.startsWith('/portal-internal-dispar');
 

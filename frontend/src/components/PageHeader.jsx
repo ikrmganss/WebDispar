@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRight, Sparkles } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
+import { BREADCRUMB_TRANS, BADGE_TRANS, TITLE_TRANS } from '../utils/translations';
 
 const PageHeader = ({
   badge = 'Dinas Pariwisata Provinsi Sulawesi Tengah',
@@ -10,6 +12,13 @@ const PageHeader = ({
   breadcrumbs = [],
   children,
 }) => {
+  const { language } = useLanguage();
+  const isEn = language === 'EN';
+
+  const displayBadge = isEn && BADGE_TRANS?.EN?.[badge] ? BADGE_TRANS.EN[badge] : badge;
+  const displayTitle = isEn && TITLE_TRANS?.EN?.[title]?.title ? TITLE_TRANS.EN[title].title : title;
+  const displaySubtitle = isEn && TITLE_TRANS?.EN?.[title]?.subtitle ? TITLE_TRANS.EN[title].subtitle : subtitle;
+
   return (
     <div
       className="py-12 lg:py-16 text-white relative overflow-hidden transition-colors duration-300"
@@ -20,22 +29,22 @@ const PageHeader = ({
 
       <div className="container mx-auto max-w-7xl px-4 md:px-8 relative z-10">
         {/* Badge */}
-        {badge && (
+        {displayBadge && (
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 backdrop-blur-sm text-xs font-semibold text-amber-300 mb-4 border border-white/20">
             {BadgeIcon && <BadgeIcon size={14} className="text-amber-300 flex-shrink-0" />}
-            <span>{badge}</span>
+            <span>{displayBadge}</span>
           </div>
         )}
 
         {/* Title */}
         <h1 className="text-3xl lg:text-5xl font-black tracking-tight leading-tight text-white">
-          {title}
+          {displayTitle}
         </h1>
 
         {/* Subtitle */}
-        {subtitle && (
+        {displaySubtitle && (
           <p className="text-white/80 mt-3 max-w-3xl text-sm lg:text-base leading-relaxed">
-            {subtitle}
+            {displaySubtitle}
           </p>
         )}
 
@@ -47,15 +56,17 @@ const PageHeader = ({
             </Link>
             {breadcrumbs.map((crumb, idx) => {
               const isLast = idx === breadcrumbs.length - 1;
+              const label = isEn && BREADCRUMB_TRANS?.EN?.[crumb.label] ? BREADCRUMB_TRANS.EN[crumb.label] : crumb.label;
+
               return (
                 <React.Fragment key={idx}>
                   <ChevronRight size={12} className="text-white/50 flex-shrink-0" />
                   {crumb.path && !isLast ? (
                     <Link to={crumb.path} className="hover:text-amber-300 transition-colors">
-                      {crumb.label}
+                      {label}
                     </Link>
                   ) : (
-                    <span className="text-amber-300 font-semibold">{crumb.label}</span>
+                    <span className="text-amber-300 font-semibold">{label}</span>
                   )}
                 </React.Fragment>
               );

@@ -3,6 +3,8 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X, ChevronDown, ChevronRight, Search, ExternalLink, ShieldAlert, ArrowRight } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { SeasonalIcon } from './SeasonalIcon';
+import { useLanguage } from '../context/LanguageContext';
+import { UI_STRINGS } from '../utils/translations';
 
 const KABUPATEN_LIST = [
   'Kota Palu', 'Kabupaten Donggala', 'Kabupaten Sigi', 'Kabupaten Parigi Moutong',
@@ -13,6 +15,19 @@ const KABUPATEN_LIST = [
 
 const slugify = (str) =>
   str.toLowerCase().replace(/kabupaten |kota /g, '').replace(/\s+/g, '-');
+
+const getTopMenuLabel = (label, isEn) => {
+  if (!isEn) return label;
+  const map = {
+    'Home': 'Home',
+    'Berita': 'News',
+    'Profil': 'Profile',
+    'Informasi Publik': 'Public Information',
+    'Info Pariwisata': 'Tourism Info',
+    'Lapor': 'Report',
+  };
+  return map[label] || label;
+};
 
 // MENUS PERSIS DARI WEBDISPAR ORIGINAL
 const MENUS = [
@@ -371,8 +386,14 @@ const DropdownPanel = ({ items, onClose }) => {
   );
 };
 
-export const Navbar = ({ onToggleMobile, language = 'ID', setLanguage }) => {
+export const Navbar = ({ onToggleMobile, language: propLanguage, setLanguage: propSetLanguage }) => {
   const { theme } = useTheme();
+  const { language: contextLang, setLanguage: contextSetLang } = useLanguage();
+  const language = propLanguage || contextLang || 'ID';
+  const setLanguage = propSetLanguage || contextSetLang;
+  const isEn = language === 'EN';
+  const strings = UI_STRINGS[language] || UI_STRINGS.ID;
+
   const [activeMenu, setActiveMenu] = useState(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -455,10 +476,10 @@ export const Navbar = ({ onToggleMobile, language = 'ID', setLanguage }) => {
             </div>
             <div className="flex flex-col justify-center">
               <span className="font-black text-lg md:text-xl tracking-tight leading-tight text-white whitespace-nowrap">
-                Dinas Pariwisata
+                {strings.deptName || 'Dinas Pariwisata'}
               </span>
               <span className="font-bold text-amber-400 text-[9px] sm:text-[10px] md:text-[11px] tracking-wider uppercase whitespace-nowrap leading-tight">
-                PROVINSI SULAWESI TENGAH
+                {strings.provinceName || 'PROVINSI SULAWESI TENGAH'}
               </span>
             </div>
           </Link>
@@ -479,7 +500,7 @@ export const Navbar = ({ onToggleMobile, language = 'ID', setLanguage }) => {
                           : 'text-white hover:bg-white/20'
                       }`}
                     >
-                      <span>{menu.label}</span>
+                      <span>{getTopMenuLabel(menu.label, isEn)}</span>
                       <ChevronDown
                         size={11}
                         style={{
@@ -506,7 +527,7 @@ export const Navbar = ({ onToggleMobile, language = 'ID', setLanguage }) => {
                     active ? 'bg-amber-500 text-slate-950 shadow-sm' : 'text-white hover:bg-white/20'
                   }`}
                 >
-                  {menu.label}
+                  {getTopMenuLabel(menu.label, isEn)}
                 </Link>
               );
             })}
@@ -555,7 +576,7 @@ export const Navbar = ({ onToggleMobile, language = 'ID', setLanguage }) => {
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-white w-full max-w-md rounded-2xl p-5 shadow-2xl border border-slate-200 flex flex-col gap-4 animate-in fade-in zoom-in-95 duration-200">
             <div className="flex items-center justify-between pb-2 border-b border-slate-100">
-              <h3 className="font-bold text-slate-900 text-base">Cari Portal Wisata</h3>
+              <h3 className="font-bold text-slate-900 text-base">{strings.searchTitle || 'Cari Portal Wisata'}</h3>
               <button
                 onClick={() => setIsSearchOpen(false)}
                 className="text-slate-400 hover:text-slate-600 font-bold text-lg leading-none"
@@ -569,7 +590,7 @@ export const Navbar = ({ onToggleMobile, language = 'ID', setLanguage }) => {
                 <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
                 <input
                   type="text"
-                  placeholder="Ketik berita, destinasi, atau kode akses..."
+                  placeholder={strings.searchPlaceholder || 'Ketik berita, destinasi, atau kode akses...'}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full pl-10 pr-4 py-2.5 bg-slate-100 rounded-xl text-xs outline-none focus:ring-2 focus:ring-purple-600 font-medium"
@@ -588,8 +609,12 @@ export const Navbar = ({ onToggleMobile, language = 'ID', setLanguage }) => {
                       <ShieldAlert className="w-4 h-4" />
                     </div>
                     <div>
-                      <p className="text-xs font-bold leading-tight">Akses Panel Admin Terdeteksi</p>
-                      <p className="text-[10px] text-amber-800/80">Tekan Enter atau klik untuk membuka Login CMS Admin</p>
+                      <p className="text-xs font-bold leading-tight">
+                        {isEn ? 'Admin Panel Access Detected' : 'Akses Panel Admin Terdeteksi'}
+                      </p>
+                      <p className="text-[10px] text-amber-800/80">
+                        {isEn ? 'Press Enter or click to open CMS Admin Login' : 'Tekan Enter atau klik untuk membuka Login CMS Admin'}
+                      </p>
                     </div>
                   </div>
                   <ArrowRight className="w-4 h-4 text-amber-700 group-hover:translate-x-1 transition-transform" />
@@ -602,13 +627,13 @@ export const Navbar = ({ onToggleMobile, language = 'ID', setLanguage }) => {
                   onClick={() => setIsSearchOpen(false)}
                   className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition-colors cursor-pointer"
                 >
-                  Tutup
+                  {strings.close || 'Tutup'}
                 </button>
                 <button
                   type="submit"
                   className="px-4 py-2 bg-gradient-to-r from-[#1F5BA6] to-[#5C2180] hover:opacity-90 text-white text-xs font-bold rounded-xl transition-all shadow-sm cursor-pointer"
                 >
-                  {isAdminTrigger ? 'Buka Admin' : 'Cari'}
+                  {isAdminTrigger ? (isEn ? 'Open Admin' : 'Buka Admin') : (strings.search || 'Cari')}
                 </button>
               </div>
             </form>

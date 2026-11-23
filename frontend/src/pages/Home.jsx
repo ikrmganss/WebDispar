@@ -8,6 +8,8 @@ import {
 import Hero from '../components/Hero';
 import IKMChart from '../components/IKMChart';
 import api from '../services/api';
+import { useLanguage } from '../context/LanguageContext';
+import { UI_STRINGS } from '../utils/translations';
 
 const IMAGES = {
   news1: 'https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=800&q=80',
@@ -72,7 +74,7 @@ const getTagColor = (tag = '') => {
   return 'bg-[#1E293B]'; // Slate dark navy
 };
 
-const LatestNewsSection = ({ berita, loading }) => {
+const LatestNewsSection = ({ berita, loading, strings, isEn }) => {
   const fallbackNews = [
     {
       image: IMAGES.news1,
@@ -113,7 +115,7 @@ const LatestNewsSection = ({ berita, loading }) => {
           tag,
           tagColor: getTagColor(tag),
           title: b.judul,
-          date: new Date(b.tanggal || b.created_at || Date.now()).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }),
+          date: new Date(b.tanggal || b.created_at || Date.now()).toLocaleDateString(isEn ? 'en-US' : 'id-ID', { day: 'numeric', month: 'long', year: 'numeric' }),
           slug: b.slug,
         };
       })
@@ -126,10 +128,10 @@ const LatestNewsSection = ({ berita, loading }) => {
         <div className="flex flex-col gap-0.5">
           <div className="flex items-center gap-1.5 text-[#D97706] font-bold text-xs tracking-wider uppercase">
             <span className="w-2 h-2 rounded-full bg-[#F59E0B]" />
-            <span>WARTA PARIWISATA DAERAH</span>
+            <span>{strings?.regionalNewsTag || 'WARTA PARIWISATA DAERAH'}</span>
           </div>
           <h2 className="text-[#0F172A] text-2xl font-extrabold tracking-tight">
-            Berita Terbaru
+            {strings?.latestNews || 'Berita Terbaru'}
           </h2>
         </div>
 
@@ -202,15 +204,15 @@ const LatestNewsSection = ({ berita, loading }) => {
 // ==========================================
 // SECTION 2: PELAYANAN & KEGIATAN KALENDER
 // ==========================================
-const AgendaAndIKMSection = () => {
+const AgendaAndIKMSection = ({ strings, isEn }) => {
   return (
     <section className="flex flex-col gap-5 w-full">
       <div className="flex flex-col gap-0.5">
         <span className="text-[#D97706] font-bold text-xs tracking-wider uppercase">
-          PELAYANAN &amp; KEGIATAN
+          {strings?.servicesTag || 'PELAYANAN & KEGIATAN'}
         </span>
         <h2 className="text-[#0F172A] text-2xl font-extrabold tracking-tight">
-          Agenda Kegiatan &amp; Kepuasan Publik
+          {strings?.servicesTitle || 'Agenda Kegiatan & Kepuasan Publik'}
         </h2>
       </div>
 
@@ -233,22 +235,33 @@ const AgendaAndIKMSection = () => {
                 alt="Logo Dinas Pariwisata Sulteng"
                 className="h-7 w-auto object-contain shrink-0 drop-shadow-xs"
               />
-              <span className="text-xs font-bold text-slate-800 tracking-wide uppercase">DINAS PARIWISATA SULTENG</span>
+              <span className="text-xs font-bold text-slate-800 tracking-wide uppercase">{strings?.disparSulteng || 'DINAS PARIWISATA SULTENG'}</span>
             </div>
             <span className="px-3.5 py-1.5 rounded-full bg-white/85 backdrop-blur-md border border-white/80 text-amber-800 font-bold text-xs shadow-xs">
-              Tahun 2026
+              {strings?.year2026 || 'Tahun 2026'}
             </span>
           </div>
 
           <div className="relative z-10 flex flex-col gap-2.5 my-auto max-w-lg">
             <h3 className="text-3xl md:text-4xl font-black text-slate-900 leading-tight drop-shadow-[0_1px_3px_rgba(255,255,255,0.9)]">
-              Kalender <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 via-orange-600 to-rose-600">
-                Event Daerah
-              </span>
+              {isEn ? (
+                <>
+                  Regional Event <br />
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 via-orange-600 to-rose-600">
+                    Calendar
+                  </span>
+                </>
+              ) : (
+                <>
+                  Kalender <br />
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 via-orange-600 to-rose-600">
+                    Event Daerah
+                  </span>
+                </>
+              )}
             </h3>
             <p className="text-xs md:text-sm text-slate-800 font-semibold leading-relaxed drop-shadow-[0_1px_3px_rgba(255,255,255,0.9)]">
-              Provinsi Sulawesi Tengah — Beragam festival budaya, karnaval bahari, dan atraksi tradisi tahun berjalan.
+              {strings?.calendarDesc || 'Provinsi Sulawesi Tengah — Beragam festival budaya, karnaval bahari, dan atraksi tradisi tahun berjalan.'}
             </p>
           </div>
 
@@ -257,7 +270,7 @@ const AgendaAndIKMSection = () => {
               to="/info-pariwisata/pemasaran/kalender-event"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-slate-900/90 hover:bg-slate-900 backdrop-blur-md text-white font-bold text-xs md:text-sm shadow-md hover:shadow-xl transition-all hover:gap-3 group-hover:scale-[1.02] border border-white/20"
             >
-              <span>Jelajahi Semua Agenda</span>
+              <span>{strings?.exploreAllAgenda || 'Jelajahi Semua Agenda'}</span>
               <ChevronRight className="w-4 h-4 text-amber-400" />
             </Link>
           </div>
@@ -275,7 +288,7 @@ const AgendaAndIKMSection = () => {
 // ==========================================
 // SECTION 3: STATISTIK WISATAWAN & VIDEO TOURISM
 // ==========================================
-const StatisticsAndVideosSection = ({ stats }) => {
+const StatisticsAndVideosSection = ({ stats, strings, isEn }) => {
   const domestic = stats?.domestic ?? 11668933;
   const international = stats?.international ?? 28165;
   const tahun = stats?.tahun || '2025';
@@ -289,24 +302,24 @@ const StatisticsAndVideosSection = ({ stats }) => {
         <div className="flex flex-col gap-1">
           <div className="flex items-center justify-between">
             <span className="text-[#D97706] font-bold text-[10px] tracking-wider uppercase">
-              DATA BERKALA RESMI
+              {strings?.officialDataTag || 'DATA BERKALA RESMI'}
             </span>
             <span className="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-bold">
               +{growth}% vs {stats?.prevTahun || '2023'}
             </span>
           </div>
           <h3 className="text-[#0F172A] text-xl font-extrabold tracking-tight">
-            Statistik Wisatawan
+            {strings?.touristStats || 'Statistik Wisatawan'}
           </h3>
           <p className="text-[#94A3B8] text-xs">
-            Realisasi kunjungan wisatawan resmi Dispar Sulteng
+            {strings?.touristStatsDesc || 'Realisasi kunjungan wisatawan resmi Dispar Sulteng'}
           </p>
         </div>
 
         <div className="flex items-center justify-between pb-2 border-b border-[#E5E7EB] text-xs font-bold text-[#94A3B8]">
-          <span>Kategori Wisatawan</span>
+          <span>{strings?.visitorCategory || 'Kategori Wisatawan'}</span>
           <span className="text-primary-700 bg-primary-50 px-2 py-0.5 rounded-md font-semibold">
-            Periode {tahun}
+            {strings?.period || 'Periode'} {tahun}
           </span>
         </div>
 
@@ -318,9 +331,9 @@ const StatisticsAndVideosSection = ({ stats }) => {
             </div>
             <div className="flex flex-col">
               <span className="text-xl font-extrabold text-[#0F172A] leading-tight">
-                {domestic.toLocaleString('id-ID')}
+                {domestic.toLocaleString(isEn ? 'en-US' : 'id-ID')}
               </span>
-              <span className="text-[#64748B] text-xs font-medium">Nusantara (Domestik)</span>
+              <span className="text-[#64748B] text-xs font-medium">{strings?.domesticVisitors || 'Nusantara (Domestik)'}</span>
             </div>
           </div>
           {/* Persentase */}
@@ -328,7 +341,7 @@ const StatisticsAndVideosSection = ({ stats }) => {
             <span className="text-xs font-bold text-sky-700">
               {total > 0 ? ((domestic / total) * 100).toFixed(1) : 99.7}%
             </span>
-            <span className="text-[10px] text-slate-400">Pangsa</span>
+            <span className="text-[10px] text-slate-400">{strings?.share || 'Pangsa'}</span>
           </div>
         </div>
 
@@ -340,9 +353,9 @@ const StatisticsAndVideosSection = ({ stats }) => {
             </div>
             <div className="flex flex-col">
               <span className="text-xl font-extrabold text-[#0F172A] leading-tight">
-                {international.toLocaleString('id-ID')}
+                {international.toLocaleString(isEn ? 'en-US' : 'id-ID')}
               </span>
-              <span className="text-[#64748B] text-xs font-medium">Mancanegara (Internasional)</span>
+              <span className="text-[#64748B] text-xs font-medium">{strings?.internationalVisitors || 'Mancanegara (Internasional)'}</span>
             </div>
           </div>
           {/* Persentase */}
@@ -350,7 +363,7 @@ const StatisticsAndVideosSection = ({ stats }) => {
             <span className="text-xs font-bold text-amber-700">
               {total > 0 ? ((international / total) * 100).toFixed(1) : 0.3}%
             </span>
-            <span className="text-[10px] text-slate-400">Pangsa</span>
+            <span className="text-[10px] text-slate-400">{strings?.share || 'Pangsa'}</span>
           </div>
         </div>
 
@@ -359,14 +372,14 @@ const StatisticsAndVideosSection = ({ stats }) => {
           to="/info-pariwisata/pemasaran/statistik-kunjungan"
           className="flex items-center justify-between px-4 py-2.5 rounded-xl bg-gradient-to-r from-primary-50 to-sky-50 border border-primary-200 text-primary-700 hover:from-primary-600 hover:to-navy-800 hover:text-white transition-all duration-300 font-semibold text-xs group/btn shadow-xs"
         >
-          <span>Buka Analisis &amp; Grafik Lengkap ({tahun})</span>
+          <span>{strings?.openFullStats || 'Buka Analisis & Grafik Lengkap'} ({tahun})</span>
           <ChevronRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
         </Link>
 
         {/* Sumber Info */}
         <div className="flex items-center gap-2 pt-1 text-[#94A3B8] text-[11px] border-t border-slate-100">
           <TrendingUp className="w-3.5 h-3.5 text-[#F59E0B] shrink-0" />
-          <span>Sumber: Dokumen Resmi Analisis Dispar &amp; BPS Sulteng</span>
+          <span>{strings?.statsSource || 'Sumber: Dokumen Resmi Analisis Dispar & BPS Sulteng'}</span>
         </div>
       </div>
 
@@ -375,17 +388,17 @@ const StatisticsAndVideosSection = ({ stats }) => {
         <div className="flex items-center justify-between">
           <div className="flex flex-col gap-1">
             <span className="text-[#D97706] font-bold text-[10px] tracking-wider uppercase">
-              DOKUMENTASI VISUAL
+              {strings?.visualDocTag || 'DOKUMENTASI VISUAL'}
             </span>
             <h3 className="text-[#0F172A] text-xl font-extrabold tracking-tight">
-              Video Pariwisata &amp; Desa Wisata
+              {strings?.videoTitle || 'Video Pariwisata & Desa Wisata'}
             </h3>
             <p className="text-[#94A3B8] text-xs max-w-md">
-              Sinematik keajaiban alam, ragam tradisi, dan daya tarik desa wisata unggulan Sulawesi Tengah
+              {strings?.videoDesc || 'Sinematik keajaiban alam, ragam tradisi, dan daya tarik desa wisata unggulan Sulawesi Tengah'}
             </p>
           </div>
           <span className="px-3 py-1.5 rounded-lg bg-[#FFFBEB] border border-[#FDE68A] text-[#B45309] text-xs font-bold text-center leading-tight">
-            Galeri<br />Video
+            {strings?.videoGallery || 'Galeri Video'}
           </span>
         </div>
 
@@ -419,15 +432,15 @@ const StatisticsAndVideosSection = ({ stats }) => {
             </div>
             <div className="p-3.5 flex flex-col justify-between flex-1 gap-2">
               <h4 className="font-bold text-[#1E293B] text-sm leading-snug line-clamp-1">
-                Video Pariwisata Sulawesi Tengah
+                {strings?.video1Title || 'Video Pariwisata Sulawesi Tengah'}
               </h4>
               <p className="text-[#64748B] text-xs line-clamp-2">
-                Tonton dokumentasi pariwisata langsung di YouTube.
+                {strings?.video1Desc || 'Tonton dokumentasi pariwisata langsung di YouTube.'}
               </p>
               <div className="flex items-center justify-between pt-2 border-t border-slate-100 text-xs">
                 <span className="font-bold text-[#D97706] flex items-center gap-1">
                   <MapPin className="w-3.5 h-3.5" />
-                  Profil Daerah
+                  {strings?.regionalProfile || 'Profil Daerah'}
                 </span>
                 <span className="px-1.5 py-0.5 rounded bg-[#EF4444] text-white font-bold text-[10px]">
                   YouTube
@@ -465,15 +478,15 @@ const StatisticsAndVideosSection = ({ stats }) => {
             </div>
             <div className="p-3.5 flex flex-col justify-between flex-1 gap-2">
               <h4 className="font-bold text-[#1E293B] text-sm leading-snug line-clamp-1">
-                Video Desa Wisata Sulawesi Tengah
+                {strings?.video2Title || 'Video Desa Wisata Sulawesi Tengah'}
               </h4>
               <p className="text-[#64748B] text-xs line-clamp-2">
-                Tonton dokumentasi desa wisata langsung di YouTube.
+                {strings?.video2Desc || 'Tonton dokumentasi desa wisata langsung di YouTube.'}
               </p>
               <div className="flex items-center justify-between pt-2 border-t border-slate-100 text-xs">
                 <span className="font-bold text-[#059669] flex items-center gap-1">
                   <MapPin className="w-3.5 h-3.5" />
-                  Jelajah Desa
+                  {strings?.exploreVillage || 'Jelajah Desa'}
                 </span>
                 <span className="px-1.5 py-0.5 rounded bg-[#EF4444] text-white font-bold text-[10px]">
                   YouTube
@@ -491,6 +504,10 @@ const StatisticsAndVideosSection = ({ stats }) => {
 // HOME PAGE ROOT
 // ==========================================
 const Home = () => {
+  const { language } = useLanguage();
+  const isEn = language === 'EN';
+  const strings = UI_STRINGS[language] || UI_STRINGS.ID;
+
   const [berita, setBerita] = useState([]);
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -511,10 +528,18 @@ const Home = () => {
   return (
     <>
       <Helmet>
-        <title>Dinas Pariwisata Provinsi Sulawesi Tengah - Portal Resmi</title>
+        <title>
+          {isEn
+            ? 'Department of Tourism Central Sulawesi - Official Portal'
+            : 'Dinas Pariwisata Provinsi Sulawesi Tengah - Portal Resmi'}
+        </title>
         <meta
           name="description"
-          content="Portal resmi Dinas Pariwisata Provinsi Sulawesi Tengah. Informasi destinasi wisata, kalender event, warta pariwisata daerah, dan pelayanan publik."
+          content={
+            isEn
+              ? 'Official portal of the Department of Tourism of Central Sulawesi Province. Information on tourist destinations, event calendar, regional tourism news, and public services.'
+              : 'Portal resmi Dinas Pariwisata Provinsi Sulawesi Tengah. Informasi destinasi wisata, kalender event, warta pariwisata daerah, dan pelayanan publik.'
+          }
         />
       </Helmet>
 
@@ -523,9 +548,9 @@ const Home = () => {
 
       {/* Main Container Content */}
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-8 md:py-10 flex flex-col gap-10">
-        <LatestNewsSection berita={berita} loading={loading} />
-        <AgendaAndIKMSection />
-        <StatisticsAndVideosSection stats={stats} />
+        <LatestNewsSection berita={berita} loading={loading} strings={strings} isEn={isEn} />
+        <AgendaAndIKMSection strings={strings} isEn={isEn} />
+        <StatisticsAndVideosSection stats={stats} strings={strings} isEn={isEn} />
       </div>
     </>
   );
