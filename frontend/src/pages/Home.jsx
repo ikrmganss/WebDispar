@@ -13,7 +13,7 @@ const IMAGES = {
   news1: 'https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=800&q=80',
   news2: 'https://images.unsplash.com/photo-1532375810709-75b1da00537c?auto=format&fit=crop&w=800&q=80',
   news3: 'https://images.unsplash.com/photo-1506929562872-bb421503ef21?auto=format&fit=crop&w=800&q=80',
-  calendarBanner: '/images/calendar-event-banner.webp',
+  calendarBanner: '/images/banner-event-wisata-sulteng.jpg', // Gambar wisata Sulawesi Tengah (Jembatan & Laut Pesisir)
   videoPariwisata: 'https://i.ytimg.com/vi/voGg26hCInU/hqdefault.jpg',
   videoDesaWisata: 'https://i.ytimg.com/vi/42oGdqocrlw/hqdefault.jpg',
 };
@@ -219,19 +219,23 @@ const AgendaAndIKMSection = () => {
         <div className="lg:col-span-8 relative rounded-3xl overflow-hidden border border-white/60 shadow-[0_10px_30px_rgba(0,0,0,0.06),inset_0_1px_2px_rgba(255,255,255,0.7)] min-h-[340px] flex flex-col justify-between p-8 group">
           <img
             src={IMAGES.calendarBanner}
-            alt="Kalender Event Sulawesi Tengah"
-            className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 select-none"
+            alt="Kalender Event Wisata Sulawesi Tengah"
+            className="absolute inset-0 w-full h-full object-cover filter blur-[2.5px] scale-105 group-hover:scale-110 transition-transform duration-700 select-none"
           />
           {/* Glassmorphic frosted layer - 100% uniform across the entire image (sama rata) */}
-          <div className="absolute inset-0 bg-white/35 backdrop-blur-[4px] pointer-events-none" />
-          <div className="absolute inset-0 bg-gradient-to-b from-white/20 via-transparent to-black/10 pointer-events-none" />
+          <div className="absolute inset-0 bg-white/40 backdrop-blur-[4px] pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-r from-white/70 via-white/35 to-transparent pointer-events-none" />
 
           <div className="relative z-10 flex items-center justify-between">
-            <div className="flex items-center gap-2.5 bg-white/75 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-white/80 shadow-xs">
-              <img src="/dinas pariwisata-COLOR WHITE.png" alt="Logo" className="h-7 w-auto invert drop-shadow" />
+            <div className="flex items-center gap-2.5 bg-white/85 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-white/80 shadow-xs">
+              <img
+                src="/dinas-pariwisata-logo-clean.png"
+                alt="Logo Dinas Pariwisata Sulteng"
+                className="h-7 w-auto object-contain shrink-0 drop-shadow-xs"
+              />
               <span className="text-xs font-bold text-slate-800 tracking-wide uppercase">DINAS PARIWISATA SULTENG</span>
             </div>
-            <span className="px-3.5 py-1.5 rounded-full bg-white/75 backdrop-blur-md border border-white/80 text-amber-800 font-bold text-xs shadow-xs">
+            <span className="px-3.5 py-1.5 rounded-full bg-white/85 backdrop-blur-md border border-white/80 text-amber-800 font-bold text-xs shadow-xs">
               Tahun 2026
             </span>
           </div>

@@ -182,8 +182,12 @@ const MENUS = [
   { label: 'Lapor', path: 'https://www.lapor.go.id/instansi/pemerintah-provinsi-sulawesi-tengah', external: true },
 ];
 
-const LogoSymbol = () => (
-  <img src="/dinas pariwisata-COLOR WHITE.png" alt="Logo Dinas Pariwisata" className="h-10 w-auto object-contain" />
+const LogoSymbol = ({ className = 'h-11 sm:h-12 md:h-14 w-auto object-contain' }) => (
+  <img
+    src="/dinas-pariwisata-logo-clean.png?v=clean"
+    alt="Logo Dinas Pariwisata"
+    className={`${className} shrink-0 drop-shadow-md select-none`}
+  />
 );
 
 // Dropdown panel styles (Glassy White/Purple sesuai WebDispar Original)
@@ -409,15 +413,15 @@ export const Navbar = ({ onToggleMobile, language = 'ID', setLanguage }) => {
             : 'bg-gradient-to-r from-[#1F5BA6]/90 via-[#383087]/90 to-[#5C2180]/90 backdrop-blur-md border-b border-white/10 shadow-sm'
         }`}
       >
-        <div className="flex max-w-7xl h-20 items-center justify-between px-4 md:px-8 w-full">
+        <div className="flex max-w-7xl h-20 items-center justify-between px-3 sm:px-4 md:px-6 w-full">
           {/* Logo */}
-          <Link to="/" onClick={closeAll} className="inline-flex items-center gap-3">
+          <Link to="/" onClick={closeAll} className="inline-flex items-center gap-2 sm:gap-2.5 shrink-0">
             <LogoSymbol />
-            <div className="flex flex-col">
-              <span className="font-black text-lg md:text-xl tracking-tight leading-tight text-white">
+            <div className="flex flex-col justify-center">
+              <span className="font-black text-lg md:text-xl tracking-tight leading-tight text-white whitespace-nowrap">
                 Dinas Pariwisata
               </span>
-              <span className="font-bold text-amber-400 text-[10px] md:text-xs tracking-wider uppercase">
+              <span className="font-bold text-amber-400 text-[9px] sm:text-[10px] md:text-[11px] tracking-wider uppercase whitespace-nowrap leading-tight">
                 PROVINSI SULAWESI TENGAH
               </span>
             </div>
