@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { MapPin, Compass } from 'lucide-react';
+import { MapPin, Eye, Compass } from 'lucide-react';
 import { motion } from 'framer-motion';
 import api from '../../../services/api';
 import PageHeader from '../../../components/PageHeader';
-import { useLanguage } from '../../../context/LanguageContext';
 
 const kabupatenList = [
   'Kota Palu', 'Kabupaten Donggala', 'Kabupaten Sigi', 'Kabupaten Parigi Moutong',
@@ -20,7 +19,7 @@ const getDescriptionPreview = (html) => {
   return document.body.textContent.replace(/\s+/g, ' ').trim();
 };
 
-const DestinationCard = ({ item, index, isEn }) => {
+const DestinationCard = ({ item, index }) => {
   const [imageFailed, setImageFailed] = useState(false);
   const image = typeof item.gambar === 'string' ? item.gambar.trim() : '';
   const imageSrc = image
@@ -47,66 +46,51 @@ const DestinationCard = ({ item, index, isEn }) => {
         ) : (
           <div className="flex h-full flex-col items-center justify-center gap-2 text-slate-400">
             <MapPin size={32} aria-hidden="true" />
-            <span className="text-sm">{isEn ? 'Photo not available' : 'Foto belum tersedia'}</span>
+            <span className="text-sm">Foto belum tersedia</span>
           </div>
         )}
+        <div className="absolute top-4 left-4 rounded-full bg-amber-400 px-3 py-1 text-xs font-bold text-slate-900 shadow">
+          {item.kabupaten}
+        </div>
       </div>
-
-      <div className="flex flex-1 flex-col justify-between p-5">
-        <div>
-          <h3 className="line-clamp-2 text-base font-bold text-navy-900 transition-colors group-hover:text-primary-600">
-            {item.judul}
-          </h3>
-          <p className="mt-2 line-clamp-3 text-xs leading-relaxed text-gray-500">
-            {description || (isEn ? 'No description available for this destination.' : 'Deskripsi belum tersedia untuk destinasi ini.')}
-          </p>
-        </div>
-
-        <div className="flex items-center justify-between border-t border-gray-100 pt-3 text-xs text-gray-400">
-          <span className="inline-flex items-center gap-1">
-            <MapPin size={12} className="text-primary-600" />
-            <span className="truncate">{item.kabupaten || '-'}</span>
-          </span>
-        </div>
+      <div className="flex min-h-0 flex-1 flex-col p-5">
+        <h3 className="mb-2 line-clamp-2 text-lg font-bold text-navy-900">{item.judul}</h3>
+        <p className="mb-4 line-clamp-3 text-sm text-gray-600">
+          {description || 'Deskripsi belum tersedia.'}
+        </p>
+        <span className="mt-auto inline-flex items-center gap-1 text-xs text-gray-400">
+          <Eye size={14} /> {item.dilihat ?? 0} dilihat
+        </span>
       </div>
     </motion.div>
   );
 };
 
 const DayaTarikWisata = () => {
-  const { language } = useLanguage();
-  const isEn = language === 'EN';
-
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState('Kota Palu');
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setLoading(true);
-    api.get(`/info-pariwisata/daya-tarik-wisata?kabupaten=${selected}`)
-      .then((res) => setData(res.data || []))
-      .catch(() => setData([]))
+    api.get(`/info-pariwisata/dtw?kabupaten=${selected}`)
+      .then((res) => setData(res.data))
+      .catch(() => {})
       .finally(() => setLoading(false));
   }, [selected]);
 
   return (
     <>
-      <Helmet>
-        <title>{isEn ? 'Tourist Attractions - Tourism Info' : 'Daya Tarik Wisata - Info Pariwisata'}</title>
-      </Helmet>
+      <Helmet><title>Daya Tarik Wisata - Info Pariwisata</title></Helmet>
       <PageHeader
-        badge={isEn ? "Featured Destinations & Tourism" : "Destinasi & Wisata Unggulan"}
+        badge="Destinasi & Wisata Unggulan"
         badgeIcon={Compass}
-        title={isEn ? "Tourist Attractions" : "Daya Tarik Wisata"}
-        subtitle={
-          isEn
-            ? "Explore natural wonders, cultural heritage, and maritime charm across 13 regencies & cities of Central Sulawesi"
-            : "Jelajahi keindahan alam, budaya, dan pesona wisata bahari di 13 kabupaten & kota Sulawesi Tengah"
-        }
+        title="Daya Tarik Wisata"
+        subtitle="Jelajahi keindahan alam, budaya, dan pesona wisata bahari di 13 kabupaten & kota Sulawesi Tengah"
         breadcrumbs={[
-          { label: isEn ? 'Tourism Info' : 'Info Pariwisata', path: '/info-pariwisata/destinasi/daya-tarik-wisata' },
-          { label: isEn ? 'Destinations' : 'Destinasi' },
-          { label: isEn ? 'Tourist Attractions' : 'Daya Tarik Wisata' }
+          { label: 'Info Pariwisata', path: '/info-pariwisata/destinasi/daya-tarik-wisata' },
+          { label: 'Destinasi' },
+          { label: 'Daya Tarik Wisata' }
         ]}
       />
       <section className="py-12 lg:py-16">
@@ -131,12 +115,12 @@ const DayaTarikWisata = () => {
           ) : data.length === 0 ? (
             <div className="text-center py-20 text-gray-400">
               <MapPin size={48} className="mx-auto mb-4 opacity-30" />
-              <p>{isEn ? `No destination data available for ${selected}` : `Belum ada data destinasi untuk ${selected}`}</p>
+              <p>Belum ada data destinasi untuk {selected}</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {data.map((item, idx) => (
-                <DestinationCard key={item.id} item={item} index={idx} isEn={isEn} />
+                <DestinationCard key={item.id} item={item} index={idx} />
               ))}
             </div>
           )}

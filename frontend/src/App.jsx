@@ -1,6 +1,5 @@
 import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { useLanguage } from './context/LanguageContext';
 import MainLayout from './components/MainLayout';
 import Home from './pages/Home';
 import Berita from './pages/Berita';
@@ -71,7 +70,7 @@ const ProtectedRoute = ({ children }) => {
 };
 
 function App() {
-  const { language, setLanguage } = useLanguage();
+  const [language, setLanguage] = useState('ID');
   const location = useLocation();
   const isAdmin = location.pathname.startsWith('/portal-internal-dispar');
 

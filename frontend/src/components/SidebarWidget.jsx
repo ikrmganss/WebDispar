@@ -2,12 +2,8 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Newspaper, Calendar, TrendingUp, ExternalLink } from 'lucide-react';
 import api from '../services/api';
-import { useLanguage } from '../context/LanguageContext';
 
 const SidebarWidget = () => {
-  const { language } = useLanguage();
-  const isEn = language === 'EN';
-
   const [beritaPopuler, setBeritaPopuler] = useState([]);
   const [events, setEvents] = useState([]);
 
@@ -17,7 +13,7 @@ const SidebarWidget = () => {
   }, []);
 
   const formatDate = (date) =>
-    new Date(date).toLocaleDateString(isEn ? 'en-US' : 'id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
+    new Date(date).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
 
   return (
     <aside className="space-y-6">
@@ -25,11 +21,11 @@ const SidebarWidget = () => {
       <div className="card p-5">
         <h3 className="font-bold text-navy-900 mb-4 flex items-center gap-2 border-b border-gray-100 pb-3">
           <Newspaper size={18} className="text-primary-600" />
-          {isEn ? 'Popular News' : 'Berita Populer'}
+          Berita Populer
         </h3>
         <div className="space-y-3">
           {beritaPopuler.length === 0 ? (
-            <p className="text-sm text-gray-400 text-center py-4">{isEn ? 'No news yet' : 'Belum ada berita'}</p>
+            <p className="text-sm text-gray-400 text-center py-4">Belum ada berita</p>
           ) : (
             beritaPopuler.map((b) => (
               <Link
@@ -59,17 +55,17 @@ const SidebarWidget = () => {
       <div className="card p-5">
         <h3 className="font-bold text-navy-900 mb-4 flex items-center gap-2 border-b border-gray-100 pb-3">
           <Calendar size={18} className="text-gold-500" />
-          {isEn ? 'Event Agenda' : 'Agenda Event'}
+          Agenda Event
         </h3>
         <div className="space-y-3">
           {events.length === 0 ? (
-            <p className="text-sm text-gray-400 text-center py-4">{isEn ? 'No events yet' : 'Belum ada event'}</p>
+            <p className="text-sm text-gray-400 text-center py-4">Belum ada event</p>
           ) : (
             events.map((ev) => (
               <div key={ev.id} className="flex gap-3 p-2 rounded-lg hover:bg-gray-50 transition-colors">
                 <div className="w-12 h-12 bg-primary-600 rounded-lg flex flex-col items-center justify-center text-white flex-shrink-0">
                   <span className="text-xs font-bold">{new Date(ev.tanggal).getDate()}</span>
-                  <span className="text-[9px] uppercase">{new Date(ev.tanggal).toLocaleDateString(isEn ? 'en-US' : 'id-ID', { month: 'short' })}</span>
+                  <span className="text-[9px] uppercase">{new Date(ev.tanggal).toLocaleDateString('id-ID', { month: 'short' })}</span>
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-navy-900 line-clamp-2">{ev.judul}</p>
@@ -83,7 +79,7 @@ const SidebarWidget = () => {
           to="/info-pariwisata/pemasaran/kalender-event"
           className="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-primary-600 hover:gap-2 transition-all"
         >
-          {isEn ? 'View All Events' : 'Lihat Semua Event'} <ExternalLink size={12} />
+          Lihat Semua Event <ExternalLink size={12} />
         </Link>
       </div>
 
@@ -91,14 +87,14 @@ const SidebarWidget = () => {
       <div className="card p-5 bg-gradient-to-br from-primary-600 to-navy-800 text-white">
         <h3 className="font-bold mb-4 flex items-center gap-2 border-b border-white/20 pb-3">
           <TrendingUp size={18} className="text-gold-400" />
-          {isEn ? 'Quick Access' : 'Akses Cepat'}
+          Akses Cepat
         </h3>
         <div className="space-y-2">
           {[
-            { label: isEn ? 'Public Information List' : 'Daftar Informasi Publik', path: '/ppid/daftar-informasi-publik' },
-            { label: isEn ? 'Information Request Form' : 'Form Permohonan Informasi', path: '/ppid/layanan-publik/form-permohonan' },
-            { label: isEn ? 'Public Satisfaction Survey' : 'Survey Kepuasan Masyarakat', path: '/ppid/layanan-publik/survey-kepuasan' },
-            { label: isEn ? 'Publication Plan' : 'Rencana Terbit', path: '/rencana-terbit' },
+            { label: 'Daftar Informasi Publik', path: '/ppid/daftar-informasi-publik' },
+            { label: 'Form Permohonan Informasi', path: '/ppid/layanan-publik/form-permohonan' },
+            { label: 'Survey Kepuasan Masyarakat', path: '/ppid/layanan-publik/survey-kepuasan' },
+            { label: 'Rencana Terbit', path: '/rencana-terbit' },
           ].map((item, idx) => (
             <Link
               key={idx}

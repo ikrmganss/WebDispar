@@ -2,25 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { Mail, Clock, ShieldCheck } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { SeasonalIcon } from './SeasonalIcon';
-import { useLanguage } from '../context/LanguageContext';
-import { UI_STRINGS } from '../utils/translations';
 
 export const Topbar = () => {
   const { theme } = useTheme();
-  const { language } = useLanguage();
   const [time, setTime] = useState('');
-  const strings = UI_STRINGS[language] || UI_STRINGS.ID;
 
   useEffect(() => {
     const update = () => {
       const now = new Date();
-      const daysId = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
-      const monthsId = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
-      const daysEn = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-      const monthsEn = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
-      const days = language === 'EN' ? daysEn : daysId;
-      const months = language === 'EN' ? monthsEn : monthsId;
+      const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
       const day = days[now.getDay()];
       const date = now.getDate();
       const month = months[now.getMonth()];
@@ -32,7 +23,7 @@ export const Topbar = () => {
     update();
     const t = setInterval(update, 60000);
     return () => clearInterval(t);
-  }, [language]);
+  }, []);
 
   return (
     <div
@@ -42,7 +33,7 @@ export const Topbar = () => {
       <div className="max-w-7xl w-full flex items-center justify-between gap-2">
         {/* Left: Status Badge & Slogan */}
         <div className="flex items-center gap-2 min-w-0 flex-1">
-          {theme?.badge_icon && theme.badge_icon !== 'none' ? (
+          {theme.badge_icon && theme.badge_icon !== 'none' ? (
             <div
               className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white/20 border border-white/30 text-[10px] font-bold text-white shadow-sm backdrop-blur-sm shrink-0 max-w-[150px] sm:max-w-[240px]"
               title={theme.seasonal_badge || 'Edisi Khusus Hari Besar'}
@@ -53,11 +44,11 @@ export const Topbar = () => {
           ) : (
             <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-[10px] font-bold text-emerald-400 shrink-0">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              {strings.officialPortal}
+              Portal Resmi
             </div>
           )}
           <span className="hidden md:inline text-xs text-slate-300 font-normal truncate">
-            {strings.govSlogan}
+            Pemerintah Provinsi Sulawesi Tengah • <span className="text-amber-400 font-semibold">Bumi Seribu Megalit</span>
           </span>
         </div>
 

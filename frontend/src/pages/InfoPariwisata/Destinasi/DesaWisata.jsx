@@ -4,7 +4,6 @@ import { MapPin, Eye, Home } from 'lucide-react';
 import { motion } from 'framer-motion';
 import api from '../../../services/api';
 import PageHeader from '../../../components/PageHeader';
-import { useLanguage } from '../../../context/LanguageContext';
 
 const KABUPATEN = [
   'Kota Palu', 'Kabupaten Donggala', 'Kabupaten Sigi', 'Kabupaten Parigi Moutong',
@@ -14,8 +13,6 @@ const KABUPATEN = [
 ];
 
 const DesaWisata = () => {
-  const { language } = useLanguage();
-  const isEn = language === 'EN';
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState('Kota Palu');
   const [loading, setLoading] = useState(false);
@@ -30,9 +27,7 @@ const DesaWisata = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{isEn ? 'Tourism Villages - Central Sulawesi Tourism' : 'Desa Wisata - Info Pariwisata Sulawesi Tengah'}</title>
-      </Helmet>
+      <Helmet><title>Desa Wisata - Info Pariwisata Sulawesi Tengah</title></Helmet>
 
       <PageHeader
         badge="Pariwisata Berbasis Masyarakat"
@@ -70,7 +65,7 @@ const DesaWisata = () => {
           ) : data.length === 0 ? (
             <div className="text-center py-20 text-gray-400 card">
               <Home size={48} className="mx-auto mb-4 opacity-30" />
-              <p>{isEn ? `No tourism village data available for ${selected}` : `Belum ada data desa wisata untuk ${selected}`}</p>
+              <p>Belum ada data desa wisata untuk {selected}</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -103,7 +98,7 @@ const DesaWisata = () => {
                       dangerouslySetInnerHTML={{ __html: item.deskripsi }}
                     />
                     <span className="inline-flex items-center gap-1 text-xs text-gray-400">
-                      <Eye size={14} /> {item.dilihat || 0} {isEn ? 'views' : 'dilihat'}
+                      <Eye size={14} /> {item.dilihat || 0} dilihat
                     </span>
                   </div>
                 </motion.div>
