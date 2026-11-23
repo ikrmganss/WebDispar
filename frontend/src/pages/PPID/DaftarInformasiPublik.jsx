@@ -76,10 +76,11 @@ const DaftarInformasiPublik = () => {
                             href={getDocHref(item)}
                             target="_blank"
                             rel="noopener noreferrer"
+                            download={!getDocHref(item).startsWith('http')}
                             className="flex items-center justify-between p-3 rounded-lg bg-white hover:bg-primary-50 transition-colors group"
                           >
                             <span className="text-sm text-navy-800 group-hover:text-primary-700">{item.judul}</span>
-                            {item.file && <Download size={16} className="text-primary-600" />}
+                            {(item.file || item.link) && <Download size={16} className="text-primary-600 group-hover:scale-110 transition-transform" />}
                           </a>
                         ))}
                         {(!items[kat.id] || items[kat.id].length === 0) && (

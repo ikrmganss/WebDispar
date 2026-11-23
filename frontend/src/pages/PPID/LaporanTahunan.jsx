@@ -6,9 +6,11 @@ import api from '../../services/api';
 import PageHeader from '../../components/PageHeader';
 
 const DEFAULT_LAPORAN = [
-  { judul: 'Laporan PPID Dinas Pariwisata Provinsi Sulawesi Tengah - Tahun 2020', tahun: '2020', file: '/laporan/laporan-ppid-2020.pdf' },
-  { judul: 'Laporan PPID Dinas Pariwisata Provinsi Sulawesi Tengah - Tahun 2021', tahun: '2021', file: '/laporan/laporan-ppid-2021.pdf' },
-  { judul: 'Laporan PPID Dinas Pariwisata Provinsi Sulawesi Tengah - Tahun 2022', tahun: '2022', file: '/laporan/laporan-ppid-2022.pdf' },
+  { judul: 'Laporan Penyelenggaraan Pemerintahan Daerah (LPPD) Dinas Pariwisata Sulteng - Tahun 2024', tahun: '2024', file: '/laporan/laporan-ppid-2024.pdf' },
+  { judul: 'Laporan Keuangan Dinas Pariwisata Prov. Sulteng (Audited) - Tahun 2023', tahun: '2023', file: '/laporan/laporan-ppid-2023.pdf' },
+  { judul: 'Laporan Cascading & Kinerja Dinas Pariwisata Prov. Sulteng - Tahun 2022', tahun: '2022', file: '/laporan/laporan-ppid-2022.pdf' },
+  { judul: 'Laporan Perjanjian Kinerja Dinas Pariwisata Prov. Sulteng - Tahun 2021', tahun: '2021', file: '/laporan/laporan-ppid-2021.pdf' },
+  { judul: 'Laporan Akuntabilitas Kinerja Instansi Pemerintah (LAKIP) Dinas Pariwisata Prov. Sulteng - Tahun 2020', tahun: '2020', file: '/laporan/laporan-ppid-2020.pdf' },
 ];
 
 const LaporanTahunan = () => {
@@ -56,9 +58,10 @@ const LaporanTahunan = () => {
                   <p className="text-xs text-gray-500">Dokumen Resmi PPID</p>
                 </div>
                 <a
-                  href={item.link || item.file || '#'}
+                  href={item.file || item.link || '#'}
                   target="_blank"
                   rel="noopener noreferrer"
+                  download={!(item.file || item.link || '').startsWith('http')}
                   className="flex-shrink-0 inline-flex items-center gap-2 bg-primary-600 hover:bg-primary-700 text-white text-sm font-semibold px-4 py-2.5 rounded-lg transition-colors"
                 >
                   <Download size={16} /> Unduh

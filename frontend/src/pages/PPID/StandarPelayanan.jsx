@@ -41,6 +41,54 @@ const StandarPelayanan = () => {
 
       <section className="py-12 lg:py-16">
         <div className="container-custom max-w-5xl space-y-8">
+          {/* Dokumen Resmi Standar Pelayanan */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="card p-6 sm:p-8 bg-gradient-to-br from-white to-primary-50/40 border border-primary-200/80 shadow-sm"
+          >
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+              <div className="flex items-start gap-4">
+                <div className="w-14 h-14 rounded-2xl bg-primary-600 text-white flex items-center justify-center shrink-0 shadow-md shadow-primary-600/20">
+                  <Shield size={28} />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-primary-100 text-primary-800">
+                      Dokumen Resmi Kepala Dinas
+                    </span>
+                    <span className="text-xs text-gray-500 font-medium">PDF • 1.6 MB • SK Resmi 2024</span>
+                  </div>
+                  <h2 className="text-lg sm:text-xl font-bold text-navy-900 leading-snug">
+                    Buku Standar Pelayanan Publik & SOP Dinas Pariwisata
+                  </h2>
+                  <p className="text-xs sm:text-sm text-gray-600 mt-1 max-w-2xl leading-relaxed">
+                    Naskah lengkap Standar Pelayanan Publik, Maklumat Pelayanan, dan seluruh SOP Layanan Informasi Dinas Pariwisata Provinsi Sulawesi Tengah.
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2.5 shrink-0">
+                <a
+                  href="/images/Kepegawaian/STANDAR_PELAYANAN_2024.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-gray-300 text-navy-800 hover:bg-white text-xs sm:text-sm font-bold transition-all shadow-xs"
+                >
+                  <FileText size={16} />
+                  <span>Lihat PDF</span>
+                </a>
+                <a
+                  href="/images/Kepegawaian/STANDAR_PELAYANAN_2024.pdf"
+                  download="STANDAR_PELAYANAN_DINAS_PARIWISATA_SULTENG_2024.pdf"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary-600 hover:bg-primary-700 text-white text-xs sm:text-sm font-bold shadow-md shadow-primary-600/20 transition-all"
+                >
+                  <Download size={16} />
+                  <span>Unduh Dokumen</span>
+                </a>
+              </div>
+            </div>
+          </motion.div>
+
           {/* Mekanisme */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
