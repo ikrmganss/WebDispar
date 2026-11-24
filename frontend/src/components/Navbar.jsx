@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, ChevronDown, ChevronRight, Search, ExternalLink, ShieldAlert, ArrowRight } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
+import { Menu, ChevronDown, ChevronRight, Search } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 import { SeasonalIcon } from './SeasonalIcon';
 import SearchModal from './SearchModal';
+import { useLanguage } from '../context/LanguageContext';
+import { UI_STRINGS } from '../utils/translations';
 
 const KABUPATEN_LIST = [
   'Kota Palu', 'Kabupaten Donggala', 'Kabupaten Sigi', 'Kabupaten Parigi Moutong',
@@ -14,6 +16,19 @@ const KABUPATEN_LIST = [
 
 const slugify = (str) =>
   str.toLowerCase().replace(/kabupaten |kota /g, '').replace(/\s+/g, '-');
+
+const getTopMenuLabel = (label, isEn) => {
+  if (!isEn) return label;
+  const map = {
+    'Home': 'Home',
+    'Berita': 'News',
+    'Profil': 'Profile',
+    'Informasi Publik': 'Public Information',
+    'Info Pariwisata': 'Tourism Info',
+    'Lapor': 'Report',
+  };
+  return map[label] || label;
+};
 
 // MENUS PERSIS DARI WEBDISPAR ORIGINAL
 const MENUS = [
@@ -372,13 +387,18 @@ const DropdownPanel = ({ items, onClose }) => {
   );
 };
 
-export const Navbar = ({ onToggleMobile, language = 'ID', setLanguage }) => {
+export const Navbar = ({ onToggleMobile, language: propLanguage, setLanguage: propSetLanguage }) => {
   const { theme } = useTheme();
+  const { language: contextLang, setLanguage: contextSetLang } = useLanguage();
+  const language = propLanguage || contextLang || 'ID';
+  const setLanguage = propSetLanguage || contextSetLang;
+  const isEn = language === 'EN';
+  const strings = UI_STRINGS[language] || UI_STRINGS.ID;
+
   const [activeMenu, setActiveMenu] = useState(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
-  const navigate = useNavigate();
   const navRef = useRef(null);
 
   useEffect(() => {
@@ -433,10 +453,10 @@ export const Navbar = ({ onToggleMobile, language = 'ID', setLanguage }) => {
             </div>
             <div className="flex flex-col justify-center">
               <span className="font-black text-lg md:text-xl tracking-tight leading-tight text-white whitespace-nowrap">
-                Dinas Pariwisata
+                {strings.deptName || 'Dinas Pariwisata'}
               </span>
               <span className="font-bold text-amber-400 text-[9px] sm:text-[10px] md:text-[11px] tracking-wider uppercase whitespace-nowrap leading-tight">
-                PROVINSI SULAWESI TENGAH
+                {strings.provinceName || 'PROVINSI SULAWESI TENGAH'}
               </span>
             </div>
           </Link>
@@ -457,7 +477,7 @@ export const Navbar = ({ onToggleMobile, language = 'ID', setLanguage }) => {
                           : 'text-white hover:bg-white/20'
                       }`}
                     >
-                      <span>{menu.label}</span>
+                      <span>{getTopMenuLabel(menu.label, isEn)}</span>
                       <ChevronDown
                         size={11}
                         style={{
@@ -484,7 +504,7 @@ export const Navbar = ({ onToggleMobile, language = 'ID', setLanguage }) => {
                     active ? 'bg-amber-500 text-slate-950 shadow-sm' : 'text-white hover:bg-white/20'
                   }`}
                 >
-                  {menu.label}
+                  {getTopMenuLabel(menu.label, isEn)}
                 </Link>
               );
             })}

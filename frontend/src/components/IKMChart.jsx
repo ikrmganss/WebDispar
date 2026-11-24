@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import api from '../services/api';
 import { Check } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
+import { UI_STRINGS } from '../utils/translations';
 
-const IKMGaugeChart = ({ nilai = 89.444 }) => {
+const IKMGaugeChart = ({ nilai = 89.444, strings }) => {
   // Hitung persentase 0..100
   const pct = Math.min(Math.max(nilai / 100, 0), 1);
   const angle = -180 + pct * 180;
@@ -50,7 +52,7 @@ const IKMGaugeChart = ({ nilai = 89.444 }) => {
           {nilai}
         </span>
         <span className="px-3 py-0.5 rounded-full bg-[#D1FAE5] text-[#047857] text-[10px] font-extrabold tracking-wider uppercase">
-          SANGAT BAIK
+          {strings?.excellent || 'SANGAT BAIK'}
         </span>
       </div>
     </div>
@@ -58,6 +60,8 @@ const IKMGaugeChart = ({ nilai = 89.444 }) => {
 };
 
 const IKMChart = () => {
+  const { language } = useLanguage();
+  const strings = UI_STRINGS[language] || UI_STRINGS.ID;
   const [data, setData] = useState(null);
 
   useEffect(() => {
@@ -71,25 +75,25 @@ const IKMChart = () => {
       {/* Header */}
       <div className="w-full flex flex-col items-center gap-1">
         <span className="text-[10px] font-bold text-[#059669] tracking-wider uppercase">
-          EVALUASI PELAYANAN
+          {strings?.serviceEval || 'EVALUASI PELAYANAN'}
         </span>
         <h3 className="font-extrabold text-[#1E293B] text-base leading-tight">
-          Indeks Kepuasan Masyarakat (IKM)
+          {strings?.ikmTitle || 'Indeks Kepuasan Masyarakat (IKM)'}
         </h3>
         <p className="text-slate-400 text-[11px] leading-tight max-w-[240px]">
-          Akumulasi survei mutu layanan publik Dinas Pariwisata
+          {strings?.ikmDesc || 'Akumulasi survei mutu layanan publik Dinas Pariwisata'}
         </p>
       </div>
 
       {/* Gauge Visualization */}
       <div className="my-2 w-full flex justify-center">
-        <IKMGaugeChart nilai={nilai} />
+        <IKMGaugeChart nilai={nilai} strings={strings} />
       </div>
 
       {/* CTA Button Badge */}
       <div className="w-full pt-2">
         <div className="w-full py-2 px-3 rounded-lg bg-[#F1F5F9] flex items-center justify-center gap-2 text-slate-700 text-xs font-bold">
-          <span>Sangat Baik</span>
+          <span>{strings?.veryGood || 'Sangat Baik'}</span>
           <div className="w-4 h-4 rounded-full bg-emerald-500 flex items-center justify-center text-white">
             <Check className="w-2.5 h-2.5 stroke-[3]" />
           </div>

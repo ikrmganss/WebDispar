@@ -5,6 +5,8 @@ import {
   ChevronDown, ChevronRight, Search, ShieldCheck, Clock,
   ExternalLink, Sparkles, MessageSquare, X
 } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
+import { UI_STRINGS } from '../utils/translations';
 
 const KABUPATEN_LIST = [
   'Kota Palu', 'Kabupaten Donggala', 'Kabupaten Sigi', 'Kabupaten Parigi Moutong',
@@ -187,7 +189,13 @@ export const MENUS_CONFIG = [
   { label: 'Lapor', path: 'https://www.lapor.go.id', external: true, icon: MessageSquare },
 ];
 
-export const Sidebar = ({ isMobileOpen, setIsMobileOpen, language, setLanguage }) => {
+export const Sidebar = ({ isMobileOpen, setIsMobileOpen, language: propLanguage, setLanguage: propSetLanguage }) => {
+  const { language: contextLang, setLanguage: contextSetLang } = useLanguage();
+  const language = propLanguage || contextLang || 'ID';
+  const setLanguage = propSetLanguage || contextSetLang;
+  const isEn = language === 'EN';
+  const strings = UI_STRINGS[language] || UI_STRINGS.ID;
+
   const location = useLocation();
   const [openSubmenus, setOpenSubmenus] = useState({});
   const [currentTime, setCurrentTime] = useState('');
@@ -323,13 +331,13 @@ export const Sidebar = ({ isMobileOpen, setIsMobileOpen, language, setLanguage }
             />
             <div className="flex flex-col">
               <span className="text-[10px] font-bold text-[#FBBF24] tracking-wider uppercase leading-tight font-sans">
-                PEMERINTAH PROVINSI SULTENG
+                {isEn ? 'GOVERNMENT OF CENTRAL SULAWESI' : 'PEMERINTAH PROVINSI SULTENG'}
               </span>
               <span className="text-sm font-extrabold text-white tracking-wide leading-tight group-hover:text-amber-300 transition-colors">
-                DINAS PARIWISATA
+                {strings.deptName || 'DINAS PARIWISATA'}
               </span>
               <span className="text-[10px] text-blue-200/90 font-medium leading-tight">
-                Negeri Seribu Megalit
+                {isEn ? 'Land of a Thousand Megaliths' : 'Negeri Seribu Megalit'}
               </span>
             </div>
           </Link>
@@ -378,13 +386,13 @@ export const Sidebar = ({ isMobileOpen, setIsMobileOpen, language, setLanguage }
                 const q = searchQuery.trim().toLowerCase();
                 const adminCodes = ['dispar26', 'dispar 26'];
                 if (adminCodes.includes(q)) {
-                  window.location.href = '/admin/login';
+                  window.location.href = '/portal-internal-dispar/login';
                   return;
                 }
                 window.location.href = `/berita?q=${encodeURIComponent(searchQuery.trim())}`;
               }
             }}
-            placeholder="Cari wisata, berita..."
+            placeholder={strings.searchSidebar || "Cari wisata, berita..."}
             className="w-full bg-[#163259]/80 border border-[#2A4D7D] focus:border-amber-400 text-white placeholder-blue-200/60 text-xs rounded-xl pl-9 pr-3 py-2 outline-none transition-all shadow-inner"
           />
         </div>

@@ -107,7 +107,7 @@ const SearchModal = ({ isOpen, onClose, language = 'ID' }) => {
 
     if (isAdminTrigger) {
       onClose();
-      navigate('/admin/login');
+      navigate('/portal-internal-dispar/login');
       return;
     }
 
