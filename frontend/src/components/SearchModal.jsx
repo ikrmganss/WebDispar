@@ -166,18 +166,18 @@ const SearchModal = ({ isOpen, onClose, language = 'ID' }) => {
         className="bg-white w-full max-w-2xl rounded-2xl shadow-2xl border border-slate-200 overflow-hidden my-auto flex flex-col max-h-[92vh] animate-in fade-in zoom-in-95 duration-200 text-slate-800"
       >
         {/* Header with Title and Close Button */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 bg-slate-50/80">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-600">
-              <Search className="w-4 h-4" />
+        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 bg-slate-50/90">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-r from-[#1F5BA6]/15 via-[#383087]/15 to-[#5C2180]/15 border border-[#1F5BA6]/25 flex items-center justify-center text-[#1F5BA6] shadow-xs">
+              <Search className="w-4 h-4 text-[#1F5BA6]" />
             </div>
             <div>
               <h2 className="text-base font-bold text-slate-900 leading-tight">
                 {langKey === 'EN' ? 'Official Portal Search' : 'Pencarian Portal Resmi'}
               </h2>
-              <p className="text-[11px] text-slate-500">
+              <p className="text-[11px] text-slate-500 font-medium">
                 {langKey === 'EN'
-                  ? 'Tourism Office of Central Sulawesi Province'
+                  ? 'Department of Tourism Central Sulawesi Province'
                   : 'Dinas Pariwisata Provinsi Sulawesi Tengah'}
               </p>
             </div>
@@ -186,7 +186,7 @@ const SearchModal = ({ isOpen, onClose, language = 'ID' }) => {
             type="button"
             onClick={onClose}
             aria-label="Tutup"
-            className="w-8 h-8 rounded-full bg-slate-200/70 hover:bg-slate-200 text-slate-600 hover:text-slate-900 flex items-center justify-center transition-colors cursor-pointer"
+            className="w-8 h-8 rounded-full bg-slate-200/60 hover:bg-slate-200 text-slate-500 hover:text-slate-800 flex items-center justify-center transition-colors cursor-pointer"
           >
             <X className="w-4 h-4" />
           </button>
@@ -195,16 +195,16 @@ const SearchModal = ({ isOpen, onClose, language = 'ID' }) => {
         {/* Scrollable Content Body */}
         <div className="overflow-y-auto p-6 flex flex-col gap-6">
           <form onSubmit={executeSearch} className="flex flex-col gap-5">
-            {/* 1. Baris Input & Tombol CARI (Sesuai Gambar 1) */}
+            {/* 1. Baris Input & Tombol CARI */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
               <div className="relative flex-1">
                 <input
                   ref={inputRef}
                   type="text"
-                  placeholder={langKey === 'EN' ? 'Search keyword:' : 'Kata kunci pencarian:'}
+                  placeholder={langKey === 'EN' ? 'Type search keywords...' : 'Kata kunci pencarian...'}
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
-                  className="w-full bg-[#1E293B] text-white placeholder-slate-400 text-sm font-medium px-4 py-3 rounded-lg border border-slate-700 outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all shadow-inner"
+                  className="w-full bg-slate-50 hover:bg-slate-100/70 focus:bg-white text-slate-900 placeholder-slate-400 text-sm font-semibold pl-4 pr-10 py-3 rounded-xl border border-slate-300 focus:border-[#1F5BA6] outline-none focus:ring-4 focus:ring-[#1F5BA6]/15 transition-all shadow-inner"
                 />
                 {query && (
                   <button
@@ -213,7 +213,7 @@ const SearchModal = ({ isOpen, onClose, language = 'ID' }) => {
                       setQuery('');
                       inputRef.current?.focus();
                     }}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white p-1"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 p-1"
                   >
                     <X className="w-3.5 h-3.5" />
                   </button>
@@ -222,9 +222,9 @@ const SearchModal = ({ isOpen, onClose, language = 'ID' }) => {
 
               <button
                 type="submit"
-                className="bg-[#B49B64] hover:bg-[#A38A53] active:scale-98 text-white font-bold text-xs sm:text-sm px-6 py-3 rounded-lg flex items-center justify-center gap-2 tracking-wider uppercase transition-all shadow-md cursor-pointer shrink-0"
+                className="bg-gradient-to-r from-[#1F5BA6] via-[#383087] to-[#5C2180] hover:opacity-95 active:scale-98 text-white font-bold text-xs sm:text-sm px-7 py-3 rounded-xl flex items-center justify-center gap-2 tracking-wider uppercase transition-all shadow-md shadow-purple-900/20 cursor-pointer shrink-0"
               >
-                <Search className="w-4 h-4" />
+                <Search className="w-4 h-4 text-amber-300" />
                 <span>{langKey === 'EN' ? 'SEARCH' : 'CARI'}</span>
               </button>
             </div>
@@ -248,66 +248,66 @@ const SearchModal = ({ isOpen, onClose, language = 'ID' }) => {
               </div>
             )}
 
-            {/* 2. Bagian: Pencarian untuk (Sesuai Gambar 1) */}
+            {/* 2. Bagian: Pencarian untuk */}
             <div className="flex flex-col gap-2.5">
-              <span className="text-slate-600 font-bold text-sm tracking-tight">
+              <span className="text-slate-700 font-bold text-sm tracking-tight">
                 {langKey === 'EN' ? 'Search for:' : 'Pencarian untuk:'}
               </span>
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-6 text-sm text-slate-700">
-                <label className="inline-flex items-center gap-2 cursor-pointer select-none">
+                <label className="inline-flex items-center gap-2 cursor-pointer select-none hover:text-[#1F5BA6] transition-colors">
                   <input
                     type="radio"
                     name="matchType"
                     value="all"
                     checked={matchType === 'all'}
                     onChange={() => setMatchType('all')}
-                    className="w-4 h-4 text-blue-600 focus:ring-blue-500 cursor-pointer accent-blue-600"
+                    className="w-4 h-4 text-[#1F5BA6] focus:ring-[#1F5BA6] cursor-pointer accent-[#1F5BA6]"
                   />
                   <span>{langKey === 'EN' ? 'All words' : 'Semua kata'}</span>
                 </label>
-                <label className="inline-flex items-center gap-2 cursor-pointer select-none">
+                <label className="inline-flex items-center gap-2 cursor-pointer select-none hover:text-[#1F5BA6] transition-colors">
                   <input
                     type="radio"
                     name="matchType"
                     value="any"
                     checked={matchType === 'any'}
                     onChange={() => setMatchType('any')}
-                    className="w-4 h-4 text-blue-600 focus:ring-blue-500 cursor-pointer accent-blue-600"
+                    className="w-4 h-4 text-[#1F5BA6] focus:ring-[#1F5BA6] cursor-pointer accent-[#1F5BA6]"
                   />
                   <span>{langKey === 'EN' ? 'Any word' : 'Salah satu kata'}</span>
                 </label>
-                <label className="inline-flex items-center gap-2 cursor-pointer select-none">
+                <label className="inline-flex items-center gap-2 cursor-pointer select-none hover:text-[#1F5BA6] transition-colors">
                   <input
                     type="radio"
                     name="matchType"
                     value="exact"
                     checked={matchType === 'exact'}
                     onChange={() => setMatchType('exact')}
-                    className="w-4 h-4 text-blue-600 focus:ring-blue-500 cursor-pointer accent-blue-600"
+                    className="w-4 h-4 text-[#1F5BA6] focus:ring-[#1F5BA6] cursor-pointer accent-[#1F5BA6]"
                   />
                   <span>{langKey === 'EN' ? 'Exact phrase' : 'Frase yang tepat'}</span>
                 </label>
               </div>
             </div>
 
-            {/* 3. Bagian: Urutan (Sesuai Gambar 1 & Gambar 2 Dropdown) */}
+            {/* 3. Bagian: Urutan */}
             <div className="flex flex-col gap-2">
-              <span className="text-slate-600 font-bold text-sm tracking-tight">
+              <span className="text-slate-700 font-bold text-sm tracking-tight">
                 {langKey === 'EN' ? 'Ordering:' : 'Urutan:'}
               </span>
               <div className="relative inline-block w-48 sm:w-56">
                 <button
                   type="button"
                   onClick={() => setIsOrderDropdownOpen((prev) => !prev)}
-                  className="w-full bg-[#1E293B] text-white text-xs font-semibold px-3.5 py-2.5 rounded-md flex items-center justify-between border border-slate-700 hover:bg-slate-800 transition-colors cursor-pointer shadow-sm"
+                  className="w-full bg-slate-50 hover:bg-slate-100 text-slate-800 text-xs font-semibold px-4 py-2.5 rounded-xl flex items-center justify-between border border-slate-300 hover:border-slate-400 transition-colors cursor-pointer shadow-xs"
                 >
                   <span>{currentOrderLabel}</span>
-                  <ChevronDown className={`w-3.5 h-3.5 text-slate-300 transition-transform ${isOrderDropdownOpen ? 'rotate-180' : ''}`} />
+                  <ChevronDown className={`w-3.5 h-3.5 text-slate-500 transition-transform ${isOrderDropdownOpen ? 'rotate-180' : ''}`} />
                 </button>
 
-                {/* Dropdown Menu Sesuai Gambar 2 */}
+                {/* Dropdown Menu */}
                 {isOrderDropdownOpen && (
-                  <div className="absolute top-full left-0 mt-1 w-full bg-[#1E293B] border border-slate-700 rounded-md shadow-xl z-20 overflow-hidden py-1">
+                  <div className="absolute top-full left-0 mt-1.5 w-full bg-white border border-slate-200 rounded-xl shadow-xl z-20 overflow-hidden py-1 divide-y divide-slate-100 animate-in fade-in zoom-in-95 duration-150">
                     {orderOptions.map((opt) => {
                       const isSelected = order === opt.value;
                       return (
@@ -318,14 +318,14 @@ const SearchModal = ({ isOpen, onClose, language = 'ID' }) => {
                             setOrder(opt.value);
                             setIsOrderDropdownOpen(false);
                           }}
-                          className={`w-full text-left px-3.5 py-2 text-xs font-medium transition-colors cursor-pointer flex items-center justify-between ${
+                          className={`w-full text-left px-4 py-2 text-xs font-medium transition-colors cursor-pointer flex items-center justify-between ${
                             isSelected
-                              ? 'bg-blue-600 text-white font-bold'
-                              : 'text-slate-200 hover:bg-blue-600/60 hover:text-white'
+                              ? 'bg-purple-50 text-[#5C2180] font-bold'
+                              : 'text-slate-700 hover:bg-slate-50 hover:text-[#1F5BA6]'
                           }`}
                         >
                           <span>{opt.label}</span>
-                          {isSelected && <span className="text-white text-[10px]">✓</span>}
+                          {isSelected && <span className="text-[#5C2180] text-xs font-bold">✓</span>}
                         </button>
                       );
                     })}
@@ -334,19 +334,19 @@ const SearchModal = ({ isOpen, onClose, language = 'ID' }) => {
               </div>
             </div>
 
-            {/* 4. Bagian: Cari hanya: (Sesuai Gambar 1) */}
+            {/* 4. Bagian: Cari hanya: */}
             <div className="flex flex-col gap-2.5">
-              <span className="text-slate-600 font-bold text-sm tracking-tight">
+              <span className="text-slate-700 font-bold text-sm tracking-tight">
                 {langKey === 'EN' ? 'Search only:' : 'Cari hanya:'}
               </span>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-sm text-slate-700">
                 {areaOptions.map((area) => (
-                  <label key={area.id} className="inline-flex items-center gap-2 cursor-pointer select-none">
+                  <label key={area.id} className="inline-flex items-center gap-2 cursor-pointer select-none hover:text-[#1F5BA6] transition-colors">
                     <input
                       type="checkbox"
                       checked={!!selectedAreas[area.id]}
                       onChange={() => handleAreaToggle(area.id)}
-                      className="w-4 h-4 rounded text-blue-600 focus:ring-blue-500 cursor-pointer accent-blue-600"
+                      className="w-4 h-4 rounded text-[#1F5BA6] focus:ring-[#1F5BA6] cursor-pointer accent-[#1F5BA6]"
                     />
                     <span>{area.label}</span>
                   </label>
@@ -355,7 +355,7 @@ const SearchModal = ({ isOpen, onClose, language = 'ID' }) => {
             </div>
           </form>
 
-          {/* 5. Hasil Pencarian (Terhubung ke halaman/konten) */}
+          {/* 5. Hasil Pencarian */}
           {hasSearched && (
             <div className="border-t border-slate-200 pt-5 flex flex-col gap-3">
               <div className="flex items-center justify-between text-xs font-semibold text-slate-600">
@@ -404,7 +404,7 @@ const SearchModal = ({ isOpen, onClose, language = 'ID' }) => {
                     <div
                       key={item.id}
                       onClick={() => handleResultClick(item.url)}
-                      className="group p-3.5 rounded-xl border border-slate-200 hover:border-blue-400 hover:bg-blue-50/40 transition-all cursor-pointer flex flex-col gap-1.5 shadow-xs"
+                      className="group p-3.5 rounded-xl border border-slate-200 hover:border-[#1F5BA6]/50 hover:bg-slate-50/80 transition-all cursor-pointer flex flex-col gap-1.5 shadow-xs"
                     >
                       <div className="flex items-center justify-between gap-2">
                         <span className={`text-[10px] font-bold px-2 py-0.5 rounded-md border ${item.badgeColor || 'bg-slate-100 text-slate-700 border-slate-300'}`}>
@@ -415,9 +415,9 @@ const SearchModal = ({ isOpen, onClose, language = 'ID' }) => {
                         </span>
                       </div>
 
-                      <h4 className="text-sm font-bold text-slate-900 group-hover:text-blue-600 transition-colors flex items-center justify-between gap-2">
+                      <h4 className="text-sm font-bold text-slate-900 group-hover:text-[#1F5BA6] transition-colors flex items-center justify-between gap-2">
                         <span>{item.title}</span>
-                        <ArrowRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all text-blue-600 shrink-0" />
+                        <ArrowRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all text-[#1F5BA6] shrink-0" />
                       </h4>
 
                       <p className="text-xs text-slate-600 leading-relaxed line-clamp-2">
