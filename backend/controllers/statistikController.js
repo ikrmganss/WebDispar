@@ -3,10 +3,22 @@ const db = require('../config/db');
 exports.getPengunjung = async (req, res) => {
   const forwarded = req.headers['x-forwarded-for'];
   const rawIp = forwarded ? forwarded.split(',')[0].trim() : (req.socket?.remoteAddress || req.ip || '127.0.0.1');
-  const ip = rawIp.replace(/^.*:/, '') || '127.0.0.1';
+  let ip = rawIp.replace(/^.*:/, '') || '127.0.0.1';
+  if (ip === '1') ip = '127.0.0.1';
 
   try {
     const today = new Date().toISOString().split('T')[0];
+
+    // Otomatis catat/hitung kunjungan jika tidak secara eksplisit di-skip (?peek=true)
+    if (req.query.peek !== 'true') {
+      const [existing] = await db.query('SELECT * FROM pengunjung WHERE ip = ? AND tanggal = ?', [ip, today]);
+      if (existing && existing.length > 0) {
+        await db.query('UPDATE pengunjung SET hits = hits + 1 WHERE id = ?', [existing[0].id]);
+      } else {
+        await db.query('INSERT INTO pengunjung (ip, tanggal, hits) VALUES (?, ?, 1)', [ip, today]);
+      }
+    }
+
     const [todayRows] = await db.query('SELECT COALESCE(SUM(hits), 0) as total FROM pengunjung WHERE tanggal = ?', [today]);
     const [yesterdayRows] = await db.query('SELECT COALESCE(SUM(hits), 0) as total FROM pengunjung WHERE tanggal = DATE_SUB(?, INTERVAL 1 DAY)', [today]);
     const [thisWeekRows] = await db.query('SELECT COALESCE(SUM(hits), 0) as total FROM pengunjung WHERE YEARWEEK(tanggal, 1) = YEARWEEK(?, 1)', [today]);
@@ -27,6 +39,7 @@ exports.getPengunjung = async (req, res) => {
       serverTime: new Date().toISOString()
     });
   } catch (err) {
+    console.error('Error getPengunjung:', err);
     // Fallback gracefully jika database belum terkoneksi / query error
     res.json({
       today: 0,

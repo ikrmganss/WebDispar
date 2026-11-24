@@ -67,7 +67,7 @@ function App() {
 
   useEffect(() => {
     api.post('/statistik/track').catch(() => {});
-  }, []);
+  }, [location.pathname]);
 
   if (isAdmin) {
     return (

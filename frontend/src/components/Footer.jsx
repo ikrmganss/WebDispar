@@ -66,10 +66,18 @@ const Footer = () => {
               Alamat &amp; Kontak Resmi
             </h3>
             <div className="flex flex-col gap-2.5 text-xs text-slate-300">
-              <div className="flex items-start gap-2.5">
-                <MapPin className="w-4 h-4 text-[#FBBF24] shrink-0 mt-0.5" />
-                <span className="leading-relaxed">Jalan Dewi Sartika Nomor 45 Palu, Kode Pos 94121, Palu Selatan, Sulawesi Tengah</span>
-              </div>
+              <a
+                href="https://maps.app.goo.gl/KET7RCLtQzEHyH7E7"
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Buka lokasi Kantor Dinas Pariwisata di Google Maps"
+                className="flex items-start gap-2.5 group hover:text-amber-300 transition-colors cursor-pointer"
+              >
+                <MapPin className="w-4 h-4 text-[#FBBF24] shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
+                <span className="leading-relaxed group-hover:underline">
+                  Jalan Dewi Sartika Nomor 45 Palu, Kode Pos 94121, Palu Selatan, Sulawesi Tengah
+                </span>
+              </a>
               <div className="flex items-center gap-2.5">
                 <Mail className="w-4 h-4 text-[#FBBF24] shrink-0" />
                 <a href="mailto:dispar@sultengprov.go.id" className="hover:text-amber-300 transition-colors">

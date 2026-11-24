@@ -241,7 +241,12 @@ const StatistikPengunjung = ({ language = 'ID' }) => {
       {/* Floating Button Icon di Pojok Kiri Bawah (Persis Posisi Gambar) */}
       <div className="fixed bottom-6 left-6 z-40 select-none">
         <motion.button
-          onClick={() => setIsOpen((prev) => !prev)}
+          onClick={() => {
+            setIsOpen((prev) => {
+              if (!prev) fetchStats();
+              return !prev;
+            });
+          }}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.92 }}
           aria-label={isEN ? 'Visitor Statistics' : 'Statistik Pengunjung'}

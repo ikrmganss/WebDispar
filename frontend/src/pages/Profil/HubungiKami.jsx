@@ -31,6 +31,7 @@ const HubungiKami = () => {
       title: 'Alamat Kantor',
       value:
         'Jalan Dewi Sartika Nomor 45 Palu, Kode Pos 94121\nPalu Selatan, Sulawesi Tengah, Indonesia',
+      href: 'https://maps.app.goo.gl/KET7RCLtQzEHyH7E7',
       color: 'from-red-500 to-red-700',
     },
     {
@@ -120,7 +121,9 @@ const HubungiKami = () => {
                 {item.href ? (
                   <a
                     href={item.href}
-                    className="text-sm text-gray-600 hover:text-primary-600 transition-colors whitespace-pre-line"
+                    target={item.href.startsWith('http') ? '_blank' : undefined}
+                    rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                    className="text-sm text-gray-600 hover:text-primary-600 transition-colors whitespace-pre-line hover:underline"
                   >
                     {item.value}
                   </a>
