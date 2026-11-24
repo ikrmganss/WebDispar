@@ -370,7 +370,7 @@ const Regulasi = () => {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] flex flex-col overflow-hidden border border-slate-200"
+              className="bg-white rounded-2xl shadow-2xl w-full max-w-6xl h-[92vh] max-h-[92vh] flex flex-col overflow-hidden border border-slate-200"
             >
               {/* Modal Header */}
               <div className="p-4 px-6 border-b border-slate-100 flex items-center justify-between bg-slate-50">
@@ -402,11 +402,11 @@ const Regulasi = () => {
               </div>
 
               {/* Modal Viewer Body */}
-              <div className="flex-1 min-h-[550px] p-2 bg-slate-100 relative">
+              <div className="flex-1 min-h-0 p-2 bg-slate-100 relative">
                 <iframe
-                  src={`${getDocHref(selectedFile.file)}#toolbar=1`}
+                  src={`${getDocHref(selectedFile.file)}#toolbar=1&view=FitH`}
                   title={selectedFile.judul}
-                  className="w-full h-full rounded-lg border border-slate-200"
+                  className="block w-full h-full rounded-lg border border-slate-200 bg-white"
                 />
               </div>
             </motion.div>

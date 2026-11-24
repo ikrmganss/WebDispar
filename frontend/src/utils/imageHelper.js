@@ -1,4 +1,4 @@
-const BASE_URL = import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5000';
+const BASE_URL = import.meta.env.VITE_API_URL?.replace(/\/api\/?$/, '') || '';
 
 export const getImageSrc = (img, fallback = '/slider/Slider.jpg') => {
   if (!img) return fallback;
