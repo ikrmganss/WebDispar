@@ -668,7 +668,7 @@ export const getNavMenus = (language = 'ID', isSidebar = false, icons = {}) => {
         },
         {
           label: isEn ? 'Public Complaint Service' : 'Layanan Aduan Masyarakat',
-          path: 'https://www.lapor.go.id/instansi/pemerintah-provinsi-sulawesi-tengah',
+          path: 'https://www.lapor.go.id',
           external: true,
         },
         {
@@ -722,7 +722,7 @@ export const getNavMenus = (language = 'ID', isSidebar = false, icons = {}) => {
     },
     {
       label: isEn ? 'Report' : 'Lapor',
-      path: 'https://www.lapor.go.id/instansi/pemerintah-provinsi-sulawesi-tengah',
+      path: 'https://www.lapor.go.id',
       external: true,
       ...(isSidebar && icons.MessageSquare ? { icon: icons.MessageSquare } : {}),
     },

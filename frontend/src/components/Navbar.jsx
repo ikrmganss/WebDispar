@@ -305,6 +305,22 @@ export const Navbar = ({ onToggleMobile, language: propLanguage, setLanguage: pr
                   </div>
                 );
               }
+              if (menu.external) {
+                return (
+                  <a
+                    key={idx}
+                    href={menu.path}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={closeAll}
+                    className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
+                      active ? 'bg-amber-500 text-slate-950 shadow-sm' : 'text-white hover:bg-white/20'
+                    }`}
+                  >
+                    {menu.label}
+                  </a>
+                );
+              }
               return (
                 <Link
                   key={idx}

@@ -57,7 +57,7 @@ const SLIDES = [
     alt: 'SP4N-LAPOR Pengaduan Pelayanan Publik',
     title: 'Layanan Aspirasi & Pengaduan SP4N-LAPOR',
     subtitle: 'Sampaikan Aspirasi dan Laporan Anda Secara Online',
-    link: 'https://www.lapor.go.id/instansi/pemerintah-provinsi-sulawesi-tengah',
+    link: 'https://www.lapor.go.id',
     isExternal: true,
   },
   {
