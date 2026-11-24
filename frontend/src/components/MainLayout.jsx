@@ -4,6 +4,7 @@ import Topbar from './Topbar';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import StatistikPengunjung from './StatistikPengunjung';
+import BackToTop from './BackToTop';
 
 export const MainLayout = ({ children, language, setLanguage }) => {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
@@ -46,6 +47,9 @@ export const MainLayout = ({ children, language, setLanguage }) => {
 
       {/* Floating Widget Statistik Pengunjung (Pojok Kiri Bawah) */}
       <StatistikPengunjung language={language} />
+
+      {/* Floating Button Back to Top (Pojok Kanan Bawah) */}
+      <BackToTop language={language} />
     </div>
   );
 };
