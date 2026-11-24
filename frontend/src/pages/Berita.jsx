@@ -4,8 +4,11 @@ import { Search, ChevronLeft, ChevronRight, Newspaper } from 'lucide-react';
 import BeritaCard from '../components/BeritaCard';
 import PageHeader from '../components/PageHeader';
 import api from '../services/api';
+import { useLanguage } from '../context/LanguageContext';
 
 const Berita = () => {
+  const { language } = useLanguage();
+  const isEn = language === 'EN';
   const [berita, setBerita] = useState([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
@@ -26,7 +29,7 @@ const Berita = () => {
   return (
     <>
       <Helmet>
-        <title>Berita - Dinas Pariwisata Sulteng</title>
+        <title>{isEn ? 'News - Central Sulawesi Tourism Department' : 'Berita - Dinas Pariwisata Sulteng'}</title>
       </Helmet>
 
       <PageHeader
@@ -44,7 +47,7 @@ const Berita = () => {
               <Search size={20} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
               <input
                 type="text"
-                placeholder="Cari berita..."
+                placeholder={isEn ? 'Search news...' : 'Cari berita...'}
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="w-full pl-12 pr-4 py-3 rounded-full border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none transition-all"

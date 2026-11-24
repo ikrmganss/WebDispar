@@ -5,200 +5,9 @@ import { useTheme } from '../context/ThemeContext';
 import { SeasonalIcon } from './SeasonalIcon';
 import SearchModal from './SearchModal';
 import { useLanguage } from '../context/LanguageContext';
-import { UI_STRINGS } from '../utils/translations';
+import { UI_STRINGS, getNavMenus } from '../utils/translations';
 
-const KABUPATEN_LIST = [
-  'Kota Palu', 'Kabupaten Donggala', 'Kabupaten Sigi', 'Kabupaten Parigi Moutong',
-  'Kabupaten Poso', 'Kabupaten Morowali', 'Kabupaten Morowali Utara', 'Kabupaten Tojo Una-Una',
-  'Kabupaten Banggai', 'Kabupaten Banggai Kepulauan', 'Kabupaten Banggai Laut',
-  'Kabupaten Tolitoli', 'Kabupaten Buol',
-];
-
-const slugify = (str) =>
-  str.toLowerCase().replace(/kabupaten |kota /g, '').replace(/\s+/g, '-');
-
-const getTopMenuLabel = (label, isEn) => {
-  if (!isEn) return label;
-  const map = {
-    'Home': 'Home',
-    'Berita': 'News',
-    'Profil': 'Profile',
-    'Informasi Publik': 'Public Information',
-    'Info Pariwisata': 'Tourism Info',
-    'Lapor': 'Report',
-  };
-  return map[label] || label;
-};
-
-// MENUS PERSIS DARI WEBDISPAR ORIGINAL
-const MENUS = [
-  { label: 'Home', path: '/' },
-  { label: 'Berita', path: '/berita' },
-  {
-    label: 'Profil',
-    children: [
-      { label: 'Sejarah', path: '/profil/sejarah' },
-      { label: 'Visi dan Misi', path: '/profil/visi-misi' },
-      { label: 'Profil Pimpinan', path: '/profil/profil-pimpinan' },
-      { label: 'Tupoksi', path: '/profil/tupoksi' },
-      { label: 'Majalah', path: '/profil/majalah' },
-      { label: 'Logo', path: '/profil/logo' },
-      { label: 'Hubungi Kami', path: '/profil/hubungi-kami' },
-    ],
-  },
-  {
-    label: 'Informasi Publik',
-    children: [
-      {
-        label: 'PPID',
-        children: [
-          {
-            label: 'Profil',
-            children: [
-              { label: 'Struktur Organisasi PPID', path: '/ppid/profil/struktur-organisasi' },
-              { label: 'Visi dan Misi', path: '/ppid/profil/visi-misi' },
-              { label: 'Maklumat Pelayanan Informasi Publik', path: '/ppid/profil/maklumat-pelayanan' },
-              { label: 'Tugas PPID dan PPID Pelaksana', path: '/ppid/profil/tugas-ppid' },
-            ],
-          },
-          { label: 'Dokumen Publik', path: '/ppid/daftar-informasi-publik' },
-          { label: 'Laporan Tahunan PPID', path: '/ppid/laporan-tahunan' },
-          {
-            label: 'Layanan Publik',
-            children: [
-              { label: 'Form Permohonan Informasi', path: '/ppid/layanan-publik/form-permohonan' },
-              { label: 'Form Pengajuan Keberatan', path: '/ppid/layanan-publik/form-keberatan' },
-              { label: 'Prosedur Pengaduan', path: '/ppid/layanan-publik/prosedur-pengaduan' },
-              { label: 'Survey Penilaian Layanan Informasi Publik', path: '/ppid/layanan-publik/survey-kepuasan' },
-              { label: 'Regulasi Layanan Publik', path: '/ppid/layanan-publik/regulasi' },
-            ],
-          },
-          { label: 'Surat Keputusan', path: '/ppid/surat-keputusan' },
-          { label: 'Standar Pelayanan Publik', path: '/ppid/standar-pelayanan' },
-        ],
-      },
-      {
-        label: 'Informasi Secara Berkala',
-        path: '/ppid/informasi-secara-berkala',
-        children: [
-          {
-            label: 'Data Kepegawaian',
-            path: '/ppid/informasi-secara-berkala?kategori=data-kepegawaian',
-            children: [
-              { label: 'Struktur Organisasi', path: '/ppid/informasi-secara-berkala?kategori=data-kepegawaian&sub=struktur-organisasi' },
-              { label: 'Daftar Pejabat', path: '/ppid/informasi-secara-berkala?kategori=data-kepegawaian&sub=daftar-pejabat' },
-              { label: 'DUK', path: '/ppid/informasi-secara-berkala?kategori=data-kepegawaian&sub=duk' },
-              { label: 'LHKPN', path: '/ppid/informasi-secara-berkala?kategori=data-kepegawaian&sub=lhkpn' },
-              { label: 'Daftar Riwayat Hidup ASN', path: '/ppid/informasi-secara-berkala?kategori=data-kepegawaian&sub=daftar-riwayat-hidup-asn' },
-              { label: 'Indeks Kepuasan Masyarakat', path: '/ppid/informasi-secara-berkala?kategori=data-kepegawaian&sub=indeks-kepuasan-masyarakat' },
-              { label: 'Standar Pelayanan', path: '/ppid/informasi-secara-berkala?kategori=data-kepegawaian&sub=standar-pelayanan' },
-              { label: 'Surat Keterangan Tanda Tangan Elektronik', path: '/ppid/informasi-secara-berkala?kategori=data-kepegawaian&sub=surat-keterangan-tanda-tangan-elektronik' },
-              { label: 'Evaluasi Jabatan', path: '/ppid/informasi-secara-berkala?kategori=data-kepegawaian&sub=evaluasi-jabatan' },
-              { label: 'Standar Operasional Prosedur (SOP)', path: '/ppid/informasi-secara-berkala?kategori=data-kepegawaian&sub=standar-operasional-prosedur-sop' },
-              { label: 'Peta Jabatan', path: '/ppid/informasi-secara-berkala?kategori=data-kepegawaian&sub=peta-jabatan' },
-              { label: 'Laporan Hasil Forum Konsultasi Publik (FKP)', path: '/ppid/informasi-secara-berkala?kategori=data-kepegawaian&sub=laporan-hasil-forum-konsultasi-publik-fkp' },
-              { label: 'Agenda Pimpinan', path: '/ppid/informasi-secara-berkala?kategori=data-kepegawaian&sub=agenda-pimpinan' },
-              { label: 'Penghargaan Tingkat Nasional', path: '/ppid/informasi-secara-berkala?kategori=data-kepegawaian&sub=penghargaan-tingkat-nasional' },
-              { label: 'Akreditas Layanan Publik', path: '/ppid/informasi-secara-berkala?kategori=data-kepegawaian&sub=akreditas-layanan-publik' },
-              { label: 'Rekapitulasi Surat Menyurat', path: '/ppid/informasi-secara-berkala?kategori=data-kepegawaian&sub=rekapitulasi-surat-menyurat' },
-            ],
-          },
-          {
-            label: 'Dokumen SAKIP',
-            path: '/ppid/informasi-secara-berkala?kategori=dokumen-sakip',
-            children: [
-              { label: 'RENJA', path: '/ppid/informasi-secara-berkala?kategori=dokumen-sakip&sub=renja' },
-              { label: 'RKPD', path: '/ppid/informasi-secara-berkala?kategori=dokumen-sakip&sub=rkpd' },
-              { label: 'IKU', path: '/ppid/informasi-secara-berkala?kategori=dokumen-sakip&sub=iku' },
-              { label: 'Definisi Operasional', path: '/ppid/informasi-secara-berkala?kategori=dokumen-sakip&sub=definisi-operasional' },
-              { label: 'RKA', path: '/ppid/informasi-secara-berkala?kategori=dokumen-sakip&sub=rka' },
-              { label: 'DPA', path: '/ppid/informasi-secara-berkala?kategori=dokumen-sakip&sub=dpa' },
-              { label: 'RUP', path: '/ppid/informasi-secara-berkala?kategori=dokumen-sakip&sub=rup' },
-              { label: 'Program dan Kegiatan', path: '/ppid/informasi-secara-berkala?kategori=dokumen-sakip&sub=program-dan-kegiatan' },
-              { label: 'RENSTRA', path: '/ppid/informasi-secara-berkala?kategori=dokumen-sakip&sub=renstra' },
-              { label: 'LAKIP', path: '/ppid/informasi-secara-berkala?kategori=dokumen-sakip&sub=lakip' },
-              { label: 'Perjanjian Kinerja', path: '/ppid/informasi-secara-berkala?kategori=dokumen-sakip&sub=perjanjian-kinerja' },
-              { label: 'Cascading Kinerja', path: '/ppid/informasi-secara-berkala?kategori=dokumen-sakip&sub=cascading-kinerja' },
-              { label: 'Pohon Kinerja', path: '/ppid/informasi-secara-berkala?kategori=dokumen-sakip&sub=pohon-kinerja' },
-              { label: 'Rencana Aksi', path: '/ppid/informasi-secara-berkala?kategori=dokumen-sakip&sub=rencana-aksi' },
-              { label: 'Peta Proses Bisnis', path: '/ppid/informasi-secara-berkala?kategori=dokumen-sakip&sub=peta-proses-bisnis' },
-              { label: 'Roadmap Reformasi Birokrasi', path: '/ppid/informasi-secara-berkala?kategori=dokumen-sakip&sub=roadmap-reformasi-birokrasi' },
-              { label: 'LPPD', path: '/ppid/informasi-secara-berkala?kategori=dokumen-sakip&sub=lppd' },
-              { label: 'Pengadaan Barang Dan Jasa OPD Yang Diumumkan Oleh LPSE', path: '/ppid/informasi-secara-berkala?kategori=dokumen-sakip&sub=pengadaan-barang-dan-jasa-opd-yang-diumumkan-oleh-lpse' },
-            ],
-          },
-          {
-            label: 'Laporan Keuangan & Aset',
-            path: '/ppid/informasi-secara-berkala?kategori=laporan-keuangan-aset',
-            children: [
-              { label: 'Laporan Realisasi Anggaran', path: '/ppid/informasi-secara-berkala?kategori=laporan-keuangan-aset&sub=laporan-realisasi-anggaran' },
-              { label: 'Dokumen Pengadaan', path: '/ppid/informasi-secara-berkala?kategori=laporan-keuangan-aset&sub=dokumen-pengadaan' },
-              { label: 'Catatan Atas Laporan Keuangan (CALK)', path: '/ppid/informasi-secara-berkala?kategori=laporan-keuangan-aset&sub=catatan-atas-laporan-keuangan-calk' },
-              { label: 'Anggaran Kas', path: '/ppid/informasi-secara-berkala?kategori=laporan-keuangan-aset&sub=anggaran-kas' },
-              { label: 'Daftar Aset', path: '/ppid/informasi-secara-berkala?kategori=laporan-keuangan-aset&sub=daftar-aset' },
-              { label: 'Kebijakan Umum Anggaran (KUA) Prioritas Pagu Anggaran Sementara (PPAS)', path: '/ppid/informasi-secara-berkala?kategori=laporan-keuangan-aset&sub=kua-ppas' },
-              { label: 'Dokumen Elektronik Keuangan', path: '/ppid/informasi-secara-berkala?kategori=laporan-keuangan-aset&sub=dokumen-elektronik-keuangan' },
-            ],
-          },
-          {
-            label: 'Laporan Kegiatan',
-            path: '/ppid/informasi-secara-berkala?kategori=laporan-kegiatan',
-            children: [
-              { label: 'Laporan Bidang Pengembangan Destinasi Pariwisata', path: '/ppid/informasi-secara-berkala?kategori=laporan-kegiatan&sub=laporan-bidang-destinasi' },
-              { label: 'Laporan Bidang Pengembangan Pemasaran Pariwisata', path: '/ppid/informasi-secara-berkala?kategori=laporan-kegiatan&sub=laporan-bidang-pemasaran' },
-              { label: 'Laporan Bidang Pengembangan Industri Pariwisata', path: '/ppid/informasi-secara-berkala?kategori=laporan-kegiatan&sub=laporan-bidang-industri' },
-              { label: 'Laporan Bidang Pengembangan Kelembagaan Kepariwisataan', path: '/ppid/informasi-secara-berkala?kategori=laporan-kegiatan&sub=laporan-bidang-kelembagaan' },
-            ],
-          },
-        ],
-      },
-      { label: 'Informasi Setiap Saat', path: '/ppid/informasi-setiap-saat' },
-      { label: 'Informasi Serta Merta', path: '/ppid/informasi-serta-merta' },
-      { label: 'Informasi Dikecualikan', path: '/ppid/informasi-dikecualikan' },
-      { label: 'Layanan Aduan Masyarakat', path: 'https://www.lapor.go.id/instansi/pemerintah-provinsi-sulawesi-tengah', external: true },
-      { label: 'Regulasi', path: '/ppid/regulasi' },
-    ],
-  },
-  {
-    label: 'Info Pariwisata',
-    children: [
-      {
-        label: 'Destinasi Pariwisata',
-        children: [
-          {
-            label: 'Daya Tarik Wisata',
-            inlineChildren: true,
-            children: KABUPATEN_LIST.map((kab) => ({
-              label: kab,
-              path: `/info-pariwisata/destinasi/daya-tarik-wisata/${slugify(kab)}`,
-            })),
-          },
-          {
-            label: 'Desa Wisata',
-            inlineChildren: true,
-            children: KABUPATEN_LIST.map((kab) => ({
-              label: kab,
-              path: `/info-pariwisata/destinasi/desa-wisata/${slugify(kab)}`,
-            })),
-          },
-        ],
-      },
-      {
-        label: 'Pemasaran Pariwisata',
-        children: [
-          { label: 'Paket Wisata', path: '/info-pariwisata/pemasaran/paket-wisata' },
-          { label: 'Kalender Event', path: '/info-pariwisata/pemasaran/kalender-event' },
-          { label: 'Data Hunian Hotel', path: '/info-pariwisata/pemasaran/data-hunian' },
-          { label: 'Statistik Kunjungan', path: '/info-pariwisata/pemasaran/statistik-kunjungan' },
-        ],
-      },
-      { label: 'Ekonomi Kreatif', path: '/info-pariwisata/ekonomi-kreatif' },
-      { label: 'Sumber Daya Pariwisata', path: '/info-pariwisata/sumber-daya' },
-    ],
-  },
-  { label: 'Rencana Terbit', path: '/rencana-terbit' },
-  { label: 'Lapor', path: 'https://www.lapor.go.id/instansi/pemerintah-provinsi-sulawesi-tengah', external: true },
-];
+const DEFAULT_MENUS = getNavMenus('ID', false);
 
 const LogoSymbol = ({ className = 'h-11 sm:h-12 md:h-14 w-auto object-contain' }) => (
   <img
@@ -394,6 +203,7 @@ export const Navbar = ({ onToggleMobile, language: propLanguage, setLanguage: pr
   const setLanguage = propSetLanguage || contextSetLang;
   const isEn = language === 'EN';
   const strings = UI_STRINGS[language] || UI_STRINGS.ID;
+  const menus = getNavMenus(language, false);
 
   const [activeMenu, setActiveMenu] = useState(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -463,7 +273,7 @@ export const Navbar = ({ onToggleMobile, language: propLanguage, setLanguage: pr
 
           {/* Desktop Nav in Glassy Pill (Warna Ungu & Kaca Sesuai WebDispar Original) */}
           <nav className="hidden lg:inline-flex items-center gap-1 p-1 rounded-full border border-white/20 bg-white/15 backdrop-blur-sm shadow-inner transition-all duration-300">
-            {MENUS.map((menu, idx) => {
+            {menus.map((menu, idx) => {
               const active = isActive(menu);
               if (menu.children) {
                 return (
@@ -477,7 +287,7 @@ export const Navbar = ({ onToggleMobile, language: propLanguage, setLanguage: pr
                           : 'text-white hover:bg-white/20'
                       }`}
                     >
-                      <span>{getTopMenuLabel(menu.label, isEn)}</span>
+                      <span>{menu.label}</span>
                       <ChevronDown
                         size={11}
                         style={{
@@ -504,7 +314,7 @@ export const Navbar = ({ onToggleMobile, language: propLanguage, setLanguage: pr
                     active ? 'bg-amber-500 text-slate-950 shadow-sm' : 'text-white hover:bg-white/20'
                   }`}
                 >
-                  {getTopMenuLabel(menu.label, isEn)}
+                  {menu.label}
                 </Link>
               );
             })}

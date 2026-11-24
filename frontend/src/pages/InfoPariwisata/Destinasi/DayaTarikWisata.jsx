@@ -1,15 +1,12 @@
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { MapPin, Eye, Compass } from 'lucide-react';
 import { motion } from 'framer-motion';
 import api from '../../../services/api';
 import PageHeader from '../../../components/PageHeader';
-
-const kabupatenList = [
-  'Kota Palu', 'Kabupaten Donggala', 'Kabupaten Sigi', 'Kabupaten Parigi Moutong',
-  'Kabupaten Poso', 'Kabupaten Morowali', 'Kabupaten Morowali Utara', 'Kabupaten Tojo Una-Una',
-  'Kabupaten Banggai', 'Kabupaten Banggai Kepulauan', 'Kabupaten Banggai Laut', 'Kabupaten Tolitoli', 'Kabupaten Buol'
-];
+import { useLanguage } from '../../../context/LanguageContext';
+import { KABUPATEN_MAP, slugify } from '../../../utils/translations';
 
 const getDescriptionPreview = (html) => {
   if (!html) return '';
@@ -19,13 +16,15 @@ const getDescriptionPreview = (html) => {
   return document.body.textContent.replace(/\s+/g, ' ').trim();
 };
 
-const DestinationCard = ({ item, index }) => {
+const DestinationCard = ({ item, index, isEn }) => {
   const [imageFailed, setImageFailed] = useState(false);
   const image = typeof item.gambar === 'string' ? item.gambar.trim() : '';
   const imageSrc = image
     ? (image.startsWith('http') || image.startsWith('/') ? image : `/uploads/${image}`)
     : '';
   const description = getDescriptionPreview(item.deskripsi);
+  const kabObj = KABUPATEN_MAP.find((k) => k.id === item.kabupaten);
+  const kabDisplay = isEn && kabObj ? kabObj.en : item.kabupaten;
 
   return (
     <motion.div
@@ -46,20 +45,20 @@ const DestinationCard = ({ item, index }) => {
         ) : (
           <div className="flex h-full flex-col items-center justify-center gap-2 text-slate-400">
             <MapPin size={32} aria-hidden="true" />
-            <span className="text-sm">Foto belum tersedia</span>
+            <span className="text-sm">{isEn ? 'Photo not available' : 'Foto belum tersedia'}</span>
           </div>
         )}
         <div className="absolute top-4 left-4 rounded-full bg-amber-400 px-3 py-1 text-xs font-bold text-slate-900 shadow">
-          {item.kabupaten}
+          {kabDisplay}
         </div>
       </div>
       <div className="flex min-h-0 flex-1 flex-col p-5">
         <h3 className="mb-2 line-clamp-2 text-lg font-bold text-navy-900">{item.judul}</h3>
         <p className="mb-4 line-clamp-3 text-sm text-gray-600">
-          {description || 'Deskripsi belum tersedia.'}
+          {description || (isEn ? 'Description not available.' : 'Deskripsi belum tersedia.')}
         </p>
         <span className="mt-auto inline-flex items-center gap-1 text-xs text-gray-400">
-          <Eye size={14} /> {item.dilihat ?? 0} dilihat
+          <Eye size={14} /> {item.dilihat ?? 0} {isEn ? 'views' : 'dilihat'}
         </span>
       </div>
     </motion.div>
@@ -67,21 +66,40 @@ const DestinationCard = ({ item, index }) => {
 };
 
 const DayaTarikWisata = () => {
+  const { language } = useLanguage();
+  const isEn = language === 'EN';
+  const { kabupaten: paramKabupaten } = useParams();
+
   const [data, setData] = useState([]);
   const [selected, setSelected] = useState('Kota Palu');
   const [loading, setLoading] = useState(false);
 
+  // Sync selected with route parameter if available
+  useEffect(() => {
+    if (paramKabupaten) {
+      const match = KABUPATEN_MAP.find(
+        (k) => k.slug === paramKabupaten.toLowerCase() || slugify(k.id) === paramKabupaten.toLowerCase()
+      );
+      if (match) {
+        setSelected(match.id);
+      }
+    }
+  }, [paramKabupaten]);
+
   useEffect(() => {
     setLoading(true);
-    api.get(`/info-pariwisata/dtw?kabupaten=${selected}`)
+    api.get(`/info-pariwisata/dtw?kabupaten=${encodeURIComponent(selected)}`)
       .then((res) => setData(res.data))
       .catch(() => {})
       .finally(() => setLoading(false));
   }, [selected]);
 
+  const selectedObj = KABUPATEN_MAP.find((k) => k.id === selected);
+  const selectedDisplay = isEn && selectedObj ? selectedObj.en : selected;
+
   return (
     <>
-      <Helmet><title>Daya Tarik Wisata - Info Pariwisata</title></Helmet>
+      <Helmet><title>{isEn ? 'Tourist Attractions - Tourism Info' : 'Daya Tarik Wisata - Info Pariwisata'}</title></Helmet>
       <PageHeader
         badge="Destinasi & Wisata Unggulan"
         badgeIcon={Compass}
@@ -97,13 +115,13 @@ const DayaTarikWisata = () => {
         <div className="container-custom">
           {/* Filter Kabupaten */}
           <div className="flex flex-wrap gap-2 mb-10">
-            {kabupatenList.map((kab) => (
+            {KABUPATEN_MAP.map((kab) => (
               <button
-                key={kab}
-                onClick={() => setSelected(kab)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${selected === kab ? 'bg-primary-600 text-white shadow-lg' : 'bg-white text-navy-700 border border-gray-200 hover:border-primary-400'}`}
+                key={kab.id}
+                onClick={() => setSelected(kab.id)}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${selected === kab.id ? 'bg-primary-600 text-white shadow-lg' : 'bg-white text-navy-700 border border-gray-200 hover:border-primary-400'}`}
               >
-                {kab}
+                {isEn ? kab.en : kab.id}
               </button>
             ))}
           </div>
@@ -115,12 +133,16 @@ const DayaTarikWisata = () => {
           ) : data.length === 0 ? (
             <div className="text-center py-20 text-gray-400">
               <MapPin size={48} className="mx-auto mb-4 opacity-30" />
-              <p>Belum ada data destinasi untuk {selected}</p>
+              <p>
+                {isEn
+                  ? `No destination data available for ${selectedDisplay}`
+                  : `Belum ada data destinasi untuk ${selectedDisplay}`}
+              </p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {data.map((item, idx) => (
-                <DestinationCard key={item.id} item={item} index={idx} />
+                <DestinationCard key={item.id} item={item} index={idx} isEn={isEn} />
               ))}
             </div>
           )}

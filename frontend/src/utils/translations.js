@@ -1,16 +1,24 @@
-export const KABUPATEN_LIST_ID = [
-  'Kota Palu', 'Kabupaten Donggala', 'Kabupaten Sigi', 'Kabupaten Parigi Moutong',
-  'Kabupaten Poso', 'Kabupaten Morowali', 'Kabupaten Morowali Utara', 'Kabupaten Tojo Una-Una',
-  'Kabupaten Banggai', 'Kabupaten Banggai Kepulauan', 'Kabupaten Banggai Laut',
-  'Kabupaten Tolitoli', 'Kabupaten Buol',
+export const KABUPATEN_MAP = [
+  { id: 'Kota Palu', en: 'Palu City', slug: 'palu' },
+  { id: 'Kabupaten Donggala', en: 'Donggala Regency', slug: 'donggala' },
+  { id: 'Kabupaten Sigi', en: 'Sigi Regency', slug: 'sigi' },
+  { id: 'Kabupaten Parigi Moutong', en: 'Parigi Moutong Regency', slug: 'parigi-moutong' },
+  { id: 'Kabupaten Poso', en: 'Poso Regency', slug: 'poso' },
+  { id: 'Kabupaten Morowali', en: 'Morowali Regency', slug: 'morowali' },
+  { id: 'Kabupaten Morowali Utara', en: 'North Morowali Regency', slug: 'morowali-utara' },
+  { id: 'Kabupaten Tojo Una-Una', en: 'Tojo Una-Una Regency', slug: 'tojo-una-una' },
+  { id: 'Kabupaten Banggai', en: 'Banggai Regency', slug: 'banggai' },
+  { id: 'Kabupaten Banggai Kepulauan', en: 'Banggai Islands Regency', slug: 'banggai-kepulauan' },
+  { id: 'Kabupaten Banggai Laut', en: 'Banggai Laut Regency', slug: 'banggai-laut' },
+  { id: 'Kabupaten Tolitoli', en: 'Tolitoli Regency', slug: 'tolitoli' },
+  { id: 'Kabupaten Buol', en: 'Buol Regency', slug: 'buol' },
 ];
 
-export const KABUPATEN_LIST_EN = [
-  'Palu City', 'Donggala Regency', 'Sigi Regency', 'Parigi Moutong Regency',
-  'Poso Regency', 'Morowali Regency', 'North Morowali Regency', 'Tojo Una-Una Regency',
-  'Banggai Regency', 'Banggai Islands Regency', 'Banggai Laut Regency',
-  'Tolitoli Regency', 'Buol Regency',
-];
+export const KABUPATEN_LIST_ID = KABUPATEN_MAP.map((k) => k.id);
+export const KABUPATEN_LIST_EN = KABUPATEN_MAP.map((k) => k.en);
+
+export const slugify = (str) =>
+  (str || '').toLowerCase().replace(/kabupaten |kota /g, '').replace(/\s+/g, '-');
 
 export const UI_STRINGS = {
   ID: {
@@ -38,6 +46,7 @@ export const UI_STRINGS = {
     regionalNewsTag: 'WARTA PARIWISATA DAERAH',
     latestNews: 'Berita Terbaru',
     readMore: 'Selengkapnya',
+    readMoreFull: 'Baca Selengkapnya',
     servicesTag: 'PELAYANAN & KEGIATAN',
     servicesTitle: 'Agenda Kegiatan & Kepuasan Publik',
     disparSulteng: 'DINAS PARIWISATA SULTENG',
@@ -73,6 +82,11 @@ export const UI_STRINGS = {
     ikmDesc: 'Akumulasi survei mutu layanan publik Dinas Pariwisata',
     excellent: 'SANGAT BAIK',
     veryGood: 'Sangat Baik',
+    views: 'dilihat',
+    photoNotAvailable: 'Foto belum tersedia',
+    descNotAvailable: 'Deskripsi belum tersedia.',
+    noDataDest: 'Belum ada data destinasi untuk',
+    noDataVillage: 'Belum ada data desa wisata untuk',
   },
   EN: {
     officialPortal: 'Official Portal',
@@ -99,6 +113,7 @@ export const UI_STRINGS = {
     regionalNewsTag: 'REGIONAL TOURISM NEWS',
     latestNews: 'Latest News',
     readMore: 'Read More',
+    readMoreFull: 'Read More',
     servicesTag: 'SERVICES & ACTIVITIES',
     servicesTitle: 'Event Agenda & Public Satisfaction',
     disparSulteng: 'CENTRAL SULAWESI TOURISM OFFICE',
@@ -134,6 +149,11 @@ export const UI_STRINGS = {
     ikmDesc: 'Cumulative public service quality survey of Department of Tourism',
     excellent: 'EXCELLENT',
     veryGood: 'Very Good',
+    views: 'views',
+    photoNotAvailable: 'Photo not available',
+    descNotAvailable: 'Description not available.',
+    noDataDest: 'No destination data available for',
+    noDataVillage: 'No tourism village data available for',
   },
 };
 
@@ -145,73 +165,118 @@ export const BREADCRUMB_TRANS = {
     'Informasi Publik': 'Public Information',
     'Info Pariwisata': 'Tourism Info',
     'Rencana Terbit': 'Publication Plan',
+    'Lapor': 'Report',
     'Sejarah': 'History',
     'Visi dan Misi': 'Vision & Mission',
     'Profil Pimpinan': 'Leadership Profile',
     'Tupoksi': 'Duties & Functions',
     'Tugas Pokok & Fungsi': 'Duties & Functions',
+    'Tugas Pokok dan Fungsi': 'Duties & Functions',
     'Majalah': 'Magazine',
     'Majalah & Publikasi': 'Magazine & Publications',
     'Logo': 'Logo',
+    'Logo & Identitas Visual': 'Logo & Visual Identity',
     'Hubungi Kami': 'Contact Us',
     'Destinasi': 'Destinations',
+    'Destinasi Pariwisata': 'Tourism Destinations',
+    'Daya Tarik Wisata': 'Tourist Attractions',
+    'Desa Wisata': 'Tourism Villages',
     'Pemasaran': 'Marketing',
+    'Pemasaran Pariwisata': 'Tourism Marketing',
+    'Paket Wisata': 'Tour Packages',
+    'Kalender Event': 'Event Calendar',
+    'Kalender Event Pariwisata': 'Tourism Event Calendar',
+    'Data Hunian': 'Hotel Occupancy Data',
+    'Data Hunian Hotel': 'Hotel Occupancy Data',
+    'Statistik Kunjungan': 'Visit Statistics',
+    'Statistik Kunjungan Wisatawan': 'Tourist Visit Statistics',
+    'Ekonomi Kreatif': 'Creative Economy',
+    'Sumber Daya': 'Resources',
+    'Sumber Daya Pariwisata': 'Tourism Resources',
+    'Sumber Daya Pariwisata & Ekonomi Kreatif': 'Tourism & Creative Economy Resources',
     'Layanan Publik': 'Public Services',
     'PPID': 'PPID',
     'Profil PPID': 'PPID Profile',
     'Daftar Informasi Publik': 'Public Information List',
+    'Dokumen Publik': 'Public Documents',
     'Informasi Secara Berkala': 'Periodic Information',
     'Informasi Serta Merta': 'Immediate Information',
     'Informasi Setiap Saat': 'Information Available at Any Time',
     'Informasi Yang Dikecualikan': 'Exempt Information',
     'Informasi Dikecualikan': 'Exempt Information',
+    'Laporan Tahunan': 'Annual Report',
     'Laporan Tahunan PPID': 'PPID Annual Report',
     'Maklumat Pelayanan': 'Service Notice',
     'Struktur Organisasi PPID': 'PPID Organizational Structure',
     'Visi dan Misi PPID': 'PPID Vision & Mission',
     'Tugas PPID': 'PPID Duties',
     'Tugas dan Fungsi PPID': 'PPID Duties & Functions',
+    'Tugas PPID dan PPID Pelaksana': 'Duties of PPID & Implementing PPID',
     'Standar Pelayanan': 'Service Standards',
+    'Standar Pelayanan Publik': 'Public Service Standards',
     'Surat Keputusan': 'Decrees & Decisions',
+    'Form Permohonan Informasi': 'Information Request Form',
     'Formulir Permohonan Informasi': 'Information Request Form',
+    'Form Pengajuan Keberatan': 'Objection Submission Form',
     'Formulir Pengajuan Keberatan': 'Objection Submission Form',
     'Prosedur Pengaduan': 'Complaint Procedures',
     'Survey Kepuasan': 'Satisfaction Survey',
+    'Survey Penilaian Layanan Informasi Publik': 'Public Information Service Survey',
+    'Survey Penilaian Layanan': 'Service Assessment Survey',
     'Regulasi': 'Regulations',
-    'Sumber Daya': 'Resources',
-    'Data Hunian Hotel': 'Hotel Occupancy Data',
-    'Statistik Kunjungan': 'Visit Statistics',
-    'Statistik Kunjungan Wisatawan': 'Tourist Visit Statistics',
-    'Ekonomi Kreatif': 'Creative Economy',
-    'Desa Wisata': 'Tourism Villages',
-    'Paket Wisata': 'Tour Packages',
-    'Kalender Event': 'Event Calendar',
-    'Daya Tarik Wisata': 'Tourist Attractions',
+    'Regulasi Layanan Publik': 'Public Service Regulations',
+    'Data Kepegawaian': 'Staffing Data',
+    'Dokumen SAKIP': 'SAKIP Documents',
+    'Laporan Keuangan & Aset': 'Financial & Asset Reports',
+    'Laporan Kegiatan': 'Activity Reports',
+    'Kota Palu': 'Palu City',
+    'Kabupaten Donggala': 'Donggala Regency',
+    'Kabupaten Sigi': 'Sigi Regency',
+    'Kabupaten Parigi Moutong': 'Parigi Moutong Regency',
+    'Kabupaten Poso': 'Poso Regency',
+    'Kabupaten Morowali': 'Morowali Regency',
+    'Kabupaten Morowali Utara': 'North Morowali Regency',
+    'Kabupaten Tojo Una-Una': 'Tojo Una-Una Regency',
+    'Kabupaten Banggai': 'Banggai Regency',
+    'Kabupaten Banggai Kepulauan': 'Banggai Islands Regency',
+    'Kabupaten Banggai Laut': 'Banggai Laut Regency',
+    'Kabupaten Tolitoli': 'Tolitoli Regency',
+    'Kabupaten Buol': 'Buol Regency',
   },
 };
 
 export const BADGE_TRANS = {
   EN: {
     'Dinas Pariwisata Provinsi Sulawesi Tengah': 'Department of Tourism Central Sulawesi Province',
-    'PPID Pelaksana Dinas Pariwisata Sulteng': 'PPID of Central Sulawesi Tourism Department',
-    'PPID Pelaksana Dispar Sulteng': 'PPID of Central Sulawesi Tourism Department',
+    'PPID Pelaksana Dinas Pariwisata Sulteng': 'Implementing PPID Central Sulawesi Tourism Department',
+    'PPID Pelaksana Dispar Sulteng': 'Implementing PPID Central Sulawesi Tourism Department',
+    'Destinasi & Wisata Unggulan': 'Featured Tourist Destinations',
+    'Keterbukaan Informasi Publik': 'Public Information Disclosure',
     'Inovasi & Karya Kreatif Lokal': 'Local Innovation & Creative Works',
     'Pengembangan Kapasitas & SDM': 'Capacity & HR Development',
     'Akuntabilitas & Kinerja KIP': 'KIP Accountability & Performance',
     'Standar Mutu Layanan': 'Service Quality Standards',
     'Regulasi & Ketetapan Hukum': 'Regulations & Legal Decrees',
+    'Regulasi & Dasar Hukum Resmi': 'Official Regulations & Legal Basis',
     'Pariwisata Berbasis Masyarakat': 'Community-Based Tourism',
     'Paket Wisata & Perjalanan': 'Tour & Travel Packages',
     'Statistik Akomodasi & Perhotelan': 'Accommodation & Hospitality Statistics',
     'Data & Analisis Kunjungan': 'Visitation Data & Analysis',
+    'Data Analitik Resmi Dispar Sulteng': 'Official Analytics Data of Central Sulawesi Tourism Department',
     'Karisma Event Sulawesi Tengah': 'Central Sulawesi Event Charisma',
     'Eksplorasi Destinasi Wisata': 'Explore Tourist Destinations',
     'Publikasi Resmi': 'Official Publications',
+    'Publikasi & Literasi': 'Publications & Literacy',
     'Layanan Informasi & Aduan': 'Information & Complaints Service',
+    'Layanan Aspirasi & Pengaduan': 'Aspiration & Complaint Services',
+    'Layanan PPID Online': 'Online PPID Services',
     'Profil Kelembagaan': 'Institutional Profile',
     'Kedudukan & Kewenangan': 'Authority & Legal Mandate',
     'Aset & Identitas Visual': 'Assets & Visual Identity',
     'Layanan Kontak & Lokasi': 'Contact & Location Services',
+    'Evaluasi & Mutu Layanan': 'Evaluation & Service Quality',
+    'Warta Pariwisata Sulawesi Tengah': 'Central Sulawesi Tourism News',
+    'Profil Pimpinan Dinas': 'Department Leadership Profile',
   },
 };
 
@@ -249,6 +314,10 @@ export const TITLE_TRANS = {
       title: 'Public Information Service Notice',
       subtitle: 'Commitment and declaration of service standards in public information disclosure',
     },
+    'Maklumat Pelayanan': {
+      title: 'Public Information Service Notice',
+      subtitle: 'Commitment and declaration of service standards in public information disclosure',
+    },
     'Struktur Organisasi PPID': {
       title: 'PPID Organizational Structure',
       subtitle: 'Composition of Information and Documentation Management Officer team of Central Sulawesi Tourism Department',
@@ -257,25 +326,53 @@ export const TITLE_TRANS = {
       title: 'PPID Vision & Mission',
       subtitle: 'Direction, goals, and commitments in realizing transparent and accountable governance',
     },
+    'Visi dan Misi PPID': {
+      title: 'PPID Vision & Mission',
+      subtitle: 'Direction, goals, and commitments in realizing transparent and accountable governance',
+    },
     'Tugas Pokok & Fungsi PPID': {
       title: 'PPID Duties & Functions',
       subtitle: 'Main tasks, authorities, and responsibilities of Main PPID and Implementing PPID',
+    },
+    'Tugas PPID dan PPID Pelaksana': {
+      title: 'Duties of PPID & Implementing PPID',
+      subtitle: 'Details of main tasks, functions, and responsibilities according to public information regulations',
     },
     'Standar Pelayanan Informasi Publik': {
       title: 'Public Information Service Standards',
       subtitle: 'Guidelines, mechanisms, and timeframes for public information services',
     },
+    'Standar Pelayanan Publik': {
+      title: 'Public Service Standards',
+      subtitle: 'Guidelines on Standard Operating Procedures (SOP) and Public Information Disclosure Service Mechanisms',
+    },
     'Surat Keputusan (SK) PPID': {
       title: 'Decrees & Legal Documents',
       subtitle: 'Official decrees regarding PPID appointment, DIP determination, and service teams',
+    },
+    'Surat Keputusan': {
+      title: 'Decrees & Decisions',
+      subtitle: 'Decrees of the Head of Department and Official Decrees on Public Information Services',
     },
     'Permohonan Informasi Publik': {
       title: 'Public Information Request',
       subtitle: 'Official form to request public information from Central Sulawesi Tourism Department',
     },
+    'Form Permohonan Informasi': {
+      title: 'Public Information Request Form',
+      subtitle: 'Submit online public information requests to the PPID of Central Sulawesi Tourism Department',
+    },
     'Pengajuan Keberatan Informasi': {
       title: 'Information Objection Submission',
       subtitle: 'Official form to file objections regarding public information requests',
+    },
+    'Form Pengajuan Keberatan': {
+      title: 'Information Objection Submission Form',
+      subtitle: 'Official form to file objections regarding public information requests to Central Sulawesi Tourism Department PPID',
+    },
+    'Prosedur Pengaduan': {
+      title: 'Public Complaint Procedures',
+      subtitle: 'Flowchart and mechanism for reporting complaints on services and administrative violations',
     },
     'Prosedur Pengaduan Masyarakat': {
       title: 'Public Complaint Procedures',
@@ -285,9 +382,21 @@ export const TITLE_TRANS = {
       title: 'Public Service Satisfaction Survey',
       subtitle: 'Evaluation and feedback questionnaire for Central Sulawesi Tourism Department information services',
     },
+    'Survey Penilaian Layanan Informasi Publik': {
+      title: 'Public Information Service Assessment Survey',
+      subtitle: 'Public Satisfaction Index questionnaire for public information services',
+    },
+    'Survey Penilaian Layanan': {
+      title: 'Public Information Service Assessment Survey',
+      subtitle: 'Public Satisfaction Index questionnaire for public information services',
+    },
     'Regulasi & Dasar Hukum PPID': {
       title: 'Regulations & Legal Basis',
       subtitle: 'Laws, regulations, and governor decisions on public information disclosure',
+    },
+    'Regulasi': {
+      title: 'Regulations',
+      subtitle: 'Collection of statutory regulations and tourism development master plans (RIPPARDA) of Central Sulawesi Province',
     },
     'Desa Wisata': {
       title: 'Tourism Villages',
@@ -313,9 +422,13 @@ export const TITLE_TRANS = {
       title: 'Tourism & Creative Economy Resources',
       subtitle: 'Labor data, competency certifications, and human resource capacity development',
     },
+    'Sumber Daya Pariwisata': {
+      title: 'Tourism Resources',
+      subtitle: 'Labor data, competency certifications, and human resource capacity development',
+    },
     'Daya Tarik Wisata': {
       title: 'Tourist Attractions',
-      subtitle: 'Explore the stunning natural wonders, cultural heritage, and megadiversity of Central Sulawesi',
+      subtitle: 'Explore the stunning natural wonders, cultural heritage, and megadiversity across 13 regencies & city in Central Sulawesi',
     },
     'Kalender Event Pariwisata': {
       title: 'Tourism Event Calendar',
@@ -325,13 +438,293 @@ export const TITLE_TRANS = {
       title: 'Latest News & Information',
       subtitle: 'Latest news, official updates, and activities of Central Sulawesi Tourism Department',
     },
+    'Berita Terkini': {
+      title: 'Latest News',
+      subtitle: 'Official news and releases on tourism development, destinations, and creative economy in Central Sulawesi.',
+    },
     'Rencana Terbit Majalah': {
       title: 'Magazine Publication Schedule',
       subtitle: 'Publication agenda, production status, and release timeline for Central Sulawesi tourism magazines',
+    },
+    'Rencana Terbit': {
+      title: 'Publication Plan',
+      subtitle: 'Official release schedule for statistical data, periodic publications, and public information of Central Sulawesi Tourism Department.',
     },
     'Layanan Pengaduan SP4N-LAPOR!': {
       title: 'SP4N-LAPOR! Complaints Service',
       subtitle: 'Official public complaint service integrated with National LAPOR! System',
     },
+    'Sejarah Singkat': {
+      title: 'Brief History',
+      subtitle: 'The history and journey of Central Sulawesi Tourism Department in advancing regional tourism.',
+    },
+    'Visi dan Misi': {
+      title: 'Vision & Mission',
+      subtitle: 'Development direction and commitments of Central Sulawesi Tourism Department for 2025-2029.',
+    },
+    'Tugas Pokok dan Fungsi': {
+      title: 'Duties and Functions',
+      subtitle: 'Department of Tourism Central Sulawesi Province based on the latest governance regulations',
+    },
+    'Hubungi Kami': {
+      title: 'Contact Us',
+      subtitle: 'We are ready to serve your information, partnership, and tourism consultation needs',
+    },
+    'Majalah & Publikasi': {
+      title: 'Magazine & Publications',
+      subtitle: 'Official magazine collection and tourism promotional booklets of Central Sulawesi',
+    },
+    'Logo & Identitas Visual': {
+      title: 'Logo & Visual Identity',
+      subtitle: 'Download official logo assets and brand identity guidelines for Central Sulawesi tourism',
+    },
   },
+};
+
+export const getNavMenus = (language = 'ID', isSidebar = false, icons = {}) => {
+  const isEn = language === 'EN';
+
+  return [
+    {
+      label: isEn ? 'Home' : 'Home',
+      path: '/',
+      ...(isSidebar && icons.Home ? { icon: icons.Home } : {}),
+    },
+    {
+      label: isEn ? 'News' : 'Berita',
+      path: '/berita',
+      ...(isSidebar && icons.Newspaper ? { icon: icons.Newspaper } : {}),
+    },
+    {
+      label: isEn ? 'Profile' : 'Profil',
+      ...(isSidebar && icons.Building ? { icon: icons.Building } : {}),
+      children: [
+        { label: isEn ? 'History' : 'Sejarah', path: '/profil/sejarah' },
+        { label: isEn ? 'Vision & Mission' : 'Visi dan Misi', path: '/profil/visi-misi' },
+        { label: isEn ? 'Leadership Profile' : 'Profil Pimpinan', path: '/profil/profil-pimpinan' },
+        { label: isEn ? 'Duties & Functions' : 'Tupoksi', path: '/profil/tupoksi' },
+        { label: isEn ? 'Magazine' : 'Majalah', path: '/profil/majalah' },
+        { label: isEn ? 'Logo' : 'Logo', path: '/profil/logo' },
+        { label: isEn ? 'Contact Us' : 'Hubungi Kami', path: '/profil/hubungi-kami' },
+      ],
+    },
+    {
+      label: isEn ? 'Public Information' : 'Informasi Publik',
+      ...(isSidebar && icons.FileText ? { icon: icons.FileText } : {}),
+      children: [
+        {
+          label: 'PPID',
+          children: [
+            {
+              label: isEn ? 'Profile' : 'Profil',
+              children: [
+                {
+                  label: isEn ? 'PPID Organization Structure' : 'Struktur Organisasi PPID',
+                  path: '/ppid/profil/struktur-organisasi',
+                },
+                {
+                  label: isEn ? 'Vision & Mission' : 'Visi dan Misi',
+                  path: '/ppid/profil/visi-misi',
+                },
+                {
+                  label: isEn ? 'Public Information Service Notice' : 'Maklumat Pelayanan Informasi Publik',
+                  path: '/ppid/profil/maklumat-pelayanan',
+                },
+                {
+                  label: isEn ? 'Duties of PPID & Implementing PPID' : 'Tugas PPID dan PPID Pelaksana',
+                  path: '/ppid/profil/tugas-ppid',
+                },
+              ],
+            },
+            {
+              label: isEn ? 'Public Documents' : 'Dokumen Publik',
+              path: '/ppid/daftar-informasi-publik',
+            },
+            {
+              label: isEn ? 'PPID Annual Report' : 'Laporan Tahunan PPID',
+              path: '/ppid/laporan-tahunan',
+            },
+            {
+              label: isEn ? 'Public Services' : 'Layanan Publik',
+              children: [
+                {
+                  label: isEn ? 'Information Request Form' : 'Form Permohonan Informasi',
+                  path: '/ppid/layanan-publik/form-permohonan',
+                },
+                {
+                  label: isEn ? 'Objection Submission Form' : 'Form Pengajuan Keberatan',
+                  path: '/ppid/layanan-publik/form-keberatan',
+                },
+                {
+                  label: isEn ? 'Complaint Procedure' : 'Prosedur Pengaduan',
+                  path: '/ppid/layanan-publik/prosedur-pengaduan',
+                },
+                {
+                  label: isEn ? 'Public Information Service Survey' : 'Survey Penilaian Layanan Informasi Publik',
+                  path: '/ppid/layanan-publik/survey-kepuasan',
+                },
+                {
+                  label: isEn ? 'Public Service Regulations' : 'Regulasi Layanan Publik',
+                  path: '/ppid/layanan-publik/regulasi',
+                },
+              ],
+            },
+            {
+              label: isEn ? 'Decrees & Decisions' : 'Surat Keputusan',
+              path: '/ppid/surat-keputusan',
+            },
+            {
+              label: isEn ? 'Public Service Standards' : 'Standar Pelayanan Publik',
+              path: '/ppid/standar-pelayanan',
+            },
+          ],
+        },
+        {
+          label: isEn ? 'Periodic Information' : 'Informasi Secara Berkala',
+          path: '/ppid/informasi-secara-berkala',
+          children: [
+            {
+              label: isEn ? 'Staffing Data' : 'Data Kepegawaian',
+              path: '/ppid/informasi-secara-berkala?kategori=data-kepegawaian',
+              children: [
+                { label: isEn ? 'Organizational Structure' : 'Struktur Organisasi', path: '/ppid/informasi-secara-berkala?kategori=data-kepegawaian&sub=struktur-organisasi' },
+                { label: isEn ? 'List of Officials' : 'Daftar Pejabat', path: '/ppid/informasi-secara-berkala?kategori=data-kepegawaian&sub=daftar-pejabat' },
+                { label: 'DUK', path: '/ppid/informasi-secara-berkala?kategori=data-kepegawaian&sub=duk' },
+                { label: 'LHKPN', path: '/ppid/informasi-secara-berkala?kategori=data-kepegawaian&sub=lhkpn' },
+                { label: isEn ? 'Civil Servant CV List' : 'Daftar Riwayat Hidup ASN', path: '/ppid/informasi-secara-berkala?kategori=data-kepegawaian&sub=daftar-riwayat-hidup-asn' },
+                { label: isEn ? 'Public Satisfaction Index' : 'Indeks Kepuasan Masyarakat', path: '/ppid/informasi-secara-berkala?kategori=data-kepegawaian&sub=indeks-kepuasan-masyarakat' },
+                { label: isEn ? 'Service Standards' : 'Standar Pelayanan', path: '/ppid/informasi-secara-berkala?kategori=data-kepegawaian&sub=standar-pelayanan' },
+                { label: isEn ? 'Electronic Signature Certificate' : 'Surat Keterangan Tanda Tangan Elektronik', path: '/ppid/informasi-secara-berkala?kategori=data-kepegawaian&sub=surat-keterangan-tanda-tangan-elektronik' },
+                { label: isEn ? 'Job Evaluation' : 'Evaluasi Jabatan', path: '/ppid/informasi-secara-berkala?kategori=data-kepegawaian&sub=evaluasi-jabatan' },
+                { label: isEn ? 'Standard Operating Procedures (SOP)' : 'Standar Operasional Prosedur (SOP)', path: '/ppid/informasi-secara-berkala?kategori=data-kepegawaian&sub=standar-operasional-prosedur-sop' },
+                { label: isEn ? 'Job Map' : 'Peta Jabatan', path: '/ppid/informasi-secara-berkala?kategori=data-kepegawaian&sub=peta-jabatan' },
+                { label: isEn ? 'Public Consultation Forum Report' : 'Laporan Hasil Forum Konsultasi Publik (FKP)', path: '/ppid/informasi-secara-berkala?kategori=data-kepegawaian&sub=laporan-hasil-forum-konsultasi-publik-fkp' },
+                { label: isEn ? 'Leadership Agenda' : 'Agenda Pimpinan', path: '/ppid/informasi-secara-berkala?kategori=data-kepegawaian&sub=agenda-pimpinan' },
+                { label: isEn ? 'National Level Awards' : 'Penghargaan Tingkat Nasional', path: '/ppid/informasi-secara-berkala?kategori=data-kepegawaian&sub=penghargaan-tingkat-nasional' },
+                { label: isEn ? 'Public Service Accreditation' : 'Akreditas Layanan Publik', path: '/ppid/informasi-secara-berkala?kategori=data-kepegawaian&sub=akreditas-layanan-publik' },
+                { label: isEn ? 'Correspondence Summary' : 'Rekapitulasi Surat Menyurat', path: '/ppid/informasi-secara-berkala?kategori=data-kepegawaian&sub=rekapitulasi-surat-menyurat' },
+              ],
+            },
+            {
+              label: isEn ? 'SAKIP Documents' : 'Dokumen SAKIP',
+              path: '/ppid/informasi-secara-berkala?kategori=dokumen-sakip',
+              children: [
+                { label: 'RENJA', path: '/ppid/informasi-secara-berkala?kategori=dokumen-sakip&sub=renja' },
+                { label: 'RKPD', path: '/ppid/informasi-secara-berkala?kategori=dokumen-sakip&sub=rkpd' },
+                { label: 'IKU', path: '/ppid/informasi-secara-berkala?kategori=dokumen-sakip&sub=iku' },
+                { label: isEn ? 'Operational Definition' : 'Definisi Operasional', path: '/ppid/informasi-secara-berkala?kategori=dokumen-sakip&sub=definisi-operasional' },
+                { label: 'RKA', path: '/ppid/informasi-secara-berkala?kategori=dokumen-sakip&sub=rka' },
+                { label: 'DPA', path: '/ppid/informasi-secara-berkala?kategori=dokumen-sakip&sub=dpa' },
+                { label: 'RUP', path: '/ppid/informasi-secara-berkala?kategori=dokumen-sakip&sub=rup' },
+                { label: isEn ? 'Programs & Activities' : 'Program dan Kegiatan', path: '/ppid/informasi-secara-berkala?kategori=dokumen-sakip&sub=program-dan-kegiatan' },
+                { label: 'RENSTRA', path: '/ppid/informasi-secara-berkala?kategori=dokumen-sakip&sub=renstra' },
+                { label: 'LAKIP', path: '/ppid/informasi-secara-berkala?kategori=dokumen-sakip&sub=lakip' },
+                { label: isEn ? 'Performance Agreement' : 'Perjanjian Kinerja', path: '/ppid/informasi-secara-berkala?kategori=dokumen-sakip&sub=perjanjian-kinerja' },
+                { label: isEn ? 'Performance Cascading' : 'Cascading Kinerja', path: '/ppid/informasi-secara-berkala?kategori=dokumen-sakip&sub=cascading-kinerja' },
+                { label: isEn ? 'Performance Tree' : 'Pohon Kinerja', path: '/ppid/informasi-secara-berkala?kategori=dokumen-sakip&sub=pohon-kinerja' },
+                { label: isEn ? 'Action Plan' : 'Rencana Aksi', path: '/ppid/informasi-secara-berkala?kategori=dokumen-sakip&sub=rencana-aksi' },
+                { label: isEn ? 'Business Process Map' : 'Peta Proses Bisnis', path: '/ppid/informasi-secara-berkala?kategori=dokumen-sakip&sub=peta-proses-bisnis' },
+                { label: isEn ? 'Bureaucratic Reform Roadmap' : 'Roadmap Reformasi Birokrasi', path: '/ppid/informasi-secara-berkala?kategori=dokumen-sakip&sub=roadmap-reformasi-birokrasi' },
+                { label: 'LPPD', path: '/ppid/informasi-secara-berkala?kategori=dokumen-sakip&sub=lppd' },
+                { label: isEn ? 'Procurement Announced by LPSE' : 'Pengadaan Barang Dan Jasa OPD Yang Diumumkan Oleh LPSE', path: '/ppid/informasi-secara-berkala?kategori=dokumen-sakip&sub=pengadaan-barang-dan-jasa-opd-yang-diumumkan-oleh-lpse' },
+              ],
+            },
+            {
+              label: isEn ? 'Financial & Asset Reports' : 'Laporan Keuangan & Aset',
+              path: '/ppid/informasi-secara-berkala?kategori=laporan-keuangan-aset',
+              children: [
+                { label: isEn ? 'Budget Realization Report' : 'Laporan Realisasi Anggaran', path: '/ppid/informasi-secara-berkala?kategori=laporan-keuangan-aset&sub=laporan-realisasi-anggaran' },
+                { label: isEn ? 'Procurement Documents' : 'Dokumen Pengadaan', path: '/ppid/informasi-secara-berkala?kategori=laporan-keuangan-aset&sub=dokumen-pengadaan' },
+                { label: isEn ? 'Notes to Financial Statements (CALK)' : 'Catatan Atas Laporan Keuangan (CALK)', path: '/ppid/informasi-secara-berkala?kategori=laporan-keuangan-aset&sub=catatan-atas-laporan-keuangan-calk' },
+                { label: isEn ? 'Cash Budget' : 'Anggaran Kas', path: '/ppid/informasi-secara-berkala?kategori=laporan-keuangan-aset&sub=anggaran-kas' },
+                { label: isEn ? 'Asset List' : 'Daftar Aset', path: '/ppid/informasi-secara-berkala?kategori=laporan-keuangan-aset&sub=daftar-aset' },
+                { label: isEn ? 'General Budget Policy (KUA-PPAS)' : 'Kebijakan Umum Anggaran (KUA) Prioritas Pagu Anggaran Sementara (PPAS)', path: '/ppid/informasi-secara-berkala?kategori=laporan-keuangan-aset&sub=kua-ppas' },
+                { label: isEn ? 'Electronic Financial Documents' : 'Dokumen Elektronik Keuangan', path: '/ppid/informasi-secara-berkala?kategori=laporan-keuangan-aset&sub=dokumen-elektronik-keuangan' },
+              ],
+            },
+            {
+              label: isEn ? 'Activity Reports' : 'Laporan Kegiatan',
+              path: '/ppid/informasi-secara-berkala?kategori=laporan-kegiatan',
+              children: [
+                { label: isEn ? 'Tourism Destination Development Report' : 'Laporan Bidang Pengembangan Destinasi Pariwisata', path: '/ppid/informasi-secara-berkala?kategori=laporan-kegiatan&sub=laporan-bidang-destinasi' },
+                { label: isEn ? 'Tourism Marketing Report' : 'Laporan Bidang Pengembangan Pemasaran Pariwisata', path: '/ppid/informasi-secara-berkala?kategori=laporan-kegiatan&sub=laporan-bidang-pemasaran' },
+                { label: isEn ? 'Tourism Industry Report' : 'Laporan Bidang Pengembangan Industri Pariwisata', path: '/ppid/informasi-secara-berkala?kategori=laporan-kegiatan&sub=laporan-bidang-industri' },
+                { label: isEn ? 'Tourism Institutional Development Report' : 'Laporan Bidang Pengembangan Kelembagaan Kepariwisataan', path: '/ppid/informasi-secara-berkala?kategori=laporan-kegiatan&sub=laporan-bidang-kelembagaan' },
+              ],
+            },
+          ],
+        },
+        {
+          label: isEn ? 'Information Available at Any Time' : 'Informasi Setiap Saat',
+          path: '/ppid/informasi-setiap-saat',
+        },
+        {
+          label: isEn ? 'Immediate Information' : 'Informasi Serta Merta',
+          path: '/ppid/informasi-serta-merta',
+        },
+        {
+          label: isEn ? 'Exempt Information' : 'Informasi Dikecualikan',
+          path: '/ppid/informasi-dikecualikan',
+        },
+        {
+          label: isEn ? 'Public Complaint Service' : 'Layanan Aduan Masyarakat',
+          path: 'https://www.lapor.go.id/instansi/pemerintah-provinsi-sulawesi-tengah',
+          external: true,
+        },
+        {
+          label: isEn ? 'Regulations' : 'Regulasi',
+          path: '/ppid/regulasi',
+        },
+      ],
+    },
+    {
+      label: isEn ? 'Tourism Info' : 'Info Pariwisata',
+      ...(isSidebar && icons.Compass ? { icon: icons.Compass } : {}),
+      children: [
+        {
+          label: isEn ? 'Tourism Destinations' : 'Destinasi Pariwisata',
+          children: [
+            {
+              label: isEn ? 'Tourist Attractions' : 'Daya Tarik Wisata',
+              inlineChildren: true,
+              children: KABUPATEN_MAP.map((k) => ({
+                label: isEn ? k.en : k.id,
+                path: `/info-pariwisata/destinasi/daya-tarik-wisata/${k.slug}`,
+              })),
+            },
+            {
+              label: isEn ? 'Tourism Villages' : 'Desa Wisata',
+              inlineChildren: true,
+              children: KABUPATEN_MAP.map((k) => ({
+                label: isEn ? k.en : k.id,
+                path: `/info-pariwisata/destinasi/desa-wisata/${k.slug}`,
+              })),
+            },
+          ],
+        },
+        {
+          label: isEn ? 'Tourism Marketing' : 'Pemasaran Pariwisata',
+          children: [
+            { label: isEn ? 'Tour Packages' : 'Paket Wisata', path: '/info-pariwisata/pemasaran/paket-wisata' },
+            { label: isEn ? 'Event Calendar' : 'Kalender Event', path: '/info-pariwisata/pemasaran/kalender-event' },
+            { label: isEn ? 'Hotel Occupancy Data' : 'Data Hunian Hotel', path: '/info-pariwisata/pemasaran/data-hunian' },
+            { label: isEn ? 'Visit Statistics' : 'Statistik Kunjungan', path: '/info-pariwisata/pemasaran/statistik-kunjungan' },
+          ],
+        },
+        { label: isEn ? 'Creative Economy' : 'Ekonomi Kreatif', path: '/info-pariwisata/ekonomi-kreatif' },
+        { label: isEn ? 'Tourism Resources' : 'Sumber Daya Pariwisata', path: '/info-pariwisata/sumber-daya' },
+      ],
+    },
+    {
+      label: isEn ? 'Publication Plan' : 'Rencana Terbit',
+      path: '/rencana-terbit',
+      ...(isSidebar && icons.Calendar ? { icon: icons.Calendar } : {}),
+    },
+    {
+      label: isEn ? 'Report' : 'Lapor',
+      path: 'https://www.lapor.go.id/instansi/pemerintah-provinsi-sulawesi-tengah',
+      external: true,
+      ...(isSidebar && icons.MessageSquare ? { icon: icons.MessageSquare } : {}),
+    },
+  ];
 };

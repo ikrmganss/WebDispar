@@ -1,10 +1,14 @@
 import { Link } from 'react-router-dom';
 import { Calendar, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useLanguage } from '../context/LanguageContext';
 
 const BeritaCard = ({ berita, index = 0 }) => {
+  const { language } = useLanguage();
+  const isEn = language === 'EN';
+
   const formatDate = (date) =>
-    new Date(date).toLocaleDateString('id-ID', {
+    new Date(date).toLocaleDateString(isEn ? 'en-US' : 'id-ID', {
       day: 'numeric',
       month: 'long',
       year: 'numeric',
@@ -49,7 +53,7 @@ const BeritaCard = ({ berita, index = 0 }) => {
             {berita.judul}
           </h3>
           <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-slate-900 border-b border-slate-900 pb-0.5 group-hover:gap-2.5 transition-all">
-            Baca Selengkapnya
+            {isEn ? 'Read More' : 'Baca Selengkapnya'}
             <ArrowRight size={14} />
           </span>
         </div>
