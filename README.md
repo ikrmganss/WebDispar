@@ -23,6 +23,8 @@ cd WebDispar
 ---
 
 ### 2. Setup Database MySQL
+Pastikan layanan MySQL di Laragon/XAMPP atau server MySQL sudah berjalan. Koneksi lokal secara default menggunakan port `3306`.
+
 1. Buka MySQL Client Anda (phpMyAdmin, DBeaver, HeidiSQL, atau Terminal MySQL).
 2. Buat database baru bernama **`sulteng_tourism`**:
    ```sql
@@ -34,6 +36,11 @@ cd WebDispar
      ```bash
      mysql -u root -p sulteng_tourism < database/sulteng_tourism.sql
      ```
+   - Di Windows, setelah `backend/.env` diisi, jalankan `node database/import_db.js` dari direktori utama. Impor ini mengganti isi tabel yang ada; gunakan pada database baru atau setelah membuat cadangan.
+4. Siapkan tabel pengaturan tema dan slider:
+   ```bash
+   node backend/scripts/migrate_admin_theme_slider.js
+   ```
 
 ---
 
@@ -58,16 +65,18 @@ cd WebDispar
    ```env
    PORT=5000
    DB_HOST=localhost
+   DB_PORT=3306
    DB_USER=root
    DB_PASSWORD=isi_password_mysql_anda
    DB_NAME=sulteng_tourism
-   JWT_SECRET=rahasia_sulteng_2026
+   JWT_SECRET=isi_dengan_nilai_acak_panjang_yang_rahasia
    ```
 5. Jalankan server Backend:
    ```bash
    npm run dev
    ```
    > Backend akan berjalan di: **`http://localhost:5000`**
+   > Periksa sambungan database melalui **`http://localhost:5000/api/health`**. Respons `database: "ok"` menandakan koneksi berhasil; status 503 berarti MySQL atau kredensialnya perlu diperiksa.
 
 ---
 
