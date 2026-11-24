@@ -71,6 +71,26 @@ export const Sidebar = ({ isMobileOpen, setIsMobileOpen, language: propLanguage,
     if (setIsMobileOpen) setIsMobileOpen(false);
   };
 
+  const handleLogoClick = (e) => {
+    handleLinkClick();
+    if (location.pathname === '/') {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  const handleMenuClick = (e, path) => {
+    handleLinkClick();
+    if (path === '/' && location.pathname === '/') {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (path === '/') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
   const renderChildren = (items, depth = 1) => {
     return (
       <div className={`flex flex-col gap-1 pl-3.5 mt-1 border-l border-white/10 ${depth > 1 ? 'ml-1.5' : ''}`}>
@@ -150,7 +170,7 @@ export const Sidebar = ({ isMobileOpen, setIsMobileOpen, language: propLanguage,
       <div className="flex-1 overflow-y-auto overflow-x-hidden p-5 flex flex-col gap-4">
         {/* Logo Branding & Mobile Close Button */}
         <div className="flex items-center justify-between pb-4 border-b border-white/10">
-          <Link to="/" onClick={handleLinkClick} className="flex items-center gap-3 group">
+          <Link to="/" onClick={handleLogoClick} className="flex items-center gap-3 group">
             <img
               src="/dinas pariwisata-COLOR WHITE.png"
               alt="Logo Dinas Pariwisata Sulteng"
@@ -285,7 +305,7 @@ export const Sidebar = ({ isMobileOpen, setIsMobileOpen, language: propLanguage,
                 <Link
                   key={idx}
                   to={menu.path}
-                  onClick={handleLinkClick}
+                  onClick={(e) => handleMenuClick(e, menu.path)}
                   className={`
                     flex items-center gap-2.5 p-2.5 rounded-lg text-xs font-semibold
                     transition-all duration-200

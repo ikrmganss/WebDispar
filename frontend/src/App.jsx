@@ -76,6 +76,7 @@ function App() {
   const isAdmin = location.pathname.startsWith('/portal-internal-dispar');
 
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
     api.post('/statistik/track').catch(() => {});
   }, [location.pathname]);
 

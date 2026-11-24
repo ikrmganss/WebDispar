@@ -232,6 +232,26 @@ export const Navbar = ({ onToggleMobile, language: propLanguage, setLanguage: pr
 
   const closeAll = () => setActiveMenu(null);
 
+  const handleLogoClick = (e) => {
+    closeAll();
+    if (location.pathname === '/') {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  const handleMenuClick = (e, menu) => {
+    closeAll();
+    if (menu.path === '/' && location.pathname === '/') {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (menu.path === '/') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
   const isActive = (menu) => {
     if (menu.path) return location.pathname === menu.path;
     return false;
@@ -249,7 +269,7 @@ export const Navbar = ({ onToggleMobile, language: propLanguage, setLanguage: pr
       >
         <div className="flex max-w-7xl h-20 items-center justify-between px-3 sm:px-4 md:px-6 w-full">
           {/* Logo */}
-          <Link to="/" onClick={closeAll} className="inline-flex items-center gap-2 sm:gap-2.5 shrink-0">
+          <Link to="/" onClick={handleLogoClick} className="inline-flex items-center gap-2 sm:gap-2.5 shrink-0 cursor-pointer">
             <div className="relative">
               <LogoSymbol />
               {theme.badge_icon && theme.badge_icon !== 'none' && (
@@ -325,7 +345,7 @@ export const Navbar = ({ onToggleMobile, language: propLanguage, setLanguage: pr
                 <Link
                   key={idx}
                   to={menu.path}
-                  onClick={closeAll}
+                  onClick={(e) => handleMenuClick(e, menu)}
                   className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all ${
                     active ? 'bg-amber-500 text-slate-950 shadow-sm' : 'text-white hover:bg-white/20'
                   }`}
