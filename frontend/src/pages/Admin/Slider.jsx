@@ -4,8 +4,6 @@ import { AdminLayout } from './Dashboard';
 import api from '../../services/api';
 import { getImageSrc } from '../../utils/imageHelper';
 
-const BASE_URL = import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5000';
-
 const AdminSlider = () => {
   const [sliders, setSliders] = useState([]);
   const [loading, setLoading] = useState(true);

@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import api from '../services/api';
+import { getImageSrc } from '../utils/imageHelper';
 
 const SLIDES = [
   {
@@ -287,16 +289,37 @@ const LetterSweep = ({ text, baseColor, highlightColor, glowColor, lineOffset = 
 };
 
 const Hero = () => {
+  const [slides, setSlides] = useState(SLIDES);
   const [current, setCurrent] = useState(0);
   const [subImageIdx, setSubImageIdx] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
-  const next = useCallback(() => setCurrent((prev) => (prev + 1) % SLIDES.length), []);
-  const prev = useCallback(() => setCurrent((prev) => (prev - 1 + SLIDES.length) % SLIDES.length), []);
+  const next = useCallback(() => setCurrent((prev) => (prev + 1) % slides.length), [slides.length]);
+  const prev = useCallback(() => setCurrent((prev) => (prev - 1 + slides.length) % slides.length), [slides.length]);
+
+  useEffect(() => {
+    let mounted = true;
+    api.get('/slider')
+      .then(({ data }) => {
+        if (!mounted || !Array.isArray(data)) return;
+        const active = data.filter((item) => item.gambar).map((item) => ({
+          image: getImageSrc(item.gambar),
+          fallbackImage: '/slider/Slider.jpg',
+          alt: item.judul || 'Banner pariwisata Sulawesi Tengah',
+          title: item.judul || 'Banner pariwisata Sulawesi Tengah',
+        }));
+        if (active.length) {
+          setCurrent(0);
+          setSlides(active);
+        }
+      })
+      .catch(() => {});
+    return () => { mounted = false; };
+  }, []);
 
   // Continuous video-like cycling between Adegan 1 (Megalit) and Adegan 2 (Lore Lindu) on Slide 0
   useEffect(() => {
-    if (current !== 0) {
+    if (!slides[current]?.isDual) {
       setSubImageIdx(0);
       return;
     }
@@ -306,20 +329,20 @@ const Hero = () => {
     }, SUB_SCENE_INTERVAL);
 
     return () => clearInterval(subTimer);
-  }, [current]);
+  }, [current, slides]);
 
   // Carousel Autoplay management for advancing slides
   useEffect(() => {
-    if (isPaused || SLIDES.length <= 1) return;
+    if (isPaused || slides.length <= 1) return;
 
-    const duration = current === 0 ? DUAL_SLIDE_DURATION : AUTOPLAY_INTERVAL;
+    const duration = slides[current]?.isDual ? DUAL_SLIDE_DURATION : AUTOPLAY_INTERVAL;
 
     const slideTimer = setTimeout(() => {
       next();
     }, duration);
 
     return () => clearTimeout(slideTimer);
-  }, [current, isPaused, next]);
+  }, [current, isPaused, next, slides]);
 
   useEffect(() => {
     const handleKey = (e) => {
@@ -330,8 +353,8 @@ const Hero = () => {
     return () => window.removeEventListener('keydown', handleKey);
   }, [next, prev]);
 
-  const slide = SLIDES[current] ?? SLIDES[0];
-  const activeDuration = current === 0 ? DUAL_SLIDE_DURATION : AUTOPLAY_INTERVAL;
+  const slide = slides[current] ?? slides[0];
+  const activeDuration = slide.isDual ? DUAL_SLIDE_DURATION : AUTOPLAY_INTERVAL;
 
   return (
     <section
@@ -341,7 +364,7 @@ const Hero = () => {
       onMouseLeave={() => setIsPaused(false)}
     >
       {/* Slide 0: Unified Dual-Destination Video-like Experience */}
-      {current === 0 ? (
+      {slide.isDual ? (
         <div className="absolute inset-0 overflow-hidden bg-slate-950">
           {/* Scene 1 (TAMPIL PERTAMA): Patung Megalit Poso, Bukit Selena Palu, & Danau Paisupok Banggai */}
           <motion.div
@@ -490,7 +513,7 @@ const Hero = () => {
 
       {/* Slide Indicators (Dots) */}
       <div className="z-20 absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/30 backdrop-blur-md border border-white/15">
-        {SLIDES.map((s, idx) => (
+        {slides.map((s, idx) => (
           <button
             key={idx}
             onClick={() => setCurrent(idx)}
